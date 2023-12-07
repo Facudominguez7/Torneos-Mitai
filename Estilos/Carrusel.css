@@ -1,0 +1,10 @@
+
+.img{
+    width: 100%; /* Utiliza el 100% del ancho del contenedor */
+    max-width: calc(100% / 3); /* Divide el ancho del contenedor en 3 columnas */
+}
+
+
+.activo {
+    background-color: rgb(3, 102, 133);
+}
