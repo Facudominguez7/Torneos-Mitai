@@ -4,6 +4,7 @@ module.exports = {
     "./index.php",
     "./**.{html,js,php}",
     "./node_modules/flowbite/**/*.js",
+    "./**/*.php"
   ],
   theme: {
     colors: {

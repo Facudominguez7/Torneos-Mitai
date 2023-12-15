@@ -1,0 +1,8 @@
+@media (max-width: 600px) {
+    #desplegableFecha {
+        margin-left: 5px;
+    }
+    #dropdownMenu {
+        margin-left: 5px;
+    }
+}
