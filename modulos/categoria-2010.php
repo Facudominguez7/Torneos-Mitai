@@ -1,6 +1,7 @@
 <head>
     <link rel="stylesheet" href="./Estilos/estilos-desplegableFechas.css">
 </head>
+
 <body>
     <header class="bg-[--color-primary] shadow">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
@@ -23,22 +24,29 @@
             <!-- Dropdown menu -->
             <div id="dropdownMenu" class="hidden font-normal bg-blue-500 divide-y divide-gray-100  rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-2 ml-10 z-10">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
-                    <li>
-                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 text-white text-xl">Fecha 1</a>
-                    </li>
-                    <li>
-                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 text-white text-xl">Fecha 2</a>
-                    </li>
-                    <li>
-                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 text-white text-xl">Fecha 3</a>
-                    </li>
-                    <li>
-                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 text-white text-xl">Fecha 4</a>
-                    </li>
-                    <li>
-                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 text-white text-xl">Fecha 5</a>
-                    </li>
-                    <!-- ... (resto de elementos del menú aquí) ... -->
+                    <?php
+                    $idCategoria = $_GET['id'];
+                    $sqlMostrarFechas = "SELECT DISTINCT fechas.nombre, fechas.id FROM fechas WHERE idCategoria = $idCategoria";
+                    $consultaFechas = mysqli_prepare($con, $sqlMostrarFechas);
+                    mysqli_stmt_execute($consultaFechas);
+                    $resultFechas = mysqli_stmt_get_result($consultaFechas);
+
+                    if ($resultFechas->num_rows > 0) {
+                        while ($filaFecha = mysqli_fetch_array($resultFechas)) {
+                    ?>
+                            <li>
+                                <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria; ?>&fecha=<?php echo $filaFecha['id']; ?>" class="block px-4 py-2 text-white text-xl"><?php echo $filaFecha['nombre']; ?></a>
+                            </li>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <li>
+                            <a class="block px-4 py-2 text-white text-xl">No hay Fechas para mostrar</a>
+                        </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -61,18 +69,30 @@
         </script>
         <div class="flex justify-center">
             <?php
-                $id = $_GET['id'];
+            $id = $_GET['id'];
             ?>
+            <a href="index.php?modulo=agregar-fechas&accion=agregar&id=<?php echo $id ?>">
+                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    Agregar Fechas
+                </button>
+            </a>
             <a href="index.php?modulo=agregar-grupo&accion=agregar&id=<?php echo $id ?>">
                 <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                     Agregar Grupos
+                </button>
+            </a>
+            <a href="index.php?modulo=agregar-equipo-a-grupo&accion=agregar&id=<?php echo $id ?>">
+                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    Agregar Equipo a Grupo
                 </button>
             </a>
         </div>
         <div class="container mx-auto py-8">
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 <?php
-                $sqlMostrarGrupos = "SELECT nombre FROM grupos";
+                $sqlMostrarGrupos = "SELECT grupos.nombre , grupos.id FROM grupos 
+                INNER JOIN categorias ON grupos.idCategoria = categorias.id
+                WHERE categorias.id = $id";
                 $stmt = mysqli_prepare($con, $sqlMostrarGrupos);
                 mysqli_stmt_execute($stmt);
                 $result = mysqli_stmt_get_result($stmt);
@@ -100,6 +120,11 @@
                                 </div>
                                 <!-- Agrega más partidos según sea necesario -->
                             </div>
+                            <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id']?>">
+                                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                    Agregar Fixture
+                                </button>
+                            </a>
                         </div>
                 <?php
                     }
