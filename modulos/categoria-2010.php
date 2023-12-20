@@ -99,33 +99,72 @@
 
                 if ($result->num_rows > 0) {
                     while ($fila = mysqli_fetch_array($result)) {
+                        $idGrupo = $fila['id'];
+                        if (empty($_GET['fecha'])) {
                 ?>
-                        <!-- Grupo A -->
-                        <div id="grupos" class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
-                            <h3 class="text-xl font-semibold mb-4 text-gray-800 text-center"><?php echo htmlspecialchars($fila['nombre']) ?></h3>
-                            <div class="space-y-2">
-                                <div class="py-2 text-center flex items-center justify-center">
-                                    <div id="imagenesLogoIzquierda">
-                                        <img class="h-14 w-14 mr-2" src="Imagenes/1701875050.jpg" alt="">
-                                    </div>
-                                    <span class="font-semibold text-gray-800 text-center">Equipo 5</span>
-                                    <span class="text-gray-600 mx-3">vs</span>
-                                    <span class="font-semibold text-gray-800">Equipo 6</span>
-                                    <div id="imagenesLogoDerecha">
-                                        <img class="h-14 w-14 ml-2" src="Imagenes/1701875050.jpg" alt="">
-                                    </div>
+                            <!-- Grupo A -->
+                            <div id="grupos" class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
+                                <h3 class="text-xl font-semibold mb-4 text-gray-800 text-center"><?php echo htmlspecialchars($fila['nombre']) ?></h3>
+                                <div class="space-y-2">
+                                    <!-- Agrega más partidos según sea necesario -->
+                                    <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria ?>">
+                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                            Debe seleccionar una fecha para continuar
+                                        </button>
+                                    </a>
                                 </div>
-                                <div class="py-2 text-center">
-                                    <span class="font-semibold text-gray-800">Equipo 7</span> vs <span class="font-semibold text-gray-800">Equipo 8</span>
-                                </div>
-                                <!-- Agrega más partidos según sea necesario -->
                             </div>
-                            <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id']?>">
-                                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                    Agregar Fixture
-                                </button>
-                            </a>
-                        </div>
+                        <?php
+                        } else {
+                            $idFecha = $_GET['fecha'];
+                            $sqlMostrarPartidos = "SELECT p.*, el.nombre AS nombre_local, ev.nombre AS nombre_visitante, el.foto AS foto_local, ev.foto AS foto_visitante
+                                                  FROM partidos p
+                                                  INNER JOIN equipos el ON p.idEquipoLocal = el.id
+                                                  INNER JOIN equipos ev ON p.idEquipoVisitante = ev.id
+                                                  WHERE p.idGrupo = $idGrupo AND p.idFechas = $idFecha";
+
+                            $stmtPartidos = mysqli_prepare($con, $sqlMostrarPartidos);
+                            mysqli_stmt_execute($stmtPartidos);
+                            $resultPartidos = mysqli_stmt_get_result($stmtPartidos);
+                        ?>
+                            <!-- Grupo A -->
+                            <div id="grupos" class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
+                                <h3 class="text-xl font-semibold mb-4 text-gray-800 text-center"><?php echo htmlspecialchars($fila['nombre']) ?></h3>
+                                <div class="space-y-2">
+                                    <?php
+                                    if ($resultPartidos->num_rows > 0) {
+                                        while ($filaPartido = mysqli_fetch_array($resultPartidos)) {
+                                            $nombreEquipoLocal = $filaPartido['nombre_local'];
+                                            $fotoLocal = $filaPartido['foto_local'];
+                                            $nombreEquipoVisitante = $filaPartido['nombre_visitante'];
+                                            $fotoVisitante = $filaPartido['foto_visitante'];
+                                    ?>
+                                            <div class="py-2 text-center flex items-center justify-center">
+                                                <div id="imagenesLogoIzquierda">
+                                                    <img class="h-14 w-14 mr-2" src="Imagenes/<?php echo $fotoLocal?>" alt="">
+                                                </div>
+                                                <span class="font-semibold text-gray-800 text-center"><?php echo $nombreEquipoLocal?></span>
+                                                <span class="text-gray-600 mx-3">vs</span>
+                                                <span class="font-semibold text-gray-800"><?php echo $nombreEquipoVisitante?></span>
+                                                <div id="imagenesLogoDerecha">
+                                                <img class="h-14 w-14 mr-2" src="Imagenes/<?php echo $fotoVisitante?>" alt="">
+                                                </div>
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+
+                                    <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
+                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                            Agregar Fixture
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
                 <?php
                     }
                 }
