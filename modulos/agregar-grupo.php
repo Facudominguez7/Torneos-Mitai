@@ -4,13 +4,37 @@
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<header class="bg-[--color-primary] shadow">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
+        <?php
+        $idCategoria = $_GET['idCategoria'];
+        $sqlMostrarCategoria = "SELECT categorias.nombreCategoria
+        FROM categorias 
+        WHERE categorias.id = $idCategoria";
+        $consultaNombre = mysqli_prepare($con, $sqlMostrarCategoria);
+        mysqli_stmt_execute($consultaNombre);
+        $resultNombreCat = mysqli_stmt_get_result($consultaNombre);
 
+        if ($resultNombreCat->num_rows > 0) {
+            while ($filaCat = mysqli_fetch_array($resultNombreCat)) {
+        ?>
+                <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
+                    <?php echo $filaCat['nombreCategoria'] ?> 
+                </h1>
+                <br />
+        <?php
+            }
+        }
+        ?>
+
+    </div>
+</header>
 <body>
     <div class="flex items-center justify-center p-12">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="mx-auto w-full max-w-[550px]">
-            <form action="index.php?modulo=agregar-grupo&accion=agregar-grupo&id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+            <form action="index.php?modulo=agregar-grupo&accion=agregar-grupo&idCategoria=<?php echo $_GET['idCategoria']; ?>" method="POST" enctype="multipart/form-data">
                 <div class="mb-5">
                     <label for="nombre" class="mb-3 block text-base font-medium text-white">
                         Nombre del Grupo
@@ -30,7 +54,7 @@
 <?php
 if (!empty($_GET['accion'])) {
     if ($_GET['accion'] == 'agregar-grupo') {
-        $idCategoria = $_GET['id'];
+        $idCategoria = $_GET['idCategoria'];
         $nombre = $_POST['nombre'];
 
         // Verificar si ya existe un grupo con ese nombre en esa categoría
@@ -55,7 +79,7 @@ if (!empty($_GET['accion'])) {
                 echo "<script>alert('Grupo agregado exitosamente');</script>";
             }
         }
-        echo "<script>window.location='index.php';</script>";
+        echo "<script>window.location='index.php?modulo=categoria-2010&id=". $idCategoria ."';</script>";
     }
 }
 

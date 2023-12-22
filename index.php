@@ -36,7 +36,7 @@ conectar();
                             <a href="index.php" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Inicio</a>
                         </li>
                         <li>
-                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Categorias 
+                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Categorias
                                 <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
@@ -45,31 +45,31 @@ conectar();
                             <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-2">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2010</a>
+                                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2010</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=2" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2011</a>
+                                        <a href="index.php?modulo=categoria-2010&id=2" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2011</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=3" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2012</a>
+                                        <a href="index.php?modulo=categoria-2010&id=3" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2012</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=4" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2013</a>
+                                        <a href="index.php?modulo=categoria-2010&id=4" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2013</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=5" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2014</a>
+                                        <a href="index.php?modulo=categoria-2010&id=5" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2014</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=6" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2015</a>
+                                        <a href="index.php?modulo=categoria-2010&id=6" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2015</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=7" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2016</a>
+                                        <a href="index.php?modulo=categoria-2010&id=7" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2016</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=8" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2017</a>
+                                        <a href="index.php?modulo=categoria-2010&id=8" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2017</a>
                                     </li>
                                     <li>
-                                        <a href="index.php?modulo=categoria-2010&id=9" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cat.2018</a>
+                                        <a href="index.php?modulo=categoria-2010&id=9" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2018</a>
                                     </li>
                                 </ul>
                             </div>
@@ -91,6 +91,15 @@ conectar();
     }
     ?>
 
+    <style>
+        /* Estilo de hover para cada elemento de categoría */
+        #dropdownNavbar a:hover {
+            background-color: #4a90e2;
+            /* Cambia este color al que desees */
+            color: white;
+            /* Cambia el color del texto si es necesario */
+        }
+    </style>
 
     <script>
         const button = document.querySelector('[data-collapse-toggle="navbar-dropdown"]');
@@ -103,18 +112,24 @@ conectar();
         });
 
         button1.addEventListener('click', function(event) {
-            if (window.innerWidth >= 768) { // Cambiar el 768 según sea necesario para definir cuándo mostrar el menú afuera
-                const navbar = document.getElementById('navbar-dropdown');
-                const navbarRect = navbar.getBoundingClientRect();
+            const buttonRect = button1.getBoundingClientRect();
 
-                menu1.style.top = `${navbarRect.bottom}px`;
-                menu1.style.left = `${navbarRect.left}px`;
+            if (window.innerWidth < 768) {
+                menu1.style.top = `${buttonRect.bottom}px`;
+                menu1.style.left = '0';
+                menu1.style.width = '100%';
+            } else {
+                const navRect = document.querySelector('nav').getBoundingClientRect();
+                const menuWidth = navRect.width * 0.1; // Ancho ajustado
+
+                menu1.style.top = `${buttonRect.bottom}px`;
+                menu1.style.left = `${buttonRect.left}px`; // Ajuste de posición a la izquierda del botón
+                menu1.style.width = `${menuWidth}px`;
             }
 
             menu1.classList.toggle('hidden');
         });
 
-        // Cerrar el menú de categorías si se hace clic fuera de él
         document.addEventListener('click', function(event) {
             const isClickInsideMenu = menu1.contains(event.target);
             const isClickOnButton = event.target === button1;
