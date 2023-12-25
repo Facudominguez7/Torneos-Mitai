@@ -206,6 +206,11 @@
                                             $diaPartido = $filaPartido['dia'];
                                             $horario = $filaPartido['horario'];
                                             $cancha = $filaPartido['cancha'];
+                                            $idPartido = $filaPartido['id'];
+                                            $idFecha = $filaPartido['idFechas'];
+                                            $idCategoria = $_GET['id'];
+                                            $resultadoEquipoLocal = $filaPartido['golesEquipoLocal'];
+                                            $resultadoEquipoVisitante = $filaPartido['golesEquipoVisitante'];
                                     ?>
                                             <div class="grid grid-cols-5 lg:grid-cols-7 gap-4 py-2 text-center">
                                                 <div class="col-span-2 flex items-center">
@@ -213,7 +218,9 @@
                                                     <span class="text-gray-800 mr-2"><?php echo $nombreEquipoLocal ?></span>
                                                 </div>
 
+                                                <span class="text-gray-600 flex items-center justify-center "><?php echo $resultadoEquipoLocal ?></span>
                                                 <span class="text-gray-600 flex items-center justify-center">vs</span>
+                                                <span class="text-gray-600 flex items-center justify-center"><?php echo $resultadoEquipoVisitante ?></span>
 
                                                 <div class="col-span-2 flex items-center">
                                                     <span class="text-gray-800 mr-2"><?php echo $nombreEquipoVisitante ?></span>
@@ -226,6 +233,14 @@
                                                 <div class="col-span-2 lg:col-span-1 flex flex-col items-center">
                                                     <span class="font-semibold text-gray-800 text-xl mb-3">Cancha</span>
                                                     <span class="text-gray-800 mr-2"><?php echo $cancha ?></span>
+                                                </div>
+                                                <div class="col-span-2 flex flex-col items-center">
+                                                    <!-- Botón para cargar resultado -->
+                                                    <a href="index.php?modulo=cargar-resultado&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>">
+                                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                                            Cargar Resultado
+                                                        </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <hr class="py-2 border-t-4 ">

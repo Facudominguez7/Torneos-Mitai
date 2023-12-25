@@ -10,6 +10,8 @@ if (!empty($_GET['accion'])) {
         $horario = $_POST['horario'];
         $cancha = $_POST['cancha'];
         $dia = $_POST['dia'];
+        $golesEquipoLocal = $_POST['golesEquipoLocal'];
+        $golesEquipoVisitante = $_POST['golesEquipoVisitante'];
 
         if ($equipoLocal == $equipoVisitante) {
             echo "<script>alert('No se puede seleccionar el mismo equipo como local y visitante.');</script>";
@@ -36,10 +38,10 @@ if (!empty($_GET['accion'])) {
                 } else {
                     echo "<script>alert('Error al programar el partido');</script>";
                 }
-                echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=". $fecha . "';</script>";
+                echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=" . $fecha . "';</script>";
             }
         }
-        echo "<script>window.location='index.php?modulo=agregar-fixture&accion=agregar&idCategoria=" . $idCategoria . "&idGrupo=" . $grupo . "&idFecha=". $fecha . "';</script>";
+        echo "<script>window.location='index.php?modulo=agregar-fixture&accion=agregar&idCategoria=" . $idCategoria . "&idGrupo=" . $grupo . "&idFecha=" . $fecha . "';</script>";
     }
 }
 ?>
