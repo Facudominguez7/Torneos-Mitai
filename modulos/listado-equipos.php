@@ -32,7 +32,8 @@
                 $sqlMostrarEquipos = "SELECT equipos.id, equipos.idCategoria, equipos.nombre, equipos.foto, 
                 categorias.nombreCategoria  
                  FROM equipos
-                 LEFT JOIN categorias ON equipos.idCategoria = categorias.id";
+                 LEFT JOIN categorias ON equipos.idCategoria = categorias.id
+                 ORDER BY categorias.nombreCategoria ASC";
                 $datos = mysqli_query($con, $sqlMostrarEquipos);
                 if ($datos->num_rows > 0) {
                     while ($fila = mysqli_fetch_array($datos)) {

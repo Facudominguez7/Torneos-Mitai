@@ -212,30 +212,37 @@
                                             $resultadoEquipoLocal = $filaPartido['golesEquipoLocal'];
                                             $resultadoEquipoVisitante = $filaPartido['golesEquipoVisitante'];
                                     ?>
-                                            <div class="grid grid-cols-5 lg:grid-cols-7 gap-4 py-2 text-center">
-                                                <div class="col-span-2 flex items-center">
+                                            <div class="grid grid-cols-12 lg:grid-cols-24 gap-4 py-2 text-center overflow-x-auto lg:overflow-x-hidden">
+                                                <div class="col-span-5 lg:col-span-3 flex items-center">
                                                     <img class="h-14 w-14 text-xs ml-2 mr-2" src="Imagenes/<?php echo $fotoLocal ?>" alt="Logo <?php echo $nombreEquipoLocal ?>">
-                                                    <span class="text-gray-800 mr-2"><?php echo $nombreEquipoLocal ?></span>
+                                                    <span class="text-gray-800"><?php echo $nombreEquipoLocal ?></span>
                                                 </div>
-
-                                                <span class="text-gray-600 flex items-center justify-center "><?php echo $resultadoEquipoLocal ?></span>
-                                                <span class="text-gray-600 flex items-center justify-center">vs</span>
-                                                <span class="text-gray-600 flex items-center justify-center"><?php echo $resultadoEquipoVisitante ?></span>
-
-                                                <div class="col-span-2 flex items-center">
-                                                    <span class="text-gray-800 mr-2"><?php echo $nombreEquipoVisitante ?></span>
-                                                    <img class="h-14 w-14 text-xs ml-2 mr-2" src="Imagenes/<?php echo $fotoVisitante ?>" alt="Logo <?php echo $nombreEquipoVisitante ?>">
+                                                <?php
+                                                if ($resultadoEquipoLocal === 0 && $resultadoEquipoVisitante === 0) {
+                                                ?>
+                                                    <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-center">vs</div>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <div class="flex col-span-3 lg:col-span-3 items-center font-bold justify-center">
+                                                        <?php echo $resultadoEquipoLocal ?> - <?php echo $resultadoEquipoVisitante ?>
+                                                    </div>
+                                                <?php
+                                                }
+                                                ?>
+                                                <div class="col-span-4 lg:col-span-3 flex items-center ">
+                                                    <span class="text-gray-800 m-0"><?php echo $nombreEquipoVisitante ?></span>
+                                                    <img class="h-14 w-14 text-xs ml-2 mr-2 lg:ml-2" src="Imagenes/<?php echo $fotoVisitante ?>" alt="Logo <?php echo $nombreEquipoVisitante ?>">
                                                 </div>
-                                                <div class="col-span-2 lg:col-span-1 flex flex-col items-center">
+                                                <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
                                                     <span class="font-semibold text-gray-800 text-xl mb-3 mr-4">Horario</span>
                                                     <span class="text-gray-800 mr-2"><?php echo $horario ?></span>
                                                 </div>
-                                                <div class="col-span-2 lg:col-span-1 flex flex-col items-center">
+                                                <div class="col-span-6 lg:col-span-2 flex flex-col items-center justify-center">
                                                     <span class="font-semibold text-gray-800 text-xl mb-3">Cancha</span>
                                                     <span class="text-gray-800 mr-2"><?php echo $cancha ?></span>
                                                 </div>
-                                                <div class="col-span-2 flex flex-col items-center">
-                                                    <!-- Botón para cargar resultado -->
+                                                <div class="col-span-6 lg:col-span-3 flex items-center justify-center">
                                                     <a href="index.php?modulo=cargar-resultado&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>">
                                                         <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                                             Cargar Resultado
@@ -243,6 +250,7 @@
                                                     </a>
                                                 </div>
                                             </div>
+
                                             <hr class="py-2 border-t-4 ">
                                     <?php
                                         }
@@ -254,7 +262,7 @@
                                             Agregar Partidos
                                         </button>
                                     </a>
-                                    <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
+                                    <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
                                         <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                             Tabla de Posiciones
                                         </button>
