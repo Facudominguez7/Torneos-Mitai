@@ -45,7 +45,7 @@ if ($_GET['accion'] == 'editar-equipo') {
     if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
         $nombre = explode('.', $_FILES['foto']['name']);
         $foto = time() . '.' . end($nombre);
-        copy($_FILES['foto']['tmp_name'], 'imagenes/' . $foto);
+        copy($_FILES['foto']['tmp_name'], 'Imagenes/' . $foto);
 
         //armo la cadena para editar las fotos
         $mas_datos = ", foto='" . $foto . "'";

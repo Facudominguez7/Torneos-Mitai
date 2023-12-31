@@ -1,5 +1,6 @@
 <head>
     <link rel="stylesheet" href="./Estilos/estilos-desplegableFechas.css">
+    <link rel="stylesheet" href="Estilos/output.css">
 </head>
 
 <body>
@@ -55,7 +56,7 @@
             <div id="desplegableFecha" class="flex justify-start mb-4 mt-10 ml-10">
                 <button id="dropdownButton" class="flex items-center middle none rounded-lg bg-blue-500 py-6 px-12 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                     <span class="mr-1 text-2xl">Fechas</span>
-                    <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                     </svg>
                 </button>
@@ -72,6 +73,7 @@
 
                     if ($resultFechas->num_rows > 0) {
                         while ($filaFecha = mysqli_fetch_array($resultFechas)) {
+
                     ?>
                             <li>
                                 <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria; ?>&fecha=<?php echo $filaFecha['id']; ?>" class="block px-4 py-2 text-white text-xl"><?php echo $filaFecha['nombre']; ?></a>
@@ -106,25 +108,100 @@
                 }
             });
         </script>
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-wrap">
             <?php
             $id = $_GET['id'];
             ?>
-            <a href="index.php?modulo=agregar-fechas&accion=agregar&idCategoria=<?php echo $id ?>">
-                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                    Agregar Fechas
+            <a href="index.php?modulo=semifinal&accion=cargar&idCategoria=<?php echo $id ?>">
+                <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    SemiFinal
                 </button>
             </a>
-            <a href="index.php?modulo=agregar-grupo&accion=agregar&idCategoria=<?php echo $id ?>">
-                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                    Agregar Grupos
+            <a href="index.php?modulo=final&accion=cargar&idCategoria=<?php echo $id ?>">
+                <button class="hidden middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    Final
                 </button>
             </a>
-            <a href="index.php?modulo=agregar-equipo-a-grupo&accion=agregar&idCategoria=<?php echo $id ?>">
-                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                    Agregar Equipo a Grupo
-                </button>
-            </a>
+            <?php
+            if (isset($_SESSION['rol'])) {
+                if (!empty($_SESSION['rol'] == 2)) {
+            ?>
+                    <a href="index.php?modulo=agregar-fechas&accion=agregar&idCategoria=<?php echo $id ?>">
+                        <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                            Agregar Fechas
+                        </button>
+                    </a>
+                    <a href="index.php?modulo=agregar-grupo&accion=agregar&idCategoria=<?php echo $id ?>">
+                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                            Agregar Grupos
+                        </button>
+                    </a>
+                    <a href="index.php?modulo=agregar-equipo-a-grupo&accion=agregar&idCategoria=<?php echo $id ?>">
+                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                            Agregar Equipo a Grupo
+                        </button>
+                    </a>
+            <?php
+                }
+            }
+            ?>
+        </div>
+        <div class="container mx-auto">
+            <div class="flex flex-wrap justify-start">
+                <?php
+                // Consulta para obtener los grupos de la categoría
+                $sqlMostrarGrupos = "SELECT DISTINCT id, nombre FROM grupos WHERE idCategoria = $idCategoria";
+                $consultaGrupos = mysqli_query($con, $sqlMostrarGrupos);
+
+                if (mysqli_num_rows($consultaGrupos) > 0) {
+                    while ($filaGrupo = mysqli_fetch_array($consultaGrupos)) {
+                        $idGrupo = $filaGrupo['id'];
+                        $nombreGrupo = $filaGrupo['nombre'];
+                ?>
+                        <div class="border rounded-lg p-1 lg:w-1/3 lg:mt-0 lg:mr-5 w-full flex justify-start flex-col bg-gray-100 mt-2">
+                            <h2 class="text-center mb-3 font-bold text-xl"><?php echo $nombreGrupo; ?></h2>
+                            <table class="border-collapse w-auto">
+                                <thead>
+                                    <tr>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Equipos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Consulta para mostrar los equipos del grupo actual
+                                    $sqlEquiposGrupo = "SELECT e.id AS idEquipo, e.nombre AS nombreEquipo, e.foto AS fotoEquipo
+                                                FROM equipos_grupos eg
+                                                INNER JOIN equipos e ON eg.idEquipo = e.id
+                                                WHERE eg.idGrupo = $idGrupo";
+                                    $consultaEquiposGrupo = mysqli_query($con, $sqlEquiposGrupo);
+
+                                    if (mysqli_num_rows($consultaEquiposGrupo) > 0) {
+                                        while ($filaEquipoGrupo = mysqli_fetch_array($consultaEquiposGrupo)) {
+                                            $idEquipo = $filaEquipoGrupo['idEquipo'];
+                                            $nombreEquipo = $filaEquipoGrupo['nombreEquipo'];
+                                            $fotoEquipo = $filaEquipoGrupo['fotoEquipo'];
+                                    ?>
+                                            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-1 lg:mb-0">
+                                                <td class="w-full lg:w-auto p-0 lg:p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                                    <?php echo $nombreEquipo ?>
+                                                </td>
+                                            </tr>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='2'>No hay equipos registrados para este grupo.</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                <?php
+                    }
+                } else {
+                    echo "No hay grupos registrados para esta categoría.";
+                }
+                ?>
+            </div>
         </div>
         <div class="container mx-auto py-8">
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-2 overflow-x-auto">
@@ -137,20 +214,28 @@
                 $result = mysqli_stmt_get_result($stmt);
 
                 if ($result->num_rows > 0) {
+
                     while ($fila = mysqli_fetch_array($result)) {
                         $idGrupo = $fila['id'];
                         if (empty($_GET['fecha'])) {
                 ?>
                             <!-- Grupo A -->
                             <div id="grupos" class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
-                                <h3 class="text-xl font-semibold mb-4 text-gray-800 text-center"><?php echo htmlspecialchars($fila['nombre']) ?></h3>
                                 <div class="w-full">
-                                    <!-- Agrega más partidos según sea necesario -->
-                                    <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria ?>">
-                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                            Debe seleccionar una fecha para continuar
-                                        </button>
-                                    </a>
+                                    <?php
+                                    if (isset($_SESSION['rol'])) {
+                                        if (!empty($_SESSION['rol'] == 2)) {
+                                    ?>
+                                            <!-- Agrega más partidos según sea necesario -->
+
+                                            <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                                Debe seleccionar una fecha para continuar
+                                            </button>
+
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                     <a class="block px-4 py-2 text-black text-xl">Debe seleccionar una fecha para ver los partidos</a>
                                 </div>
                             </div>
@@ -172,9 +257,9 @@
                             <div id="grupos" class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
                                 <?php
                                 $sqlMostrarDiaPartido = "SELECT DISTINCT d.diaPartido AS dia 
-                            FROM partidos p 
-                            RIGHT JOIN dias d ON p.idDia = d.id 
-                            WHERE p.idGrupo = $idGrupo AND p.idFechas = $idFecha";
+                                FROM partidos p 
+                                RIGHT JOIN dias d ON p.idDia = d.id 
+                                WHERE p.idGrupo = $idGrupo AND p.idFechas = $idFecha";
 
                                 $stmtDiaPartido = mysqli_prepare($con, $sqlMostrarDiaPartido);
                                 mysqli_stmt_execute($stmtDiaPartido);
@@ -242,28 +327,42 @@
                                                     <span class="font-semibold text-gray-800 text-xl mb-3">Cancha</span>
                                                     <span class="text-gray-800 mr-2"><?php echo $cancha ?></span>
                                                 </div>
-                                                <div class="col-span-6 lg:col-span-3 flex items-center justify-center">
-                                                    <a href="index.php?modulo=cargar-resultado&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>">
-                                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                                            Cargar Resultado
-                                                        </button>
-                                                    </a>
-                                                </div>
+                                                <?php
+                                                if (isset($_SESSION['rol'])) {
+                                                    if (!empty($_SESSION['rol'] == 2)) {
+                                                ?>
+                                                        <div class="col-span-6 lg:col-span-3 flex items-center justify-center">
+                                                            <a href="index.php?modulo=cargar-resultado&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>">
+                                                                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                                                    Cargar Resultado
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
                                             </div>
-
                                             <hr class="py-2 border-t-4 ">
                                     <?php
                                         }
                                     }
                                     ?>
-
-                                    <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
-                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                            Agregar Partidos
-                                        </button>
-                                    </a>
+                                    <?php
+                                    if (isset($_SESSION['rol'])) {
+                                        if (!empty($_SESSION['rol'] == 2)) {
+                                    ?>
+                                            <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
+                                                <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                                    Agregar Partidos
+                                                </button>
+                                            </a>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                     <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
-                                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                        <button class=" middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                             Tabla de Posiciones
                                         </button>
                                     </a>

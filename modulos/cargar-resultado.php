@@ -119,7 +119,7 @@ if (!empty($_GET['accion'])) {
 
 ?>
 
-<body>
+<section>
     <div class="flex items-center justify-center p-12">
         <div class="mx-auto w-full max-w-[550px]">
             <form action="index.php?modulo=cargar-resultado&accion=cargarResultado&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>" method="POST">
@@ -142,7 +142,7 @@ if (!empty($_GET['accion'])) {
                             <label for="golesEquipoLocal" class="mb-3 block text-base font-medium text-white">
                                 Anotar goles del Equipo: <?php echo $nombreEquipoLocal ?>
                             </label>
-                            <input type="text" id="golesEquipoLocal" name="golesEquipoLocal" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                            <input type="number" id="golesEquipoLocal" name="golesEquipoLocal" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         </div>
                     </div>
                 <?php
@@ -170,7 +170,7 @@ if (!empty($_GET['accion'])) {
                             <label for="golesEquipoVisitante" class="mb-3 block text-base font-medium text-white">
                                 Anotar goles del Equipo: <?php echo $nombreEquipoVisitante ?>
                             </label>
-                            <input type="text" id="golesEquipoVisitante" name="golesEquipoVisitante" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                            <input type="number" id="golesEquipoVisitante" name="golesEquipoVisitante" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         </div>
                     </div>
                 <?php
@@ -186,4 +186,4 @@ if (!empty($_GET['accion'])) {
             </form>
         </div>
     </div>
-</body>
+</section>

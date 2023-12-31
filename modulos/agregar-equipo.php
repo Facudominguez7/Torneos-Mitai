@@ -22,7 +22,6 @@
                         Categoría del Equipo
                     </label>
                     <select name="categoria" id="categoria" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                        <option value="1">Categoría 2010</option>
                         <option value="2">Categoría 2011</option>
                         <option value="3">Categoría 2012</option>
                         <option value="4">Categoría 2013</option>

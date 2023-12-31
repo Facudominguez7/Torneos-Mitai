@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('includes/conexion.php');
 conectar();
 ?>
@@ -6,22 +7,36 @@ conectar();
 <html>
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G2ZMN0053J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-G2ZMN0053J');
+    </script>
     <meta name="viewport" content="width=device-width , initial-scale=1.0">
     <link rel="stylesheet" href="Estilos/output.css">
     <link rel="stylesheet" href="Estilos/Carrusel.css">
     <meta charset="UTF-8">
     <title>Torneo Mitai</title>
+    <link rel="shortcut icon" type="image/png" href="Imagenes/Logo_Mitai_SinFondo.png">
     <script defer src="js/carrusel.js"></script>
 </head>
 
+
 <body class="bg-[--color-primary]">
     <?php
-    if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'eliminar-equipo' ) {
+    if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'eliminar-equipo') {
     ?>
         <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="Imagenes/Logo_Mitai.jpeg" class="h-10 w-10" alt="Flowbite Logo" />
+                <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="Imagenes/Logo_Mitai_SinFondo.png" class="h-10 w-10" alt="MITAI Logo" />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Torneos Mitai</span>
                 </a>
                 <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
@@ -44,9 +59,6 @@ conectar();
                             <!-- Dropdown menu -->
                             <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-2">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
-                                    <li>
-                                        <a href="index.php?modulo=categoria-2010&id=1" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2010</a>
-                                    </li>
                                     <li>
                                         <a href="index.php?modulo=categoria-2010&id=2" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2011</a>
                                     </li>
@@ -74,14 +86,48 @@ conectar();
                                 </ul>
                             </div>
                         </li>
+                        <?php
+                        if (isset($_SESSION['rol'])) {
+                            if (!empty($_SESSION['rol'] == 2)) {
+                        ?>
+                                <li>
+                                    <a href="index.php?modulo=listado-equipos" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tabla de Equipos</a>
+                                </li>
+                        <?php
+                            }
+                        }
+                        ?>
+                        <?php
+                        if (!empty($_SESSION['nombre_usuario'])) {
+                        ?>
+                            <li>
+                                <a href="index.php?modulo=iniciar-sesion&salir=ok" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cerrar Sesión</a>
+                            </li>
+                        <?php
+                        } else {
+                        ?>
+                            <li>
+                                <a href="index.php?modulo=iniciar-sesion" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Iniciar Sesión</a>
+                            </li>
+                        <?php
+                        }
+                        ?>
                         <li>
-                            <a href="index.php?modulo=listado-equipos" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tabla de Equipos</a>
+                            <button onclick="descargarPDF()" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Reglamento</button>
                         </li>
+                        <script>
+                            function descargarPDF() {
+                                // Crea un enlace invisible
+                                var enlace = document.createElement('a');
+                                enlace.href = 'PDF/REGLAMENTO TORNEO MITAÍ CUP-CANTERA.pdf'; // Reemplaza 'ruta/al/archivo.pdf' con la URL del archivo PDF
+                                enlace.download = 'ReglamentoMitaiCup.pdf'; // Establece el nombre del archivo
+                                document.body.appendChild(enlace);
+                                enlace.click();
+                                document.body.removeChild(enlace);
+                            }
+                        </script>
                         <li>
-                            <a href="index.php?modulo=iniciar-sesion" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Iniciar Sesión</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+                            <a href="https://www.facebook.com/ligamitaijb" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contacto</a>
                         </li>
                     </ul>
                 </div>
@@ -139,6 +185,28 @@ conectar();
             }
         });
     </script>
+    <?php
+    if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro')) {
+    ?>
+        <header class="bg-[--color-primary] shadow">
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
+                <?php
+                if (!empty($_SESSION['nombre_usuario'])) {
+                ?>
+                    <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
+                        Bienvenido/a <?php echo $_SESSION['nombre_usuario']; ?>
+                    </h1>
+                    <br />
+                <?php
+                }
+                ?>
+            </div>
+        </header>
+    <?php
+    }
+    ?>
+
+
 
     <main>
         <?php
@@ -167,8 +235,6 @@ conectar();
 
 
     </main>
-    <!--Fin Contenido-->
-    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 
 </html>
