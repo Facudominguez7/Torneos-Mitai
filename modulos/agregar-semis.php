@@ -173,9 +173,9 @@ if (!empty($_GET['accion'])) {
                     </div>
                 <?php
                 } else {
-                    ?>
-                        <input class="hidden" type="number" value="0" name="copa" id="copa">
-                    <?php
+                ?>
+                    <input class="hidden" type="number" value="0" name="copa" id="copa">
+                <?php
                 }
                 ?>
                 <div>

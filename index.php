@@ -4,7 +4,7 @@ include('includes/conexion.php');
 conectar();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <!-- Google tag (gtag.js) -->
@@ -22,11 +22,24 @@ conectar();
     <meta name="viewport" content="width=device-width , initial-scale=1.0">
     <link rel="stylesheet" href="Estilos/output.css">
     <link rel="stylesheet" href="Estilos/Carrusel.css">
+    <link rel="stylesheet" href="Estilos/estilos-desplegableFechas.css">
     <meta charset="UTF-8">
     <title>Torneo Mitai</title>
     <link rel="shortcut icon" type="image/png" href="Imagenes/Logo_Mitai_SinFondo.png">
     <script defer src="js/carrusel.js"></script>
+    <style>
+        /* Estilo de hover para cada elemento de categoría */
+        #dropdownNavbar a:hover {
+            background-color: #4a90e2;
+            /* Cambia este color al que desees */
+            color: white;
+            /* Cambia el color del texto si es necesario */
+        }
+    </style>
+    
 </head>
+
+
 
 
 <body class="bg-[--color-primary]">
@@ -36,7 +49,7 @@ conectar();
         <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="Imagenes/Logo_Mitai_SinFondo.png" class="h-10 w-10" alt="MITAI Logo" />
+                    <img src="Imagenes/Logo_Mitai_SinFondo.png" class="h-10 w-10" alt="MITAI Logo">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Torneos Mitai</span>
                 </a>
                 <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
@@ -58,7 +71,7 @@ conectar();
                             </button>
                             <!-- Dropdown menu -->
                             <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-2">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-400">
                                     <li>
                                         <a href="index.php?modulo=categoria-2010&id=2" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categoría 2011</a>
                                     </li>
@@ -137,16 +150,6 @@ conectar();
     }
     ?>
 
-    <style>
-        /* Estilo de hover para cada elemento de categoría */
-        #dropdownNavbar a:hover {
-            background-color: #4a90e2;
-            /* Cambia este color al que desees */
-            color: white;
-            /* Cambia el color del texto si es necesario */
-        }
-    </style>
-
     <script>
         const button = document.querySelector('[data-collapse-toggle="navbar-dropdown"]');
         const button1 = document.querySelector('[data-dropdown-toggle="dropdownNavbar"]');
@@ -196,7 +199,6 @@ conectar();
                     <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
                         Bienvenido/a <?php echo $_SESSION['nombre_usuario']; ?>
                     </h1>
-                    <br />
                 <?php
                 }
                 ?>
@@ -217,9 +219,9 @@ conectar();
             <div class="mx-auto max-sm:w-full w-5/12 mt-9 flex justify-center items-stretch pb-4 px-4 sm:px-6 lg:px-8">
                 <div class="w-full bg-white rounded-3xl overflow-x-hidden">
                     <div class="grande w-300p flex flex-row justify-start items-center">
-                        <img src="Imagenes/Banner-Mitai.jpeg" alt="Banner-Mitai" class="img" />
-                        <img src="Imagenes/ImagenConRiver-carrusel.jpeg" alt="ImagenConRiver-carrusel" class="img" />
-                        <img src="Imagenes/RodrigoConPelota-carrusel.jpeg" alt="Foto-Portada" class="img" />
+                        <img src="Imagenes/Banner-Mitai.jpeg" alt="Banner-Mitai" class="img">
+                        <img src="Imagenes/ImagenConRiver-carrusel.jpeg" alt="ImagenConRiver-carrusel" class="img">
+                        <img src="Imagenes/RodrigoConPelota-carrusel.jpeg" alt="Foto-Portada" class="img">
                     </div>
 
                     <ul class="w-full p-4 flex flex-row justify-center items-center">

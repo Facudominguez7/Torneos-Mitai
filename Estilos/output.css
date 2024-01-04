@@ -1241,6 +1241,10 @@ input:checked + .toggle-bg {
   margin-top: 2.25rem;
 }
 
+.mt-0 {
+  margin-top: 0px;
+}
+
 .block {
   display: block;
 }
@@ -2472,10 +2476,6 @@ input:checked + .toggle-bg {
 
   .lg\:col-span-3 {
     grid-column: span 3 / span 3;
-  }
-
-  .lg\:col-span-6 {
-    grid-column: span 6 / span 6;
   }
 
   .lg\:mb-0 {
