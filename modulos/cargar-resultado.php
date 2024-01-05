@@ -7,11 +7,12 @@ if (!empty($_GET['accion'])) {
     if ($_GET['accion'] == 'cargarResultado') {
         $golesEquipoLocal = $_POST['golesEquipoLocal'];
         $golesEquipoVisitante = $_POST['golesEquipoVisitante'];
+        $jugado = 1;
 
         // Actualizar los resultados del partido en la tabla partidos
-        $sqlActualizarResultado = "UPDATE partidos SET golesEquipoLocal = ?, golesEquipoVisitante = ? WHERE id = ?";
+        $sqlActualizarResultado = "UPDATE partidos SET golesEquipoLocal = ?, golesEquipoVisitante = ?, jugado = ? WHERE id = ?";
         $stmtActualizarResultado = mysqli_prepare($con, $sqlActualizarResultado);
-        mysqli_stmt_bind_param($stmtActualizarResultado, "iii", $golesEquipoLocal, $golesEquipoVisitante, $idPartido);
+        mysqli_stmt_bind_param($stmtActualizarResultado, "iiii", $golesEquipoLocal, $golesEquipoVisitante, $jugado, $idPartido);
         mysqli_stmt_execute($stmtActualizarResultado);
 
         function verificarEquipoEnTablaPosiciones($con, $idEquipo, $idGrupo)
@@ -99,7 +100,7 @@ if (!empty($_GET['accion'])) {
             $puntosLocal = 3;
         } else if ($golesEquipoLocal < $golesEquipoVisitante) {
             $ganadosVisitante = 1;
-            $puntosLocal = 3;
+            $puntosVisitante = 3;
         } else {
             $empatadosLocal = 1;
             $empatadosVisitante = 1;

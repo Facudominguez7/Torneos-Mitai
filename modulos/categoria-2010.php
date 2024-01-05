@@ -291,6 +291,9 @@
                                         $idCategoria = $_GET['id'];
                                         $resultadoEquipoLocal = $filaPartido['golesEquipoLocal'];
                                         $resultadoEquipoVisitante = $filaPartido['golesEquipoVisitante'];
+                                        $partidosJugadosEquipoLocal = $filaPartido['jugado'];
+                                        $partidosJugadosEquipoVisitante = $filaPartido['jugado'];
+
                                 ?>
                                         <div class="grid grid-cols-12 lg:grid-cols-24 gap-4 py-2 text-center overflow-x-auto lg:overflow-x-hidden">
                                             <div class="col-span-5 md:col-span-5 lg:col-span-3 flex items-center">
@@ -298,7 +301,7 @@
                                                 <span class="text-gray-800"><?php echo $nombreEquipoLocal ?></span>
                                             </div>
                                             <?php
-                                            if ($resultadoEquipoLocal === 0 && $resultadoEquipoVisitante === 0) {
+                                            if ($partidosJugadosEquipoLocal === 0 && $partidosJugadosEquipoVisitante === 0) {
                                             ?>
                                                 <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-center">vs</div>
                                             <?php
