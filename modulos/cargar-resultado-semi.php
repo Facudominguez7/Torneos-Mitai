@@ -39,7 +39,7 @@ if (!empty($_GET['accion'])) {
         }
 
         if (!empty($equipoGanador) && !empty($equipoPerdedor)) {
-            if ($idCategoria == 5 || $idCategoria == 6 || $idCategoria == 7 || $idCategoria == 8 || $idCategoria == 9) {
+            if ($idCategoria == 5 || $idCategoria == 6 || $idCategoria == 7 || $idCategoria == 8) {
                 // Insertar en la tabla de ganadores
                 $sqlInsertarEquipoGanador = "INSERT INTO equipos_ganadores_semifinales_unicas (idEquipo, idCategoria) VALUES (?, ?)";
                 $stmtInsertarEquipoGanador = mysqli_prepare($con, $sqlInsertarEquipoGanador);
@@ -63,6 +63,8 @@ if (!empty($_GET['accion'])) {
                 } else {
                     echo "<script>alert('Hubo un problema al insertar el equipo Perdedor');</script>";
                 }
+            } elseif ($idCategoria === 9) {
+                echo "<script>window.location='index.php?modulo=semifinal&idCategoria=" . $idCategoria . "';</script>";
             } else {
                 if ($idCopa == 1) {
                     // Insertar en la tabla de ganadores semifinales Oro

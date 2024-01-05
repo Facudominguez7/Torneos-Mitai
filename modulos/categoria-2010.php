@@ -1,4 +1,3 @@
-
 <header class="bg-[--color-primary] shadow">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
         <?php
@@ -294,7 +293,7 @@
                                         $resultadoEquipoVisitante = $filaPartido['golesEquipoVisitante'];
                                 ?>
                                         <div class="grid grid-cols-12 lg:grid-cols-24 gap-4 py-2 text-center overflow-x-auto lg:overflow-x-hidden">
-                                            <div class="col-span-5 lg:col-span-3 flex items-center">
+                                            <div class="col-span-5 md:col-span-5 lg:col-span-3 flex items-center">
                                                 <img class="h-14 w-14 text-xs ml-2 mr-2" src="Imagenes/<?php echo $fotoLocal ?>" alt="Logo <?php echo $nombreEquipoLocal ?>">
                                                 <span class="text-gray-800"><?php echo $nombreEquipoLocal ?></span>
                                             </div>
@@ -316,7 +315,7 @@
                                                 <img class="h-14 w-14 text-xs ml-2 mr-2 lg:ml-2" src="Imagenes/<?php echo $fotoVisitante ?>" alt="Logo <?php echo $nombreEquipoVisitante ?>">
                                             </div>
                                             <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
-                                                <span class="font-semibold text-gray-800 text-xl mb-3 mr-4">Horario</span>
+                                                <span class="font-semibold text-gray-800 text-xl mb-3 lg:mr-10 mr-4">Horario</span>
                                                 <span class="text-gray-800 mr-2"><?php echo $horario ?></span>
                                             </div>
                                             <div class="col-span-6 lg:col-span-2 flex flex-col items-center justify-center">

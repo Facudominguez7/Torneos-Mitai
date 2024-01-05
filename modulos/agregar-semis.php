@@ -23,6 +23,18 @@ if (!empty($_GET['accion'])) {
             $rowPartido = mysqli_fetch_assoc($resultVerificarPartido);
 
             if ($rowPartido['count'] > 0) {
+                if ($idCategoria === 9) {
+                    $sqlInsertarPartido = "INSERT INTO semifinales (idCategoria, idEquipoLocal, idEquipoVisitante, horario, cancha, idDia, idCopa) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    $stmtPartido = mysqli_prepare($con, $sqlInsertarPartido);
+                    mysqli_stmt_bind_param($stmtPartido, "iiisiii", $idCategoria, $equipoLocal, $equipoVisitante, $horario, $cancha, $dia, $copa);
+
+                    if (mysqli_stmt_execute($stmtPartido)) {
+                        echo "<script>alert('Partido programado correctamente');</script>";
+                    } else {
+                        echo "<script>alert('Error al programar el partido');</script>";
+                    }
+                    echo "<script>window.location='index.php?modulo=semifinal&idCategoria=" . $idCategoria . "';</script>";
+                }
                 echo "<script>alert('Al menos uno de los equipos ya tiene un partido en esta instancia');</script>";
             } else {
                 // Insertar el partido si los equipos están disponibles
