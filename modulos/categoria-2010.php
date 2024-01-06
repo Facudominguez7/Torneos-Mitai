@@ -318,7 +318,7 @@
                                                 <img class="h-14 w-14 text-xs ml-2 mr-2 lg:ml-2" src="Imagenes/<?php echo $fotoVisitante ?>" alt="Logo <?php echo $nombreEquipoVisitante ?>">
                                             </div>
                                             <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
-                                                <span class="font-semibold text-gray-800 text-xl mb-3 lg:mr-10 mr-4">Horario</span>
+                                                <span class="font-semibold text-gray-800 text-xl mb-3 md:mr-10 lg:mr-10 mr-4">Horario</span>
                                                 <span class="text-gray-800 mr-2"><?php echo $horario ?></span>
                                             </div>
                                             <div class="col-span-6 lg:col-span-2 flex flex-col items-center justify-center">
@@ -361,7 +361,7 @@
                                 ?>
                                 <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
                                     <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                        Tabla de Posiciones
+                                        Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre'])?>
                                     </button>
                                 </a>
                             </div>
