@@ -42,7 +42,21 @@
             }
         }
         ?>
-
+        <div class="flex justify-center items-center">
+            <button onclick="descargarPDFDefinicion()" class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">Descargar Horarios Semifinales y Finales 07/01
+            </button>
+        </div>
+        <script>
+            function descargarPDFDefinicion() {
+                // Crea un enlace invisible
+                var enlace = document.createElement('a');
+                enlace.href = 'PDF/Definicion.pdf'; // Reemplaza 'ruta/al/archivo.pdf' con la URL del archivo PDF
+                enlace.download = 'HorarioDefinicionDomingo07/01.pdf'; // Establece el nombre del archivo
+                document.body.appendChild(enlace);
+                enlace.click();
+                document.body.removeChild(enlace);
+            }
+        </script>
     </div>
 </header>
 <section>
@@ -111,7 +125,7 @@
                 SemiFinales 07/01
             </a>
         </button>
-        <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+        <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
             <a href="index.php?modulo=final&accion=cargar&idCategoria=<?php echo $id ?>">
                 Finales 07/01
             </a>
@@ -361,7 +375,7 @@
                                 ?>
                                 <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
                                     <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                        Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre'])?>
+                                        Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre']) ?>
                                     </button>
                                 </a>
                             </div>

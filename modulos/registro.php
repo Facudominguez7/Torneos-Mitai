@@ -21,7 +21,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
         $insertarResultado = mysqli_query($con, $insertarUsuario);
 
         if ($insertarResultado) {
-            echo "<script>alert('Registro insertado con éxito');</script>";
+            echo "<script>alert('Gracias por registrarse!!');</script>";
         } else {
             echo "<script>alert('Error: No se pudo insertar el registro');</script>";
         }
