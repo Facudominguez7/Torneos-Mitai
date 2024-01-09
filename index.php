@@ -104,7 +104,7 @@ conectar();
                             if (!empty($_SESSION['rol'] == 2)) {
                         ?>
                                 <li>
-                                    <a href="index.php?modulo=listado-equipos" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tabla de Equipos</a>
+                                    <a href="index.php?modulo=panel-administracion" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Panel de Administración</a>
                                 </li>
                         <?php
                             }
@@ -216,14 +216,45 @@ conectar();
             include('./modulos/' . $_GET['modulo'] . '.php');
         } else {
         ?>
+            <div class="flex justify-center items-center mt-5">
+                <div class="bg-white py-1 w-screen lg:w-2/4 rounded-lg">
+                    <div class="mx-auto max-w-7xl px-4 py-1 sm:px-3 lg:px-8">
+                        <h1 class="text-xl italic font-bold tracking-tight flex justify-center text-black">
+                            "Registrate para recibir nuestras actualizaciones por correo electrónico. Te mantendremos al día con nuestras últimas noticias y novedades del torneo directamente en tu bandeja de entrada."
+                        </h1>
+                        <br />
+                        <div class="flex justify-center lg:justify-end items-center">
+                            <button class=" mb-1 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                <a href="index.php?modulo=registro">
+                                    Registrarse
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+                echo 'Versión de PHP ' . phpversion();
+            ?>
+
             <div class="flex justify-center flex-wrap mt-4">
-                <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                <button class=" mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                     <a href="index.php?modulo=campeones">
-                        Campeones
+                        Campeones 2024
+                    </a>
+                </button>
+                <button class=" mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    <a href="index.php?modulo=subcampeones">
+                        Subcampeones 2024
+                    </a>
+                </button>
+                <button class=" mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    <a href="index.php?modulo=valla-menos-vencida">
+                        Valla menos vencida
                     </a>
                 </button>
             </div>
-
             <div class="mx-auto max-sm:w-full w-5/12 mt-9 flex justify-center items-stretch pb-4 px-4 sm:px-6 lg:px-8">
                 <div class="w-full bg-white rounded-3xl overflow-x-hidden">
                     <div class="grande w-300p flex flex-row justify-start items-center">
