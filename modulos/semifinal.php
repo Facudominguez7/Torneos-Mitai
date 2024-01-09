@@ -71,13 +71,15 @@
                             $idPartido = $filaSemi['id'];
                             $penalesEquipoLocal = $filaSemi['penalesEquipoLocal'];
                             $penalesEquipoVisitante = $filaSemi['penalesEquipoVisitante'];
+                            $partidosJugadosEquipoLocal = $filaSemi['jugado'];
+                            $partidosJugadosEquipoVisitante = $filaSemi['jugado'];
                     ?>
                             <div class="col-span-6 lg:col-span-3 flex lg:justify-end items-center">
                                 <img class="h-14 w-14 text-xs ml-2 mr-2" src="Imagenes/<?php echo $filaSemi['foto_local'] ?> " alt="<?php echo $filaSemi['nombre_local'] ?>">
                                 <span class="text-gray-800"><?php echo $filaSemi['nombre_local'] ?></span>
                             </div>
                             <?php
-                            if ($resultadoEquipoLocal === 0 && $resultadoEquipoVisitante === 0) {
+                            if ($partidosJugadosEquipoLocal === 0 && $partidosJugadosEquipoVisitante === 0) {
                             ?>
                                 <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-center">vs</div>
                                 <?php
