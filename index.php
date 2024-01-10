@@ -249,6 +249,11 @@ conectar();
                         Valla menos vencida
                     </a>
                 </button>
+                <button class=" mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                    <a href="index.php?modulo=goleadores">
+                        Goleadores
+                    </a>
+                </button>
             </div>
             <div class="mx-auto max-sm:w-full w-5/12 mt-9 flex justify-center items-stretch pb-4 px-4 sm:px-6 lg:px-8">
                 <div class="w-full bg-white rounded-3xl overflow-x-hidden">
