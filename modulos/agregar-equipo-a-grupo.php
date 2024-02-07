@@ -1,6 +1,7 @@
 <?php
 if (!empty($_GET['accion'])) {
     $idCategoria = $_GET['idCategoria'];
+    $idEdicion = $_GET['idEdicion'];
     if ($_GET['accion'] == 'agregar-equipoGrupo') {
         $equipo = $_POST['equipo'];
         $grupo = $_POST['grupo'];
@@ -38,7 +39,7 @@ if (!empty($_GET['accion'])) {
         } else {
             echo "<script>alert('Error en la consulta de verificación');</script>";
         }
-        echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "';</script>";
+        echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&idEdicion=". $idEdicion ."';</script>";
     }
 }
 ?>
@@ -57,16 +58,17 @@ if (!empty($_GET['accion'])) {
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="mx-auto w-full max-w-[550px]">
-            <form action="index.php?modulo=agregar-equipo-a-grupo&accion=agregar-equipoGrupo&idCategoria=<?php echo $_GET['idCategoria']?>" method="POST" enctype="multipart/form-data">
+            <form action="index.php?modulo=agregar-equipo-a-grupo&accion=agregar-equipoGrupo&idCategoria=<?php echo $_GET['idCategoria']?>&idEdicion=<?php echo $_GET['idEdicion']?>" method="POST" enctype="multipart/form-data">
                 <div class="mb-5">
                     <label for="equipo" class="mb-3 block text-base font-medium text-white">
                         Seleccione el Equipo
                     </label>
                     <?php
                     $idCategoria = $_GET['idCategoria'];
+                    $idEdicion = $_GET['idEdicion'];
                     $sqlMostrarEquipos = "SELECT equipos.id , equipos.nombre
                     FROM equipos
-                    WHERE idCategoria = $idCategoria";
+                    WHERE idCategoria = $idCategoria AND idEdicion = $idEdicion";
                     $stmt = mysqli_prepare($con, $sqlMostrarEquipos);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
@@ -92,7 +94,7 @@ if (!empty($_GET['accion'])) {
                     <?php
                     $sqlMostrarGrupos = "SELECT grupos.id , grupos.nombre
                     FROM grupos
-                    WHERE idCategoria = $idCategoria";
+                    WHERE idCategoria = $idCategoria AND idEdicion = $idEdicion";
                     $stmt = mysqli_prepare($con, $sqlMostrarGrupos);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);

@@ -4,6 +4,7 @@ if (!empty($_GET['accion'])) {
     $idGrupo = $_GET['idGrupo'];
     $idFecha = $_GET['idFecha'];
     $idCategoria = $_GET['idCategoria'];
+    $idEdicion = $_GET['idEdicion'];
     if ($_GET['accion'] == 'cargarResultado') {
         $golesEquipoLocal = $_POST['golesEquipoLocal'];
         $golesEquipoVisitante = $_POST['golesEquipoVisitante'];
@@ -114,7 +115,7 @@ if (!empty($_GET['accion'])) {
         // Para el equipo visitante
         actualizarTablaPosiciones($con, $idEquipoVisitante, $idGrupo, $golesEquipoVisitante, $golesEquipoLocal, $puntosVisitante, $ganadosVisitante, $empatadosVisitante);
 
-        echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=" . $idFecha . "';</script>";
+        echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=" . $idFecha . "&idEdicion=". $idEdicion ."';</script>";
     }
 }
 
@@ -123,7 +124,7 @@ if (!empty($_GET['accion'])) {
 <section>
     <div class="flex items-center justify-center p-12">
         <div class="mx-auto w-full max-w-[550px]">
-            <form action="index.php?modulo=cargar-resultado&accion=cargarResultado&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>" method="POST">
+            <form action="index.php?modulo=cargar-resultado&accion=cargarResultado&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>&idEdicion=<?php echo $idEdicion ?>" method="POST">
                 <?php
                 $sqlMostrarEquipoLocal = "SELECT partidos.id, equipos.nombre AS nombreEquipoLocal
                     FROM partidos

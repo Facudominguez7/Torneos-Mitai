@@ -17,7 +17,6 @@ if (!empty($_GET['accion'])) {
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
             <?php
             $idCategoria = $_GET['idCategoria'];
-            $idFecha = $_GET['idFecha'];
             $idGrupo = $_GET['idGrupo'];
 
             // Consulta para obtener el nombre del grupo y de la categoría desde las tablas correspondientes
@@ -63,7 +62,7 @@ if (!empty($_GET['accion'])) {
             <table class="border-collapse w-full mt-5">
                 <thead>
                     <tr>
-                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">id</th>
+                        <!--<th class=" p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 lg:table-cell">id</th>-->
                         <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Puesto</th>
                         <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Logo</th>
                         <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Nombre</th>
@@ -84,10 +83,11 @@ if (!empty($_GET['accion'])) {
 
                     <tbody>
                         <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                            <!--
+                            <td class="hidden w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:table-cell relative lg:static">
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">id</span>
                                 <?php echo $filaTabla['idEquipo'] ?>
-                            </td>
+                            </td>-->
                             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Puesto</span>
                                 <?php echo $posicion; ?>°

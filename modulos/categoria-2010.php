@@ -1,3 +1,4 @@
+<?php $idEdicion = $_GET['idEdicion'] ?>
 <header class="bg-[--color-primary] shadow">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
         <?php
@@ -84,7 +85,7 @@
 
                 ?>
                         <li>
-                            <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria; ?>&fecha=<?php echo $filaFecha['id']; ?>" class="block px-4 py-2 text-white text-xl"><?php echo $filaFecha['nombre']; ?></a>
+                            <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria; ?>&fecha=<?php echo $filaFecha['id']; ?>&idEdicion=<?php echo $idEdicion ?>" class="block px-4 py-2 text-white text-xl"><?php echo $filaFecha['nombre']; ?></a>
                         </li>
                     <?php
                     }
@@ -120,12 +121,12 @@
         <?php
         $id = $_GET['id'];
         ?>
-        <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+        <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
             <a href="index.php?modulo=semifinal&accion=cargar&idCategoria=<?php echo $id ?>">
                 SemiFinales 07/01
             </a>
         </button>
-        <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+        <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
             <a href="index.php?modulo=final&accion=cargar&idCategoria=<?php echo $id ?>">
                 Finales 07/01
             </a>
@@ -136,17 +137,17 @@
         ?>
 
                 <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                    <a href="index.php?modulo=agregar-fechas&accion=agregar&idCategoria=<?php echo $id ?>">
+                    <a href="index.php?modulo=agregar-fechas&accion=agregar&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $idEdicion ?>">
                         Agregar Fechas
                     </a>
                 </button>
                 <button class="middle mb-4 none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                    <a href="index.php?modulo=agregar-grupo&accion=agregar&idCategoria=<?php echo $id ?>">
+                    <a href="index.php?modulo=agregar-grupo&accion=agregar&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $idEdicion ?>">
                         Agregar Grupos
                     </a>
                 </button>
                 <button class="middle mb-4 none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                    <a href="index.php?modulo=agregar-equipo-a-grupo&accion=agregar&idCategoria=<?php echo $id ?>">
+                    <a href="index.php?modulo=agregar-equipo-a-grupo&accion=agregar&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $idEdicion ?>">
                         Agregar Equipo a Grupo
                     </a>
                 </button>
@@ -204,10 +205,28 @@
                             </tbody>
                         </table>
                     </div>
-            <?php
+                <?php
                 }
             } else {
-                echo "No hay grupos registrados para esta categoría.";
+                ?>
+                <div class="flex justify-center items-center mt-5">
+                    <div class="bg-white py-1 w-screen lg:w-full rounded-lg">
+                        <div class=" px-4 py-1 sm:px-3 lg:px-8">
+                            <h1 id="parrafoRegistro" class="text-xl tracking-tight flex justify-center text-black">
+                                "Por el momento no se ha cargado información".
+                            </h1>
+                            <br />
+                            <div class="flex justify-center lg:justify-end items-center">
+                                <button class=" mb-1 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                    <a href="index.php">
+                                        Volver al Inicio
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
             }
             ?>
         </div>
@@ -217,7 +236,7 @@
             <?php
             $sqlMostrarGrupos = "SELECT grupos.nombre , grupos.id FROM grupos 
                 INNER JOIN categorias ON grupos.idCategoria = categorias.id
-                WHERE categorias.id = $id";
+                WHERE categorias.id = $id AND categorias.idEdicion = $idEdicion";
             $stmt = mysqli_prepare($con, $sqlMostrarGrupos);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
@@ -238,7 +257,7 @@
                                         <!-- Agrega más partidos según sea necesario -->
 
                                         <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                            Debe seleccionar una fecha para continuar
+                                            Debe seleccionar una fecha para Agregar Partidos
                                         </button>
 
                                 <?php
@@ -246,6 +265,11 @@
                                 }
                                 ?>
                                 <a class="block px-4 py-2 text-black text-xl">Debe seleccionar una fecha para ver los partidos</a>
+                                <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>">
+                                    <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                        Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre']) ?>
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     <?php
@@ -256,7 +280,7 @@
                                                   INNER JOIN equipos el ON p.idEquipoLocal = el.id
                                                   INNER JOIN equipos ev ON p.idEquipoVisitante = ev.id
                                                   INNER JOIN dias d ON p.idDia = d.id
-                                                  WHERE p.idGrupo = $idGrupo AND p.idFechas = $idFecha";
+                                                  WHERE p.idGrupo = $idGrupo AND p.idFechas = $idFecha AND p.idEdicion = $idEdicion";
 
                         $stmtPartidos = mysqli_prepare($con, $sqlMostrarPartidos);
                         mysqli_stmt_execute($stmtPartidos);
@@ -344,7 +368,7 @@
                                                 if (!empty($_SESSION['rol'] == 2)) {
                                             ?>
                                                     <div class="col-span-6 lg:col-span-3 flex items-center justify-center">
-                                                        <a href="index.php?modulo=cargar-resultado&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>">
+                                                        <a href="index.php?modulo=cargar-resultado&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idGrupo=<?php echo $idGrupo ?>&idFecha=<?php echo $idFecha ?>&idEdicion=<?php echo $idEdicion ?>">
                                                             <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                                                 Cargar Resultado
                                                             </button>
@@ -364,7 +388,7 @@
                                 if (isset($_SESSION['rol'])) {
                                     if (!empty($_SESSION['rol'] == 2)) {
                                 ?>
-                                        <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
+                                        <a href="index.php?modulo=agregar-fixture&accion=agregar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>&idEdicion=<?php echo $idEdicion ?>">
                                             <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                                 Agregar Partidos
                                             </button>

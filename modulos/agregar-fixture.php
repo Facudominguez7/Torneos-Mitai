@@ -1,4 +1,5 @@
 <?php
+$idEdicion = $_GET['idEdicion'];
 if (!empty($_GET['accion'])) {
     $fecha = $_GET['idFecha'];
     $grupo = $_GET['idGrupo'];
@@ -28,19 +29,19 @@ if (!empty($_GET['accion'])) {
                 echo "<script>alert('Al menos uno de los equipos ya tiene un partido en esta fecha y grupo');</script>";
             } else {*/
                 // Insertar el partido si los equipos están disponibles
-                $sqlInsertarPartido = "INSERT INTO partidos (idEquipoLocal, idEquipoVisitante, idFechas, idGrupo, horario, cancha, idDia) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $sqlInsertarPartido = "INSERT INTO partidos (idEquipoLocal, idEquipoVisitante, idFechas, idGrupo, horario, cancha, idDia, idEdicion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmtPartido = mysqli_prepare($con, $sqlInsertarPartido);
-                mysqli_stmt_bind_param($stmtPartido, "iiiisii", $equipoLocal, $equipoVisitante, $fecha, $grupo, $horario, $cancha, $dia);
+                mysqli_stmt_bind_param($stmtPartido, "iiiisiii", $equipoLocal, $equipoVisitante, $fecha, $grupo, $horario, $cancha, $dia, $idEdicion);
 
                 if (mysqli_stmt_execute($stmtPartido)) {
                     echo "<script>alert('Partido programado correctamente');</script>";
                 } else {
                     echo "<script>alert('Error al programar el partido');</script>";
                 }
-                echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=" . $fecha . "';</script>";
+                echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=" . $fecha . "&idEdicion=". $idEdicion. "';</script>";
             //}
         }
-        echo "<script>window.location='index.php?modulo=agregar-fixture&accion=agregar&idCategoria=" . $idCategoria . "&idGrupo=" . $grupo . "&idFecha=" . $fecha . "';</script>";
+        echo "<script>window.location='index.php?modulo=agregar-fixture&accion=agregar&idCategoria=" . $idCategoria . "&idGrupo=" . $grupo . "&idFecha=" . $fecha . "&idEdicion=". $idEdicion ."';</script>";
     }
 }
 ?>
@@ -54,7 +55,7 @@ if (!empty($_GET['accion'])) {
         FROM categorias 
         INNER JOIN fechas ON categorias.id = fechas.idCategoria 
         INNER JOIN grupos ON categorias.id = grupos.idCategoria
-        WHERE categorias.id = $idCategoria AND fechas.id = $idFecha AND grupos.id = $idGrupo";
+        WHERE categorias.id = $idCategoria AND fechas.id = $idFecha AND grupos.id = $idGrupo AND grupos.idEdicion = $idEdicion";
         $consultaNombre = mysqli_prepare($con, $sqlMostrarCategoria);
         mysqli_stmt_execute($consultaNombre);
         $resultNombreCat = mysqli_stmt_get_result($consultaNombre);
@@ -63,7 +64,7 @@ if (!empty($_GET['accion'])) {
             while ($filaCat = mysqli_fetch_array($resultNombreCat)) {
         ?>
                 <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
-                    <?php echo $filaCat['nombreCategoria'] ?> <?php echo $filaCat['nombre'] ?> <?php echo $filaCat['nombreGrupo'] ?>
+                    Agregar Partido en la <?php echo $filaCat['nombreCategoria'] ?> <?php echo $filaCat['nombre'] ?> <?php echo $filaCat['nombreGrupo'] ?>
                 </h1>
                 <br />
         <?php
@@ -77,7 +78,7 @@ if (!empty($_GET['accion'])) {
 <body>
     <div class="flex items-center justify-center p-12">
         <div class="mx-auto w-full max-w-[550px]">
-            <form action="index.php?modulo=agregar-fixture&accion=agregarFixture&idCategoria=<?php echo $idCategoria ?>&idGrupo=<?php echo $grupo ?>&idFecha=<?php echo $fecha ?>" method="POST">
+            <form action="index.php?modulo=agregar-fixture&accion=agregarFixture&idCategoria=<?php echo $idCategoria ?>&idGrupo=<?php echo $grupo ?>&idFecha=<?php echo $fecha ?>&idEdicion=<?php echo $idEdicion ?>" method="POST">
                 <div class="mb-5">
                     <label for="equipo" class="mb-3 block text-base font-medium text-white">
                         Seleccione el Equipo Local
@@ -88,7 +89,7 @@ if (!empty($_GET['accion'])) {
                     $sqlMostrarEquipos = "SELECT equipos.id , equipos.nombre
                     FROM equipos
                     INNER JOIN equipos_grupos ON equipos.id = equipos_grupos.idEquipo
-                    WHERE idCategoria = $idCategoria AND equipos_grupos.idGrupo = $idGrupo";
+                    WHERE idCategoria = $idCategoria AND equipos_grupos.idGrupo = $idGrupo AND equipos.idEdicion = $idEdicion";
                     $stmt = mysqli_prepare($con, $sqlMostrarEquipos);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
@@ -115,7 +116,7 @@ if (!empty($_GET['accion'])) {
                     $sqlMostrarEquipos = "SELECT equipos.id , equipos.nombre
                      FROM equipos
                      INNER JOIN equipos_grupos ON equipos.id = equipos_grupos.idEquipo
-                     WHERE idCategoria = $idCategoria AND equipos_grupos.idGrupo = $idGrupo";
+                     WHERE idCategoria = $idCategoria AND equipos_grupos.idGrupo = $idGrupo AND equipos.idEdicion = $idEdicion";
                     $stmt = mysqli_prepare($con, $sqlMostrarEquipos);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
@@ -156,7 +157,7 @@ if (!empty($_GET['accion'])) {
                             Seleccione el dia
                         </label>
                         <?php
-                        $sqlMostrarDia = "SELECT * FROM dias";
+                        $sqlMostrarDia = "SELECT * FROM dias WHERE idEdicion = $idEdicion";
                         $stmt = mysqli_prepare($con, $sqlMostrarDia);
                         mysqli_stmt_execute($stmt);
                         $result = mysqli_stmt_get_result($stmt);

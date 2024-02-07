@@ -103,11 +103,12 @@ function mostrarCampeones($categoria, $anio, $categoria_id, $con)
                 </h1>
                 <br />
                 <?php
+                $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarCampeon = "SELECT cat.nombreCategoria AS nombreCat, e.nombre AS nombreEquipo, e.foto AS fotoEquipo
                     FROM campeones_" . strtolower($categoria) . " AS campeon
                     INNER JOIN categorias cat ON campeon.idCategoria = cat.id
                     INNER JOIN equipos e ON campeon.idEquipo = e.id 
-                    WHERE campeon.idCategoria = $categoria_id";
+                    WHERE campeon.idCategoria = $categoria_id AND campeon.idEdicion = $idEdicion";
                 $stmtCampeon = mysqli_prepare($con, $sqlMostrarCampeon);
                 if (!$stmtCampeon) {
                     die('Error en la consulta: ' . mysqli_error($con));

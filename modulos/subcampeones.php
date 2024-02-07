@@ -102,11 +102,12 @@ function mostrarSubCampeones($categoria, $anio, $categoria_id, $con)
                 </h1>
                 <br />
                 <?php
+                $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarSubCampeon = "SELECT cat.nombreCategoria AS nombreCat, e.nombre AS nombreEquipo, e.foto AS fotoEquipo
                     FROM subcampeones_" . strtolower($categoria) . " AS subcampeon
                     INNER JOIN categorias cat ON subcampeon.idCategoria = cat.id
                     INNER JOIN equipos e ON subcampeon.idEquipo = e.id 
-                    WHERE subcampeon.idCategoria = $categoria_id";
+                    WHERE subcampeon.idCategoria = $categoria_id AND subcampeon.idEdicion = $idEdicion";
                 $stmtSubCampeon = mysqli_prepare($con, $sqlMostrarSubCampeon);
                 if (!$stmtSubCampeon) {
                     die('Error en la consulta: ' . mysqli_error($con));

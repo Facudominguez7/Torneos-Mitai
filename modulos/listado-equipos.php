@@ -10,7 +10,8 @@
         </div>
     </header>
     <div class="flex justify-center mt-10 mb-0">
-        <a href="index.php?modulo=agregar-equipo&accion=agregar">
+        <?php $idEdicion = $_GET['idEdicion']?>
+        <a href="index.php?modulo=agregar-equipo&accion=agregar&idEdicion=<?php echo $idEdicion?>">
             <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                 Agregar Equipo
             </button>
@@ -29,10 +30,12 @@
             </thead>
             <tbody>
                 <?php
+                $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarEquipos = "SELECT equipos.id, equipos.idCategoria, equipos.nombre, equipos.foto, 
                 categorias.nombreCategoria  
                  FROM equipos
                  LEFT JOIN categorias ON equipos.idCategoria = categorias.id
+                 WHERE equipos.idEdicion = $idEdicion
                  ORDER BY categorias.nombreCategoria ASC";
                 $datos = mysqli_query($con, $sqlMostrarEquipos);
                 if ($datos->num_rows > 0) {

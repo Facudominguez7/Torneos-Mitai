@@ -42,11 +42,12 @@ function mostrarGoleadores($categoria_id, $con)
         <div class="bg-white py-6 w-full lg:w-2/4 rounded-lg">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
                 <?php
+                $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarGoleadores = "SELECT e.nombre AS nombreEquipo, e.foto AS fotoEquipo, cat.nombreCategoria AS nombreCategoria, goleadores.nombre AS nombreJugador
                  FROM goleadores AS goleadores
                  INNER JOIN equipos e ON goleadores.idEquipo = e.id
                  INNER JOIN categorias cat ON goleadores.idCategoria = cat.id 
-                 WHERE goleadores.idCategoria = $categoria_id";
+                 WHERE goleadores.idCategoria = $categoria_id AND goleadores.idEdicion = $idEdicion";
                 $stmtGoleador = mysqli_prepare($con, $sqlMostrarGoleadores);
                 if (!$stmtGoleador) {
                     die('Error en la consulta: ' . mysqli_error($con));

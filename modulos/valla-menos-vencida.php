@@ -42,11 +42,12 @@ function mostrarVallaMenosVencida($categoria_id, $con)
         <div class="bg-white py-6 w-full lg:w-2/4 rounded-lg">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
                 <?php
+                $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarValla = "SELECT e.nombre AS nombreEquipo, e.foto AS fotoEquipo, cat.nombreCategoria AS nombreCategoria
                  FROM vallas_menos_vencidas AS valla
                  INNER JOIN equipos e ON valla.idEquipo = e.id
                  INNER JOIN categorias cat ON valla.idCategoria = cat.id 
-                 WHERE valla.idCategoria = $categoria_id";
+                 WHERE valla.idCategoria = $categoria_id AND valla.idEdicion = $idEdicion";
                 $stmtValla = mysqli_prepare($con, $sqlMostrarValla);
                 if (!$stmtValla) {
                     die('Error en la consulta: ' . mysqli_error($con));
