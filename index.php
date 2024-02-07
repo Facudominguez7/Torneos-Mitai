@@ -394,6 +394,9 @@ if (isset($_GET['idEdicion'])) {
                         <div class="carousel-item rounded-lg">
                             <img class="w-full h-5/6" src="Imagenes/Deportivo Villa Cabello.jpg" alt="Escudo Deportivo Villa Cabello">
                         </div>
+                        <div class="carousel-item rounded-lg">
+                            <img class="w-full h-5/6" src="Imagenes/LOGO-LA-PICADA.png" alt="Escudo Deportivo Villa Cabello">
+                        </div>
                     </div>
                 </div>
             </div>
