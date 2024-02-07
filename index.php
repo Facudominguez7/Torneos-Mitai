@@ -22,6 +22,9 @@ if (isset($_GET['idEdicion'])) {
 
         gtag('config', 'G-G2ZMN0053J');
     </script>
+    <!--Google Anuncios-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6431800148656534" crossorigin="anonymous">
+    </script>
     <meta name="viewport" content="width=device-width , initial-scale=1.0">
     <link rel="stylesheet" href="Estilos/output.css">
     <link rel="stylesheet" href="Estilos/estilos-desplegableFechas.css">
