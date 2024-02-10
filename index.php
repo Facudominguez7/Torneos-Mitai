@@ -89,7 +89,7 @@ if (isset($_GET['idEdicion'])) {
                 <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                     <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
-                            <a href="<?php echo isset($_SESSION['edicionSeleccionada']) ? 'index.php?idEdicion=' . $_SESSION['edicionSeleccionada'] : 'index.php' ?>" class="hidden block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Inicio</a>
+                            <a href="<?php echo isset($_SESSION['edicionSeleccionada']) ? 'index.php?idEdicion=' . $_SESSION['edicionSeleccionada'] : 'index.php' ?>" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Inicio</a>
                         </li>
                         <li>
                             <div class="flex flex-row items-center">
@@ -177,7 +177,7 @@ if (isset($_GET['idEdicion'])) {
                                 if (!isset($_GET['idEdicion'])) {
                         ?>
                                     <li>
-                                        <a href="index.php?modulo=panel-administracion&idEdicion=<?php echo $idEdicion ?>" class="hidden  py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Panel de Administración</a>
+                                        <a href="index.php?modulo=panel-administracion&idEdicion=<?php echo $idEdicion ?>" class="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Panel de Administración</a>
                                     </li>
                                 <?php
                                 } else {
@@ -197,13 +197,13 @@ if (isset($_GET['idEdicion'])) {
                         if (!empty($_SESSION['nombre_usuario'])) {
                         ?>
                             <li>
-                                <a href="index.php?modulo=iniciar-sesion&salir=ok" class="hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cerrar Sesión</a>
+                                <a href="index.php?modulo=iniciar-sesion&salir=ok" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cerrar Sesión</a>
                             </li>
                         <?php
                         } else {
                         ?>
                             <li>
-                                <a href="index.php?modulo=iniciar-sesion" class="hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Iniciar Sesión</a>
+                                <a href="index.php?modulo=iniciar-sesion" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Iniciar Sesión</a>
                             </li>
                         <?php
                         }
