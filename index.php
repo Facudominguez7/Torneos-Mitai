@@ -396,7 +396,16 @@ if (isset($_GET['idEdicion'])) {
                             <img class="w-full h-5/6" src="Imagenes/Deportivo Villa Cabello.jpg" alt="Escudo Deportivo Villa Cabello">
                         </div>
                         <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/LOGO-LA-PICADA.png" alt="Escudo Deportivo Villa Cabello">
+                            <img class="w-full h-5/6" src="Imagenes/LOGO-LA-PICADA.png" alt="Escudo La Picada">
+                        </div>
+                        <div class="carousel-item rounded-lg">
+                            <img class="w-full h-5/6" src="Imagenes/Real-removebg-preview.png" alt="Escudo REAL FC">
+                        </div>
+                        <div class="carousel-item rounded-lg">
+                            <img class="w-full h-5/6" src="Imagenes/Correcaminos-removebg-preview.png" alt="Correcaminos">
+                        </div>
+                        <div class="carousel-item rounded-lg">
+                            <img class="w-full h-5/6" src="Imagenes/Deportivo-Posadas-removebg-preview.png" alt="Deportivo Posadas">
                         </div>
                     </div>
                 </div>
