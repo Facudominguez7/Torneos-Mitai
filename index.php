@@ -117,7 +117,8 @@ if (isset($_GET['idEdicion'])) {
                                     } else {
                                         $idEdicion = $_GET['idEdicion'];
                                         $sqlMostrarCategorias = "SELECT categorias.nombreCategoria AS categoria, categorias.id FROM categorias 
-                                        WHERE categorias.idEdicion = $idEdicion";
+                                        WHERE categorias.idEdicion = $idEdicion
+                                        ORDER BY categorias.nombreCategoria DESC";
                                         $stmtCategorias = mysqli_prepare($con, $sqlMostrarCategorias);
                                         mysqli_stmt_execute($stmtCategorias);
                                         $resultCategorias = mysqli_stmt_get_result($stmtCategorias);
