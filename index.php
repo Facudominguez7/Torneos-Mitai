@@ -329,7 +329,7 @@ if (isset($_GET['idEdicion'])) {
             <!-- Primer diseño para pantallas grandes -->
             <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center hidden md:block" style="background-image: url('Imagenes/fondo-texto-1.jpg'); background-size: cover; background-position: center;">
                 <h1 class="md:text-4xl md:font-bold md:text-white md:mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
-                <p class="md:text-white md:mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
+                <p class="md:text-white md:mb-5">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
                 <a href="index.php?modulo=registro" class="md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
                     Registrarse
                 </a>
