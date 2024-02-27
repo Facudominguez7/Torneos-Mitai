@@ -326,13 +326,16 @@ if (isset($_GET['idEdicion'])) {
             include('./modulos/' . $_GET['modulo'] . '.php');
         } else {
         ?>
-            <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center md:block hidden" style="background-image: url('Imagenes/fondo-text-1.jpg'); background-size: cover; background-position: center;">
+            <!-- Primer diseño para pantallas grandes -->
+            <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center hidden md:block" style="background-image: url('Imagenes/fondo-texto-1.jpg'); background-size: cover; background-position: center;">
                 <h1 class="md:text-4xl md:font-bold md:text-white md:mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                 <p class="md:text-white md:mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
                 <a href="index.php?modulo=registro" class="md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
                     Registrarse
                 </a>
             </div>
+
+            <!-- Segundo diseño para pantallas pequeñas -->
             <div class="container mx-auto px-4 py-8 text-center relative md:hidden">
                 <div class="absolute inset-0 flex justify-center items-center" style="background-color: rgba(0, 0, 0, 0.5);">
                     <div>
@@ -343,7 +346,7 @@ if (isset($_GET['idEdicion'])) {
                         </a>
                     </div>
                 </div>
-                <img src="Imagenes/fondo-text-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
+                <img src="Imagenes/fondo-texto-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
             </div>
 
             <div class="container mx-auto px-4 py-8 text-center">
@@ -367,15 +370,11 @@ if (isset($_GET['idEdicion'])) {
                 <?php endif; ?>
             </div>
 
-            <div class="flex justify-center items-center mb-10">
+            <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center flex-row w-full md:w-1/2 gap-2">
-                    <img class="w-auto h-auto" src="Imagenes/Logo_Mitai_SinFondo.png" alt="Escudo La Isla">
+                    <img class="md:w-1/2 w-full h-auto" src="Imagenes/Logo_Mitai_SinFondo.png" alt="Escudo La Isla">
                 </div>
             </div>
-
-
-
-
         <?php
         }
         ?>
