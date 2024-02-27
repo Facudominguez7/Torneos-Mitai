@@ -326,30 +326,29 @@ if (isset($_GET['idEdicion'])) {
             include('./modulos/' . $_GET['modulo'] . '.php');
         } else {
         ?>
-            <div class="flex justify-center items-center mt-5">
-                <div class="bg-white py-1 w-screen lg:w-2/4 rounded-lg">
-                    <div class="mx-auto max-w-7xl px-4 py-1 sm:px-3 lg:px-8">
-                        <h1 id="parrafoRegistro" class="text-xl tracking-tight flex justify-center text-black">
-                            "Registrate para recibir nuestras actualizaciones por correo electrónico. Te mantendremos al día con nuestras últimas noticias y novedades del torneo directamente en tu bandeja de entrada."
-                        </h1>
-                        <br />
-                        <div class="flex justify-center lg:justify-end items-center">
-                            <button class=" mb-1 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                <a href="index.php?modulo=registro">
-                                    Registrarse
-                                </a>
-                            </button>
-                        </div>
+            <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center md:block hidden" style="background-image: url('Imagenes/fondo-text-1.jpg'); background-size: cover; background-position: center;">
+                <h1 class="md:text-4xl md:font-bold md:text-white md:mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
+                <p class="md:text-white md:mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
+                <a href="index.php?modulo=registro" class="md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
+                    Registrarse
+                </a>
+            </div>
+            <div class="container mx-auto px-4 py-8 text-center relative md:hidden">
+                <div class="absolute inset-0 flex justify-center items-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                    <div>
+                        <h1 class="text-4xl font-bold text-white mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
+                        <p class="text-white mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
+                        <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
+                            Registrarse
+                        </a>
                     </div>
                 </div>
+                <img src="Imagenes/fondo-text-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
             </div>
-            <div class="flex justify-center flex-wrap mt-4">
-                <?php
-                if (!isset($_GET['idEdicion'])) {
-                ?>
-                    <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+
+            <div class="container mx-auto px-4 py-8 text-center">
+                <?php if (isset($_GET['idEdicion'])) : ?>
                     <?php
-                } else {
                     $idEdicion = $_GET['idEdicion'];
                     $botones = [
                         ['url' => 'index.php?modulo=campeones&idEdicion=' . $idEdicion, 'texto' => 'Campeones 2024'],
@@ -357,80 +356,26 @@ if (isset($_GET['idEdicion'])) {
                         ['url' => 'index.php?modulo=valla-menos-vencida&idEdicion=' . $idEdicion, 'texto' => 'Valla menos vencida'],
                         ['url' => 'index.php?modulo=goleadores&idEdicion=' . $idEdicion,  'texto' => 'Goleadores'],
                     ];
-
-                    foreach ($botones as $boton) {
-                        if (!isset($_GET['idEdicion'])) {
-                            echo '<button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">';
-                        } else {
-                            echo '<button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">';
-                        }
-                        echo '<a href="' . $boton['url'] . '">' . $boton['texto'] . '</a>';
-                        echo '</button>';
-                    }
                     ?>
-                    <?php
-                }
-                    ?>
+                    <div class="flex justify-center flex-wrap">
+                        <?php foreach ($botones as $boton) : ?>
+                            <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mr-4 mb-4 hover:bg-blue-700 transition-all duration-300">
+                                <a href="<?php echo $boton['url']; ?>"><?php echo $boton['texto']; ?></a>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
-            <style>
-                .carousel-inner {
-                    transition: transform 1s ease;
-                }
-
-                .carousel-item {
-                    flex: 0 0 100%;
-                    padding: 0 10px;
-                }
-            </style>
-            <div class="carousel-container flex justify-center items-center mt-5 mb-5">
-                <div class="carousel w-full lg:w-2/6 overflow-hidden">
-                    <div class="carousel-inner flex">
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/Banner-Mitai.jpeg" alt="Banner-Mitai">
-                        </div>
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/Logo La Isla.jpg" alt="Escudo La Isla">
-                        </div>
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/Deportivo Villa Cabello.jpg" alt="Escudo Deportivo Villa Cabello">
-                        </div>
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/LOGO-LA-PICADA.png" alt="Escudo La Picada">
-                        </div>
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/Real-removebg-preview.png" alt="Escudo REAL FC">
-                        </div>
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/Correcaminos-removebg-preview.png" alt="Correcaminos">
-                        </div>
-                        <div class="carousel-item rounded-lg">
-                            <img class="w-full h-5/6" src="Imagenes/Deportivo-Posadas-removebg-preview.png" alt="Deportivo Posadas">
-                        </div>
-                    </div>
+            <div class="flex justify-center items-center mb-10">
+                <div class="flex justify-center items-center flex-row w-full md:w-1/2 gap-2">
+                    <img class="w-auto h-auto" src="Imagenes/Logo_Mitai_SinFondo.png" alt="Escudo La Isla">
                 </div>
             </div>
-            <script>
-                const carousel = document.querySelector('.carousel');
-                const carouselInner = carousel.querySelector('.carousel-inner');
-                const carouselItems = carousel.querySelectorAll('.carousel-item');
 
-                let currentIndex = 0;
 
-                function goToSlide(index) {
-                    carouselInner.style.transform = `translateX(-${index * 100}%)`;
-                    currentIndex = index;
-                }
 
-                function goToNextSlide() {
-                    if (currentIndex < carouselItems.length - 1) {
-                        goToSlide(currentIndex + 1);
-                    } else {
-                        goToSlide(0);
-                    }
-                }
-                setInterval(goToNextSlide, 3000);
-            </script>
+
         <?php
         }
         ?>
