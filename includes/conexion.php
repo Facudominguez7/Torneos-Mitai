@@ -2,7 +2,7 @@
 function conectar()
 {
     global $con;
-    $con= mysqli_connect("localhost","c2480763_mitai","ZOrukewe61","c2480763_mitai");
+    $con= mysqli_connect("localhost","root","","mitai");
     /*comprobar conexion*/
 
     if (mysqli_connect_errno())
