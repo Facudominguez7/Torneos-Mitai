@@ -348,13 +348,10 @@ if (isset($_GET['idEdicion'])) {
                 </div>
                 <img src="Imagenes/fondo-texto-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
             </div>
-            <div class="flex justify-center flex-wrap mt-4">
-                <?php
-                if (!isset($_GET['idEdicion'])) {
-                ?>
-                    <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+
+            <div class="container mx-auto px-4 py-8 text-center">
+                <?php if (isset($_GET['idEdicion'])) : ?>
                     <?php
-                } else {
                     $idEdicion = $_GET['idEdicion'];
                     $botones = [
                         ['url' => 'index.php?modulo=campeones&idEdicion=' . $idEdicion, 'texto' => 'Campeones 2024'],
@@ -362,20 +359,15 @@ if (isset($_GET['idEdicion'])) {
                         ['url' => 'index.php?modulo=valla-menos-vencida&idEdicion=' . $idEdicion, 'texto' => 'Valla menos vencida'],
                         ['url' => 'index.php?modulo=goleadores&idEdicion=' . $idEdicion,  'texto' => 'Goleadores'],
                     ];
-
-                    foreach ($botones as $boton) {
-                        if (!isset($_GET['idEdicion'])) {
-                            echo '<button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">';
-                        } else {
-                            echo '<button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">';
-                        }
-                        echo '<a href="' . $boton['url'] . '">' . $boton['texto'] . '</a>';
-                        echo '</button>';
-                    }
                     ?>
-                    <?php
-                }
-                    ?>
+                    <div class="flex justify-center flex-wrap">
+                        <?php foreach ($botones as $boton) : ?>
+                            <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mr-4 mb-4 hover:bg-blue-700 transition-all duration-300">
+                                <a href="<?php echo $boton['url']; ?>"><?php echo $boton['texto']; ?></a>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="flex justify-center items-center">
