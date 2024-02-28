@@ -2446,8 +2446,8 @@ input:checked + .toggle-bg {
     margin-bottom: 1rem;
   }
 
-  .md\:mb-6 {
-    margin-bottom: 1.5rem;
+  .md\:mb-5 {
+    margin-bottom: 1.25rem;
   }
 
   .md\:mr-10 {
