@@ -371,7 +371,7 @@ if (isset($_GET['idEdicion'])) {
             </div>
 
             <div class="flex justify-center items-center">
-                <div class="flex justify-center items-center flex-row w-full md:w-1/2 gap-2">
+                <div class="flex justify-center items-center flex-row w-full md:w-1/2 mb-5">
                     <img class="md:w-1/2 w-full h-auto rounded-xl" src="Imagenes/mitai-mbarete.jpg" alt="Escudo La Isla">
                 </div>
             </div>
