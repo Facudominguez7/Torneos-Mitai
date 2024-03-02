@@ -21,6 +21,7 @@
                     Editar Nombre del Equipo
                 </label>
                 <input type="text" name="nombre" id="nombre" value="<?php echo $r['nombre']; ?>" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                <input type="text" name="idEdicion" id="idEdicion" value="<?php echo $_GET['idEdicion']; ?>" class="hidden w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
             </div>
             <div class="mb-5">
                 <label for="foto" class="mb-3 block text-base font-medium text-white">
@@ -42,6 +43,7 @@
 if ($_GET['accion'] == 'editar-equipo') {
     $nombreEquipo = $_POST['nombre'];
     $idEquipo = $_GET['id'];
+    $idEdicion = $_POST['idEdicion'];
     if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
         $nombre = explode('.', $_FILES['foto']['name']);
         $foto = time() . '.' . end($nombre);
@@ -61,7 +63,7 @@ if ($_GET['accion'] == 'editar-equipo') {
     else
         echo "<script> alert('ERROR NO SE PUDO editar el equipo);</script>";
 
-        echo "<script>window.location='index.php?modulo=listado-equipos';</script>";
+        echo "<script>window.location='index.php?modulo=listado-equipos&idEdicion=" . $idEdicion ."';</script>";
 }
 
 ?>
