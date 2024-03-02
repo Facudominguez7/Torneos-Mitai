@@ -216,7 +216,7 @@ if (isset($_GET['idEdicion'])) {
                             function descargarPDF() {
                                 // Crea un enlace invisible
                                 var enlace = document.createElement('a');
-                                enlace.href = 'PDF/REGLAMENTO TORNEO MITAÍ CUP-CANTERA.pdf'; // Reemplaza 'ruta/al/archivo.pdf' con la URL del archivo PDF
+                                enlace.href = ''; // Reemplaza 'ruta/al/archivo.pdf' con la URL del archivo PDF
                                 enlace.download = 'ReglamentoMitaiCup.pdf'; // Establece el nombre del archivo
                                 document.body.appendChild(enlace);
                                 enlace.click();
