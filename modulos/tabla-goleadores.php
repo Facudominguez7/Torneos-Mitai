@@ -32,8 +32,8 @@
         $idCategoria = $_GET['idCategoria'];
         ?>
         <input type="hidden" name="modulo" value="tabla-goleadores">
-        <input type="hidden" name="idEdicion" value="<?php echo $idEdicion?>">
-        <input type="hidden" name="idCategoria" value="<?php echo $idCategoria?>">
+        <input type="hidden" name="idEdicion" value="<?php echo $idEdicion ?>">
+        <input type="hidden" name="idCategoria" value="<?php echo $idCategoria ?>">
         <input type="hidden" name="accion" value="buscar">
         <div class="relative w-full max-w-md">
             <!-- Input de búsqueda -->
@@ -45,7 +45,7 @@
             </div>
             <!-- Botón de búsqueda -->
             <?php if (isset($_GET['buscar'])) { ?>
-                <a href="index.php?modulo=tabla-goleadores&idEdicion=<?php echo $idEdicion?>&idCategoria=<?php echo $idCategoria?>">
+                <a href="index.php?modulo=tabla-goleadores&idEdicion=<?php echo $idEdicion ?>&idCategoria=<?php echo $idCategoria ?>">
                     <button type="button" class="absolute inset-y-0 right-0 flex items-center px-4 bg-blue-500 text-white rounded-full focus:outline-none">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
                             <path d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z" />
@@ -137,8 +137,16 @@
                                 }
                                 ?>
                             </tr>
-                    <?php
+                        <?php
                         }
+                    } else {
+                        ?>
+                        <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <td colspan="4" class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                No existen registros
+                            </td>
+                        </tr>
+                    <?php
                     }
                 } else {
                     ?>
