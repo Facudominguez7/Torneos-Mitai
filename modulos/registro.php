@@ -40,7 +40,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
                 $mail->Host = 'smtp.gmail.com'; // Cambiar al servidor SMTP de tu proveedor de correo
                 $mail->SMTPAuth = true; // Habilitar autenticación SMTP
                 $mail->Username = 'facudominguez457@gmail.com'; // Usuario SMTP
-                $mail->Password = 'rrbd rgej ewxq uplj'; // Contraseña SMTP
+                $mail->Password = ''; // Contraseña SMTP
                 $mail->SMTPSecure = 'tls'; // Habilitar cifrado TLS
                 $mail->Port = 587; // Puerto SMTP
 
