@@ -50,12 +50,29 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
 
                 // Configurar el contenido del correo electrónico
                 $mail->isHTML(true); // Habilitar formato HTML
+                $mail->CharSet = 'UTF-8'; // Establecer la codificación de caracteres
                 $mail->Subject = 'Verificación de correo electrónico';
                 $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
 
-                // Enviar el correo electrónico
                 $mail->send();
-                echo "<script>alert('Gracias por registrarse! Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para continuar.');</script>";
+
+                if ($mail->send()) {
+?>
+                    <script>
+                        document.getElementById('loader').classList.remove('hidden'); // Mostrar la animación de carga
+                        setTimeout(function() {
+                            alert('Gracias por registrarse! Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para continuar.');
+                            document.getElementById('loader').classList.add('hidden'); // Ocultar la animación al completar
+                        }, 3000); // Ajusta el tiempo de espera según la duración de tu animación
+                    </script>
+                <?php
+                } else {
+                ?>
+                    <script>
+                        alert('Error: No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');
+                    </script>
+<?php
+                }
             } catch (Exception $e) {
                 echo "<script>alert('Gracias por registrarse! No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');</script>";
             }
@@ -63,7 +80,6 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
             echo "<script>alert('Error: No se pudo insertar el registro');</script>";
         }
     }
-    echo "<script>window.location='index.php?modulo=iniciar-sesion';</script>";
 }
 ?>
 
@@ -73,7 +89,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
     }
 </style>
 
-<body class="bg-gray-200">
+<section class="bg-gray-200">
     <div class="flex lg:h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style="background-image:url('Imagenes/fondo_en_cancha.webp')">
         <div class="rounded-xl mt-5 mb-5 bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-5">
             <div class="text-white  lg:w-full">
@@ -107,5 +123,9 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
                 </form>
             </div>
         </div>
+        <!-- Elemento de carga -->
+        <div id="loader" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50  ">
+            <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-yellow-500"></div>
+        </div>
     </div>
-</body>
+</section>

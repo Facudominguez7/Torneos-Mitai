@@ -24,7 +24,9 @@ if (isset($_GET['token'])) {
         $_SESSION['rol'] = $row['rol'];
 
         // Redirigir al usuario a la página de inicio después de iniciar sesión automáticamente
+        echo "<script>alert('Email verificado con éxito');</script>";
         echo "<script>window.location='index.php';</script>";
+        
         exit();
     } else {
         echo "Token inválido o expirado.";
