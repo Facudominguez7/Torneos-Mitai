@@ -1,5 +1,4 @@
 <?php
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -7,9 +6,7 @@ require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
 
-
 if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['password'])) {
-
     $nombre = mysqli_real_escape_string($con, $_POST['nombre']);
     $apellido = mysqli_real_escape_string($con, $_POST['apellido']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
@@ -20,65 +17,54 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
     $chequeoResultado = mysqli_query($con, $chequeoUsuario);
 
     if (mysqli_num_rows($chequeoResultado) != 0) {
-        echo "<script>alert('Error: El usuario ya existe');</script>";
+        echo "Error: El usuario ya existe";
+        exit();
+    }
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Generar un token único
+    $token = bin2hex(random_bytes(16));
+
+    // Insertar el usuario con el token en la base de datos
+    $insertarUsuario = "INSERT INTO usuarios (nombre, apellido, email, clave, rol, token) VALUES ('$nombre', '$apellido', '$email', '$hashed_password', 1, '$token')";
+    $insertarResultado = mysqli_query($con, $insertarUsuario);
+
+    if ($insertarResultado) {
+        // Enviar correo electrónico de verificación en segundo plano
+        enviarCorreo($email, $token);
+        echo "Registro exitoso";
     } else {
+        echo "Error: No se pudo insertar el registro";
+    }
+}
 
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        // Generar un token único
-        $token = bin2hex(random_bytes(16));
+function enviarCorreo($email, $token) {
+    $mail = new PHPMailer(true); // Habilitar excepciones
+    try {
+        // Configurar el método de envío
+        $mail->isSMTP(); // Usar SMTP
+        $mail->Host = 'smtp.gmail.com'; // Cambiar al servidor SMTP de tu proveedor de correo
+        $mail->SMTPAuth = true; // Habilitar autenticación SMTP
+        $mail->Username = 'facudominguez457@gmail.com'; // Usuario SMTP
+        $mail->Password = 'rrbd rgej ewxq uplj'; // Contraseña SMTP
+        $mail->SMTPSecure = 'tls'; // Habilitar cifrado TLS
+        $mail->Port = 587; // Puerto SMTP
 
-        // Insertar el usuario con el token en la base de datos
-        $insertarUsuario = "INSERT INTO usuarios (nombre, apellido, email, clave, rol, token) VALUES ('$nombre', '$apellido', '$email', '$hashed_password', 1, '$token')";
-        $insertarResultado = mysqli_query($con, $insertarUsuario);
+        // Configurar el remitente y el destinatario
+        $mail->setFrom('torneos-mitai@xn--torneosmita-ycb.com', 'Torneos Mitai'); // Remitente
+        $mail->addAddress($email); // Destinatario
 
-        if ($insertarResultado) {
-            // Crear una nueva instancia de PHPMailer
-            $mail = new PHPMailer(true); // Habilitar excepciones
-            try {
-                // Configurar el método de envío
-                $mail->isSMTP(); // Usar SMTP
-                $mail->Host = 'smtp.gmail.com'; // Cambiar al servidor SMTP de tu proveedor de correo
-                $mail->SMTPAuth = true; // Habilitar autenticación SMTP
-                $mail->Username = 'facudominguez457@gmail.com'; // Usuario SMTP
-                $mail->Password = ''; // Contraseña SMTP
-                $mail->SMTPSecure = 'tls'; // Habilitar cifrado TLS
-                $mail->Port = 587; // Puerto SMTP
+        // Configurar el contenido del correo electrónico
+        $mail->isHTML(true); // Habilitar formato HTML
+        $mail->CharSet = 'UTF-8'; // Establecer la codificación de caracteres
+        $mail->Subject = 'Verificación de correo electrónico';
+        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
 
-                // Configurar el remitente y el destinatario
-                $mail->setFrom('torneos-mitai@xn--torneosmita-ycb.com', 'Torneos Mitai'); // Remitente
-                $mail->addAddress($email); // Destinatario
-
-                // Configurar el contenido del correo electrónico
-                $mail->isHTML(true); // Habilitar formato HTML
-                $mail->CharSet = 'UTF-8'; // Establecer la codificación de caracteres
-                $mail->Subject = 'Verificación de correo electrónico';
-                $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
-
-                $mail->send();
-
-                if ($mail->send()) {
-?>
-                    <script>
-                        document.getElementById('loader').classList.remove('hidden'); // Mostrar la animación de carga
-                        setTimeout(function() {
-                            alert('Gracias por registrarse! Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para continuar.');
-                            document.getElementById('loader').classList.add('hidden'); // Ocultar la animación al completar
-                        }, 3000); // Ajusta el tiempo de espera según la duración de tu animación
-                    </script>
-                <?php
-                } else {
-                ?>
-                    <script>
-                        alert('Error: No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');
-                    </script>
-<?php
-                }
-            } catch (Exception $e) {
-                echo "<script>alert('Gracias por registrarse! No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');</script>";
-            }
-        } else {
-            echo "<script>alert('Error: No se pudo insertar el registro');</script>";
-        }
+        // Enviar el correo electrónico
+        $mail->send();
+    } catch (Exception $e) {
+        // Manejar cualquier excepción
+        echo "Error: No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.";
     }
 }
 ?>
@@ -100,7 +86,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
                         <h1 class="text-white">Ya tiene una cuenta? <button class="rounded-lg p-1 bg-yellow-200  bg-opacity-50 hover:bg-yellow-700 shadow-xl backdrop-blur-md transition-colors duration-300">Iniciar Sesión</button></h1>
                     </a>
                 </div>
-                <form class="max-w-full" action="index.php?modulo=registro" method="POST">
+                <form id="registrationForm" class="max-w-full" action="index.php?modulo=registro" method="POST">
                     <div class="mb-4 text-2xl flex flex-col justify-center items-center">
                         <label class="mb-2" for="nombre">Nombre</label>
                         <input class="rounded-3xl border-none bg-blue-500 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="text" name="nombre" id="nombre" placeholder="Nombre" required />
@@ -129,3 +115,44 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
         </div>
     </div>
 </section>
+
+<script>
+   // Obtén el formulario y el elemento de carga
+const form = document.getElementById('registrationForm');
+const loader = document.getElementById('loader');
+
+// Agrega un evento de envío al formulario
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevenir el envío del formulario por defecto
+
+    loader.classList.remove('hidden'); // Mostrar el elemento de carga
+
+    // Retrasar el envío del formulario por 1 segundo
+    setTimeout(function() {
+        // Enviar el formulario de manera asíncrona usando Fetch API
+        fetch(form.action, {
+                method: form.method,
+                body: new FormData(form)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Si la respuesta es exitosa, mostrar el mensaje de alerta
+                    alert('Gracias por registrarse! Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para continuar.');
+                    window.location.href = 'index.php';
+                } else {
+                    // Si hay un error en la respuesta, mostrar un mensaje de error
+                    alert('Error: No se pudo registrar. Por favor, inténtelo de nuevo más tarde.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // En caso de un error, mostrar un mensaje de error
+                alert('Error: No se pudo registrar. Por favor, inténtelo de nuevo más tarde.');
+            })
+            .finally(() => {
+                loader.classList.add('hidden'); // Ocultar el elemento de carga después de enviar el formulario
+            });
+    }, 1000); // Retraso de 1 segundo
+});
+
+</script>

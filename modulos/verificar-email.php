@@ -1,5 +1,4 @@
 <?php
-session_destroy();
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
 
