@@ -21,7 +21,7 @@ function enviarCorreoVerificacion($email, $token)
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'torneos-mitai@torneosmitaí.com'; // Cambiar por tu dirección de correo electrónico
-    $mail->Password = 'rrbd rgej ewxq uplj'; // Cambiar por tu contraseña
+    $mail->Password = ''; // Cambiar por tu contraseña
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
