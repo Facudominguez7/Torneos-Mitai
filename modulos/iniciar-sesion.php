@@ -21,7 +21,7 @@ function enviarCorreoVerificacion($email, $token)
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'torneos-mitai@torneosmitaí.com'; // Cambiar por tu dirección de correo electrónico
-    $mail->Password = ''; // Cambiar por tu contraseña
+    $mail->Password = 'mhxe alhl rixr thll'; // Cambiar por tu contraseña
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
@@ -37,6 +37,8 @@ function enviarCorreoVerificacion($email, $token)
 
     // Enviar el correo electrónico
     $mail->send();
+
+    
 }
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -69,9 +71,11 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         } else {
             if (password_verify($password, $row['clave'])) {
                 $verificado = $row['verificado'];
-                ?>
-                        <input type="text" id="verificacion" class="hidden" value="<?php echo $verificado ?>">
-                <?php
+                $clave = 0;
+?>
+                <input type="text" id="verificacion" class="hidden" value="<?php echo $verificado ?>">
+                <input type="number" id="clave" class="hidden" value="<?php echo $clave ?>">
+<?php
                 $token = bin2hex(random_bytes(16));
                 $idUsuario = $row['id'];
 
@@ -89,7 +93,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     echo "Correo no enviado";
                 }
             } else {
-                echo "<script> alert('Verifique los datos.');</script>";
+                //echo "<script> alert('Verifique los datos.');</script>";
             }
         }
     } else {
@@ -146,12 +150,17 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     // Obtén el formulario y el elemento de carga
     const form = document.getElementById('registrationForm');
     const loader = document.getElementById('loader');
+    let clave = 1;
     let verificado = 0; // Valor predeterminado para verificado
 
     // Obtener el valor de verificado si existe
     const verificacionInput = document.getElementById('verificacion');
+    const claveInput = document.getElementById('clave');
     if (verificacionInput) {
         verificado = verificacionInput.value;
+    }
+    if(claveInput) {
+        clave = claveInput.value;
     }
 
 
@@ -170,12 +179,17 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 })
                 .then(response => {
                     if (response.ok) {
-                        if (verificado === 1) {
-                            window.location = 'index.php';
+                        if (clave === 0) {
+                            if (verificado === 1) {
+                                window.location = 'index.php';
+                            } else {
+                                // Si la respuesta es exitosa, mostrar el mensaje de alerta
+                                alert('Debe verificar su correo electrónico antes de iniciar sesión. Se ha enviado un correo electrónico de verificación.');
+                                window.location.href = 'index.php';
+                            }
                         } else {
-                            // Si la respuesta es exitosa, mostrar el mensaje de alerta
-                            alert('Debe verificar su correo electrónico antes de iniciar sesión. Se ha enviado un correo electrónico de verificación.');
-                            window.location.href = 'index.php';
+                            alert('Verifique los datos.');
+                            window.location.href = 'index.php?modulo=iniciar-sesion';
                         }
                     } else {
                         // Si hay un error en la respuesta, mostrar un mensaje de error
