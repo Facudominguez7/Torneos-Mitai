@@ -76,7 +76,7 @@ function enviarCorreo($email, $token)
         $mail->Host = 'c248.ferozo.com'; // Cambiar al servidor SMTP de tu proveedor de correo
         $mail->SMTPAuth = true; // Habilitar autenticación SMTP
         $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Usuario SMTP
-        $mail->Password = 'Simon201**'; // Contraseña SMTP
+        $mail->Password = ''; // Contraseña SMTP
         $mail->SMTPSecure = 'ssl'; // Habilitar cifrado TLS
         $mail->Port = 465; // 587 Puerto SMTP
 
