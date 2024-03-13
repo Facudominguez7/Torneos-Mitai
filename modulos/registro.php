@@ -12,14 +12,27 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
     $apellido = mysqli_real_escape_string($con, $_POST['apellido']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
+    //echo '<script  src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
     // Verificar si el usuario ya existe
     $chequeoUsuario = "SELECT * FROM usuarios WHERE email = '$email'";
     $chequeoResultado = mysqli_query($con, $chequeoUsuario);
 
     if (mysqli_num_rows($chequeoResultado) != 0) {
-        echo "<script>alert('El Usuario ya Existe');</script>";
-        echo "<script>window.location='index.php?modulo=iniciar-sesion';</script>";
+        echo '<script> 
+        Swal.fire({
+            title: "¡Oops!",
+            text: "Este usuario ya existe. Por favor, inicia sesión.",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Iniciar Sesión",
+            allowOutsideClick: false,
+            willClose: () => {
+                window.location.href = "index.php?modulo=iniciar-sesion";
+            }
+        }); 
+    </script>';
         exit();
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -31,13 +44,21 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
         $insertarResultado = mysqli_query($con, $insertarUsuario);
 
         if ($insertarResultado) {
-            echo "<script>
-                    alert('Gracias por registrarse! Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para continuar.');
-                    window.location='index.php';
-                  </script>";
+            echo '<script> 
+                     Swal.fire({
+                    title: "¡Registro Exitoso!",
+                    html: "<p>Gracias por registrarse. Se ha enviado un correo electrónico de verificación.</p><p>Por favor, verifique su correo electrónico para continuar.</p>",
+                    icon: "success",
+                    confirmButtonColor: "#4caf50",
+                    confirmButtonText: "Aceptar",
+                    allowOutsideClick: false,
+                    willClose: () => {
+                        window.location.href = "index.php";
+                    }
+                }); 
+            </script>';
             // Enviar correo electrónico de verificación en segundo plano
             enviarCorreo($email, $token);
-            
         } else {
             echo "Error: No se pudo insertar el registro";
         }
@@ -48,7 +69,7 @@ function enviarCorreo($email, $token)
 {
     $mail = new PHPMailer(true); // Habilitar excepciones
     try {
-          
+
 
         // Configurar el método de envío
         $mail->isSMTP(); // Usar SMTP
@@ -71,7 +92,6 @@ function enviarCorreo($email, $token)
 
         // Enviar el correo electrónico
         $mail->send();
-        
     } catch (Exception $e) {
         echo $e;
         // Manejar cualquier excepción
@@ -80,6 +100,9 @@ function enviarCorreo($email, $token)
 }
 ?>
 
+<head>
+
+</head>
 <style>
     input::placeholder {
         color: white;
@@ -87,7 +110,7 @@ function enviarCorreo($email, $token)
 </style>
 
 <section class="bg-gray-200">
-    <div class="flex lg:h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style="background-image:url('Imagenes/fondo_en_cancha.webp')">
+    <div class="flex md:h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style="background-image:url('Imagenes/fondo_en_cancha.webp')">
         <div class="rounded-xl mt-5 mb-5 bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-5">
             <div class="text-white  lg:w-full">
                 <div class="mb-8 flex flex-col items-center">
@@ -120,6 +143,4 @@ function enviarCorreo($email, $token)
                 </form>
             </div>
         </div>
-     
-    </div>
 </section>

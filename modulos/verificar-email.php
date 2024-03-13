@@ -16,16 +16,25 @@ if (isset($_GET['token'])) {
         mysqli_stmt_bind_param($stmt_update, "s", $token);
         mysqli_stmt_execute($stmt_update);
 
-        // Iniciar sesión automáticamente
-        session_start();
         $_SESSION['id'] = $row['id'];
         $_SESSION['nombre_usuario'] = $row['nombre'];
         $_SESSION['rol'] = $row['rol'];
 
+
         // Redirigir al usuario a la página de inicio después de iniciar sesión automáticamente
-        echo "<script>alert('Email verificado con éxito');</script>";
-        echo "<script>window.location='index.php';</script>";
-        
+        echo '<script> 
+                Swal.fire({
+                title: "¡Email Verificado con Éxito!",
+                html: "<p>Su email ha sido verificado exitosamente.</p>",
+                icon: "success",
+                confirmButtonColor: "#4caf50",
+                confirmButtonText: "Aceptar",
+                allowOutsideClick: false,
+                willClose: () => {
+                    window.location.href = "index.php";
+                }
+            }); 
+        </script>';
         exit();
     } else {
         echo "Token inválido o expirado.";
@@ -33,4 +42,3 @@ if (isset($_GET['token'])) {
 } else {
     echo "Token no proporcionado.";
 }
-

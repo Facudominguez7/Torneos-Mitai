@@ -2553,6 +2553,10 @@ input:checked + .toggle-bg {
     display: none;
   }
 
+  .md\:h-screen {
+    height: 100vh;
+  }
+
   .md\:w-1\/2 {
     width: 50%;
   }
@@ -2749,10 +2753,6 @@ input:checked + .toggle-bg {
 
   .lg\:h-40 {
     height: 10rem;
-  }
-
-  .lg\:h-screen {
-    height: 100vh;
   }
 
   .lg\:w-1\/3 {
