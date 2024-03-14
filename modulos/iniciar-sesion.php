@@ -16,29 +16,33 @@ function enviarCorreoVerificacion($email, $token)
 {
     $mail = new PHPMailer(true); // Crear una instancia de PHPMailer
 
-    // Configurar la conexión SMTP
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'torneos-mitai@torneosmitaí.com'; // Cambiar por tu dirección de correo electrónico
-    $mail->Password = ''; // Cambiar por tu contraseña
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
+    try {
+        // Configurar la conexión SMTP
+        $mail->isSMTP();
+        $mail->Host = 'c248.ferozo.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Cambiar por tu dirección de correo electrónico
+        $mail->Password = ''; // Cambiar por tu contraseña
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
 
-    // Configurar el remitente y el destinatario
-    $mail->setFrom('torneos-mitai@torneosmitaí.com', 'Torneos Mitai'); // Cambiar por tu dirección de correo electrónico
-    $mail->addAddress($email);
+        // Configurar el remitente y el destinatario
+        $mail->setFrom('torneos-mitai@xn--torneosmita-ycb.com', 'Torneos Mitai'); // Cambiar por tu dirección de correo electrónico
+        $mail->addAddress($email);
 
-    // Configurar el contenido del correo electrónico
-    $mail->isHTML(true);
-    $mail->CharSet = 'UTF-8';
-    $mail->Subject = 'Verificación de correo electrónico';
-    $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
+        // Configurar el contenido del correo electrónico
+        $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->Subject = 'Verificación de correo electrónico';
+        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
 
-    // Enviar el correo electrónico
-    $mail->send();
-
-    
+        // Enviar el correo electrónico
+        $mail->send();
+    } catch (Exception $e) {
+        echo $e;
+        // Manejar cualquier excepción
+        echo "<script>alert('Error: No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');</script>";
+    }
 }
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -58,24 +62,40 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         if ($row['verificado'] === 1) {
             // Verificar la contraseña almacenada con la contraseña proporcionada
             if (password_verify($password, $row['clave'])) {
-                // Iniciar sesión de manera segura
-                session_start();
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['nombre_usuario'] = $row['nombre'];
                 $_SESSION['rol'] = $row['rol'];
 
-                echo "<script> alert ('Bienvenido: " . $_SESSION['nombre_usuario'] . "');</script>";
+                echo '<script> 
+                    Swal.fire({
+                        title: "¡Bienvenido!",
+                        text: "Nombre de usuario: ' . $_SESSION['nombre_usuario'] . '",
+                        icon: "success",
+                        confirmButtonColor: "#4caf50",
+                        confirmButtonText: "Aceptar",
+                        allowOutsideClick: false,
+                        willClose: () => {
+                            window.location.href = "index.php";
+                        }
+                    }); 
+                </script>';
             } else {
-                echo "<script> alert('Verifique los datos.');</script>";
+                echo '<script> 
+                    Swal.fire({
+                        title: "¡Verifique los datos!",
+                        text: "Por favor, revise los datos ingresados.",
+                        icon: "warning",
+                        confirmButtonColor: "#ffc107",
+                        confirmButtonText: "Aceptar",
+                        willClose: () => {
+                            window.location.href = "index.php?modulo=iniciar-sesion";
+                        }
+                    }); 
+                </script>';
             }
         } else {
             if (password_verify($password, $row['clave'])) {
-                $verificado = $row['verificado'];
-                $clave = 0;
-?>
-                <input type="text" id="verificacion" class="hidden" value="<?php echo $verificado ?>">
-                <input type="number" id="clave" class="hidden" value="<?php echo $clave ?>">
-<?php
+
                 $token = bin2hex(random_bytes(16));
                 $idUsuario = $row['id'];
 
@@ -88,24 +108,49 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
                 if ($insertarResultado) {
                     enviarCorreoVerificacion($email, $token);
-                    echo "Correo enviado";
+                    echo '<script> 
+                            Swal.fire({
+                                title: "¡Correo enviado!",
+                                text: "Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para iniciar sesión.",
+                                icon: "success",
+                                confirmButtonColor: "#4caf50",
+                                confirmButtonText: "Aceptar"
+                            }); 
+                    </script>';
                 } else {
                     echo "Correo no enviado";
                 }
             } else {
-                //echo "<script> alert('Verifique los datos.');</script>";
+                echo '<script> 
+                    Swal.fire({
+                        title: "¡Verifique los datos!",
+                        text: "Por favor, revise los datos ingresados.",
+                        icon: "warning",
+                        confirmButtonColor: "#ffc107",
+                        confirmButtonText: "Aceptar",
+                        willClose: () => {
+                            window.location.href = "index.php?modulo=iniciar-sesion";
+                        }
+                    }); 
+                </script>';
             }
         }
     } else {
-        echo "<script> alert('Error en la consulta.');</script>";
+        echo '<script> 
+                    Swal.fire({
+                        title: "¡Verifique los datos!",
+                        text: "Por favor, revise los datos ingresados.",
+                        icon: "warning",
+                        confirmButtonColor: "#ffc107",
+                        confirmButtonText: "Aceptar",
+                        willClose: () => {
+                            window.location.href = "index.php?modulo=iniciar-sesion";
+                        }
+                    }); 
+                </script>';
     }
-    //echo "<script>window.location='index.php';</script>";
 }
 ?>
-
-
-<!doctype html>
-<html lang="en">
 
 <style>
     input::placeholder {
@@ -139,73 +184,5 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 </form>
             </div>
         </div>
-        <!-- Elemento de carga -->
-        <div id="loader" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50  ">
-            <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-yellow-500"></div>
-        </div>
     </div>
 </section>
-
-<script defer>
-    // Obtén el formulario y el elemento de carga
-    const form = document.getElementById('registrationForm');
-    const loader = document.getElementById('loader');
-    let clave = 1;
-    let verificado = 0; // Valor predeterminado para verificado
-
-    // Obtener el valor de verificado si existe
-    const verificacionInput = document.getElementById('verificacion');
-    const claveInput = document.getElementById('clave');
-    if (verificacionInput) {
-        verificado = verificacionInput.value;
-    }
-    if(claveInput) {
-        clave = claveInput.value;
-    }
-
-
-    // Agrega un evento de envío al formulario
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir el envío del formulario por defecto
-
-        loader.classList.remove('hidden'); // Mostrar el elemento de carga
-
-        // Retrasar el envío del formulario por 1 segundo
-        setTimeout(function() {
-            // Enviar el formulario de manera asíncrona usando Fetch API
-            fetch(form.action, {
-                    method: form.method,
-                    body: new FormData(form)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        if (clave === 0) {
-                            if (verificado === 1) {
-                                window.location = 'index.php';
-                            } else {
-                                // Si la respuesta es exitosa, mostrar el mensaje de alerta
-                                alert('Debe verificar su correo electrónico antes de iniciar sesión. Se ha enviado un correo electrónico de verificación.');
-                                window.location.href = 'index.php';
-                            }
-                        } else {
-                            alert('Verifique los datos.');
-                            window.location.href = 'index.php?modulo=iniciar-sesion';
-                        }
-                    } else {
-                        // Si hay un error en la respuesta, mostrar un mensaje de error
-                        alert('Error: No se pudo registrar. Por favor, inténtelo de nuevo más tarde.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // En caso de un error, mostrar un mensaje de error
-                    alert('Error: No se pudo registrar. Por favor, inténtelo de nuevo más tarde.');
-                })
-                .finally(() => {
-                    loader.classList.add('hidden'); // Ocultar el elemento de carga después de enviar el formulario
-                });
-        }, 1000); // Retraso de 1 segundo
-    });
-</script>
-
-</html>
