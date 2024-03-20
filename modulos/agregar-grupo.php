@@ -20,7 +20,7 @@
             while ($filaCat = mysqli_fetch_array($resultNombreCat)) {
         ?>
                 <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
-                    Agregar Grupo a la <?php echo $filaCat['nombreCategoria'] ?> 
+                    Agregar Grupo a la <?php echo $filaCat['nombreCategoria'] ?>
                 </h1>
                 <br />
         <?php
@@ -30,10 +30,8 @@
 
     </div>
 </header>
-<body>
+<section>
     <div class="flex items-center justify-center p-12">
-        <!-- Author: FormBold Team -->
-        <!-- Learn More: https://formbold.com -->
         <div class="mx-auto w-full max-w-[550px]">
             <form action="index.php?modulo=agregar-grupo&accion=agregar-grupo&idCategoria=<?php echo $_GET['idCategoria']; ?>&idEdicion=<?php echo $_GET['idEdicion']; ?>" method="POST" enctype="multipart/form-data">
                 <div class="mb-5">
@@ -50,7 +48,7 @@
             </form>
         </div>
     </div>
-</body>
+</section>
 
 <?php
 if (!empty($_GET['accion'])) {
@@ -81,7 +79,7 @@ if (!empty($_GET['accion'])) {
                 echo "<script>alert('Grupo agregado exitosamente');</script>";
             }
         }
-        echo "<script>window.location='index.php?modulo=categoria-2010&id=". $idCategoria ."&idEdicion=". $idEdicion ."';</script>";
+        echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&idEdicion=" . $idEdicion . "';</script>";
     }
 }
 

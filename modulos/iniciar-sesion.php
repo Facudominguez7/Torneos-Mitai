@@ -178,7 +178,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         <div class="mb-4 text-2xl flex flex-col justify-center items-center">
                             <label class="mb-2" for="nombre">Contraseña</label>
                             <input class="rounded-3xl border-none bg-blue-500  bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="password" id="password" name="password" placeholder="Ingrese su contraseña" required />
-                            <a href="index.php?modulo=recuperar-contraseña" class="mt-4 text-white hover:text-yellow-200">¿Olvidó su contraseña?</a>
+                            <a href="index.php?modulo=recuperar-clave" class="mt-4 text-white hover:text-yellow-200">¿Olvidó su contraseña?</a>
                         </div>
                         <div class="mt-8 flex justify-center text-lg text-black">
                             <button type="submit" class="rounded-3xl bg-yellow-200 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-700">Iniciar Sesión</button>
