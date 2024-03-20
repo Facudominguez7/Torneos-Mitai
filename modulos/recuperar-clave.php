@@ -25,7 +25,7 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                 $mail->Host = 'c248.ferozo.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Cambiar por tu dirección de correo electrónico
-                $mail->Password = 'Simon201**'; // Cambiar por tu contraseña
+                $mail->Password = ''; // Cambiar por tu contraseña
                 $mail->SMTPSecure = 'ssl';
                 $mail->Port = 465;
 
