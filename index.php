@@ -44,7 +44,7 @@ if (isset($_GET['idEdicion'])) {
 
 </head>
 <?php
-if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' ) {
+if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave' ) {
 ?>
 
     <body class="bg-[--color-primary]">
@@ -312,7 +312,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
             });
         </script>
         <?php
-        if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' )) {
+        if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave' )) {
         ?>
             <header class="bg-[--color-primary] shadow">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">

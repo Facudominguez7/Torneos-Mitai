@@ -6,13 +6,14 @@ use PHPMailer\PHPMailer\Exception;
 require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
+require_once './PHPMailer/config.php';
+$clave = $config['smtp_password'];
 
 if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['password'])) {
     $nombre = mysqli_real_escape_string($con, $_POST['nombre']);
     $apellido = mysqli_real_escape_string($con, $_POST['apellido']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
-    //echo '<script  src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
     // Verificar si el usuario ya existe
     $chequeoUsuario = "SELECT * FROM usuarios WHERE email = '$email'";
@@ -58,14 +59,14 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email'
                 }); 
             </script>';
             // Enviar correo electrónico de verificación en segundo plano
-            enviarCorreo($email, $token);
+            enviarCorreo($email, $token, $clave);
         } else {
             echo "Error: No se pudo insertar el registro";
         }
     }
 }
 
-function enviarCorreo($email, $token)
+function enviarCorreo($email, $token, $clave)
 {
     $mail = new PHPMailer(true); // Habilitar excepciones
     try {
@@ -76,7 +77,7 @@ function enviarCorreo($email, $token)
         $mail->Host = 'c248.ferozo.com'; // Cambiar al servidor SMTP de tu proveedor de correo
         $mail->SMTPAuth = true; // Habilitar autenticación SMTP
         $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Usuario SMTP
-        $mail->Password = ''; // Contraseña SMTP
+        $mail->Password = $clave; // Contraseña SMTP
         $mail->SMTPSecure = 'ssl'; // Habilitar cifrado TLS
         $mail->Port = 465; // 587 Puerto SMTP
 
@@ -88,7 +89,7 @@ function enviarCorreo($email, $token)
         $mail->isHTML(true); // Habilitar formato HTML
         $mail->CharSet = 'UTF-8'; // Establecer la codificación de caracteres
         $mail->Subject = 'Verificación de correo electrónico';
-        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
+        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=". urlencode(base64_encode($token)) ."'>Verificar correo electrónico</a>";
 
         // Enviar el correo electrónico
         $mail->send();

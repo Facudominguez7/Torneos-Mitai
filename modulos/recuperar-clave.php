@@ -37,19 +37,48 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                 $mail->isHTML(true);
                 $mail->CharSet = 'UTF-8';
                 $mail->Subject = 'Verificación de correo electrónico';
-                $mail->Body = "Haga clic en el siguiente enlace para Recuperar su contraseña: <a href='http://localhost/MITAI/index.php?modulo=formulario-clave&token=$token'>Recuperar Contraseña</a>";
+                $mail->Body = "Haga clic en el siguiente enlace para Recuperar su contraseña: <a href='http://localhost/MITAI/index.php?modulo=formulario-clave&token=". urlencode(base64_encode($token)) . "'>Recuperar Contraseña</a>";
 
                 // Enviar el correo electrónico
                 $mail->send();
+                echo '<script> 
+                Swal.fire({
+                    title: "¡Correo enviado!",
+                    text: "Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para recuperar su contraseña.",
+                    icon: "success",
+                    confirmButtonColor: "#4caf50",
+                    confirmButtonText: "Aceptar"
+                }); 
+        </script>';
             } catch (Exception $e) {
                 echo $e;
-                // Manejar cualquier excepción
-                echo "<script>alert('Error: No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');</script>";
+                echo '<script> 
+                Swal.fire({
+                    title: "¡Error!",
+                    text: "No se pudo enviar el correo electrónico, por favor intentelo de nuevo mas tarde.",
+                    icon: "warning",
+                    confirmButtonColor: "#ffc107",
+                    confirmButtonText: "Aceptar",
+                    willClose: () => {
+                        window.location.href = "index.php?modulo=recuperar-clave";
+                    }
+                }); 
+            </script>';
             }
         }
     } else {
-        // Si el correo electrónico no existe en la base de datos, mostrar un mensaje de error
-        echo "El correo electrónico no existe en la base de datos";
+        echo '<script> 
+                    Swal.fire({
+                        title: "¡Error!",
+                        text: "El email ingresado no pertenece a un usuario registrado",
+                        icon: "warning",
+                        confirmButtonColor: "#ffc107",
+                        confirmButtonText: "Aceptar",
+                        willClose: () => {
+                            window.location.href = "index.php?modulo=registro";
+                        }
+                    }); 
+                </script>';
     }
 }
 

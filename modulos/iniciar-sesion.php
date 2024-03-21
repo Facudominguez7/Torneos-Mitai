@@ -6,23 +6,23 @@ use PHPMailer\PHPMailer\Exception;
 require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
+require_once './PHPMailer/config.php';
 if (isset($_GET['salir'])) {
     session_destroy();
     echo "<script>window.location='index.php';</script>";
 }
-
+$clave = $config['smtp_password'];
 // Función para enviar un correo electrónico de verificación
-function enviarCorreoVerificacion($email, $token)
+function enviarCorreoVerificacion($email, $token, $clave)
 {
     $mail = new PHPMailer(true); // Crear una instancia de PHPMailer
-
     try {
         // Configurar la conexión SMTP
         $mail->isSMTP();
         $mail->Host = 'c248.ferozo.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Cambiar por tu dirección de correo electrónico
-        $mail->Password = ''; // Cambiar por tu contraseña
+        $mail->Password = $clave; // Cambiar por tu contraseña
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
 
@@ -34,7 +34,7 @@ function enviarCorreoVerificacion($email, $token)
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Verificación de correo electrónico';
-        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=$token'>Verificar correo electrónico</a>";
+        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=". urlencode(base64_encode($token)) . "'>Verificar correo electrónico</a>";
 
         // Enviar el correo electrónico
         $mail->send();
@@ -107,7 +107,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 $insertarResultado = mysqli_stmt_execute($stmt);
 
                 if ($insertarResultado) {
-                    enviarCorreoVerificacion($email, $token);
+                    enviarCorreoVerificacion($email, $token, $clave);
                     echo '<script> 
                             Swal.fire({
                                 title: "¡Correo enviado!",
