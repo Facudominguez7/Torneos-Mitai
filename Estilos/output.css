@@ -1332,6 +1332,10 @@ input:checked + .toggle-bg {
   height: 2.25rem;
 }
 
+.h-96 {
+  height: 24rem;
+}
+
 .h-auto {
   height: auto;
 }
@@ -1390,6 +1394,10 @@ input:checked + .toggle-bg {
 
 .w-64 {
   width: 16rem;
+}
+
+.w-96 {
+  width: 24rem;
 }
 
 .w-auto {
@@ -2508,16 +2516,8 @@ input:checked + .toggle-bg {
     display: none;
   }
 
-  .md\:h-96 {
-    height: 24rem;
-  }
-
   .md\:w-1\/2 {
     width: 50%;
-  }
-
-  .md\:w-96 {
-    width: 24rem;
   }
 
   .md\:w-auto {

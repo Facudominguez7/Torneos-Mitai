@@ -401,7 +401,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                 </div>
 
                 <div class="flex justify-center items-center flex-col">
-                    <div id="mi_mapa" class="md:block md:w-96 md:h-96 rounded-lg"></div>
+                    <div id="mi_mapa" class="block w-96 h-96 rounded-lg"></div>
                     <a id="googleMapsLink" href="" target="_blank" rel="noopener noreferrer">
                         <button class="mt-2 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                             Abrir Ubicacion
