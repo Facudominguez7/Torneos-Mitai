@@ -18,12 +18,6 @@ if (isset($_GET['token'])) {
             $stmt_update = mysqli_prepare($con, $sql_update);
             mysqli_stmt_bind_param($stmt_update, "s", $token_decodificado);
             mysqli_stmt_execute($stmt_update);
-
-            $_SESSION['id'] = $row['id'];
-            $_SESSION['nombre_usuario'] = $row['nombre'];
-            $_SESSION['rol'] = $row['rol'];
-
-
             // Redirigir al usuario a la página de inicio después de iniciar sesión automáticamente
             echo '<script> 
                 Swal.fire({
@@ -34,7 +28,7 @@ if (isset($_GET['token'])) {
                 confirmButtonText: "Aceptar",
                 allowOutsideClick: false,
                 willClose: () => {
-                    window.location.href = "index.php";
+                    window.location.href = "index.php?modulo=iniciar-sesion";
                 }
             }); 
         </script>';
