@@ -4,3 +4,4 @@
 modulos/registro.php
 modulos/recuperar-clave.php
 modulos/iniciar-sesion.php
+PHPMailer/config.php
