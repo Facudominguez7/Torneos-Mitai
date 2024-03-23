@@ -11,19 +11,21 @@ if (isset($_GET['token'])) {
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        // Marcar el correo electrónico como verificado en la base de datos
-        $sql_update = "UPDATE usuarios SET correo_verificado = 1 WHERE token = ?";
-        $stmt_update = mysqli_prepare($con, $sql_update);
-        mysqli_stmt_bind_param($stmt_update, "s", $token_decodificado);
-        mysqli_stmt_execute($stmt_update);
+        echo $correo_verificado = $row['correo_verificado'];
+        if ($correo_verificado === 0) {
+            // Marcar el correo electrónico como verificado en la base de datos
+            $sql_update = "UPDATE usuarios SET correo_verificado = 1 WHERE token = ?";
+            $stmt_update = mysqli_prepare($con, $sql_update);
+            mysqli_stmt_bind_param($stmt_update, "s", $token_decodificado);
+            mysqli_stmt_execute($stmt_update);
 
-        $_SESSION['id'] = $row['id'];
-        $_SESSION['nombre_usuario'] = $row['nombre'];
-        $_SESSION['rol'] = $row['rol'];
+            $_SESSION['id'] = $row['id'];
+            $_SESSION['nombre_usuario'] = $row['nombre'];
+            $_SESSION['rol'] = $row['rol'];
 
 
-        // Redirigir al usuario a la página de inicio después de iniciar sesión automáticamente
-        echo '<script> 
+            // Redirigir al usuario a la página de inicio después de iniciar sesión automáticamente
+            echo '<script> 
                 Swal.fire({
                 title: "¡Email Verificado con Éxito!",
                 html: "<p>Su email ha sido verificado exitosamente.</p>",
@@ -36,7 +38,20 @@ if (isset($_GET['token'])) {
                 }
             }); 
         </script>';
-        exit();
+        } else {
+            echo '<script> 
+            Swal.fire({
+                title: "¡Error!",
+                text: "El email ya ha sido verificado",
+                icon: "warning",
+                confirmButtonColor: "#ffc107",
+                confirmButtonText: "Aceptar",
+                willClose: () => {
+                    window.location.href = "index.php?modulo=iniciar-sesion";
+                }
+            }); 
+        </script>';
+        }
     } else {
         echo "Token inválido o expirado.";
     }

@@ -10,21 +10,31 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
 
         // Verificar si las contraseñas son iguales
         if ($clave === $clave2) {
-            $sql = "SELECT email FROM usuarios WHERE token = ?";
-            $stmt = mysqli_prepare($con, $sql);
-            mysqli_stmt_bind_param($stmt, "s", $token_decodificado);
-            mysqli_stmt_execute($stmt);
-            $resultado = mysqli_stmt_get_result($stmt);
+            // Obtener el tiempo de expiración del token de la base de datos
+            $sql_expiracion = "SELECT expiracion_token FROM usuarios WHERE token = ?";
+            $stmt_expiracion = mysqli_prepare($con, $sql_expiracion);
+            mysqli_stmt_bind_param($stmt_expiracion, "s", $token_decodificado);
+            mysqli_stmt_execute($stmt_expiracion);
+            $resultado_expiracion = mysqli_stmt_get_result($stmt_expiracion);
+            $row_expiracion = mysqli_fetch_assoc($resultado_expiracion);
+            $expiracion_token = $row_expiracion['expiracion_token'];
 
-            if ($resultado->num_rows > 0) {
-                // Actualizar la contraseña en la base de datos
-                $clave_encriptada = password_hash($clave, PASSWORD_DEFAULT);
-                $sql_actualizar = "UPDATE usuarios SET clave = ? WHERE token = ?";
-                $stmt_actualizar = mysqli_prepare($con, $sql_actualizar);
-                mysqli_stmt_bind_param($stmt_actualizar, "ss", $clave_encriptada, $token_decodificado);
-                mysqli_stmt_execute($stmt_actualizar);
+            if ($expiracion_token >= date('Y-m-d H:i:s')) {
+                $sql = "SELECT email FROM usuarios WHERE token = ?";
+                $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_bind_param($stmt, "s", $token_decodificado);
+                mysqli_stmt_execute($stmt);
+                $resultado = mysqli_stmt_get_result($stmt);
 
-                echo '<script> 
+                if ($resultado->num_rows > 0) {
+                    // Actualizar la contraseña en la base de datos
+                    $clave_encriptada = password_hash($clave, PASSWORD_DEFAULT);
+                    $sql_actualizar = "UPDATE usuarios SET clave = ? WHERE token = ?";
+                    $stmt_actualizar = mysqli_prepare($con, $sql_actualizar);
+                    mysqli_stmt_bind_param($stmt_actualizar, "ss", $clave_encriptada, $token_decodificado);
+                    mysqli_stmt_execute($stmt_actualizar);
+
+                    echo '<script> 
                     Swal.fire({
                     title: "¡Contraseña Actualizada!",
                     html: "<p>Ya puede iniciar sesión</p>",
@@ -37,9 +47,9 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                     }
                 }); 
             </script>';
-            } else {
-                // Token no encontrado en la base de datos, mostrar un mensaje de error
-                echo '<script> 
+                } else {
+                    // Token no encontrado en la base de datos, mostrar un mensaje de error
+                    echo '<script> 
                 Swal.fire({
                     title: "¡Oops!",
                     text: "Token no válido",
@@ -53,6 +63,23 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                     }
                 }); 
             </script>';
+                }
+            } else {
+                  // Token expirado, mostrar mensaje de error
+                  echo '<script> 
+                  Swal.fire({
+                      title: "¡Oops!",
+                      text: "El enlace para recuperar la contraseña ha caducado. Por favor, solicite uno nuevo.",
+                      icon: "error",
+                      showCloseButton: true,
+                      confirmButtonColor: "#3085d6",
+                      confirmButtonText: "Aceptar",
+                      allowOutsideClick: false,
+                      willClose: () => {
+                          window.location.href = "index.php?modulo=iniciar-sesion";
+                      }
+                  }); 
+              </script>';
             }
         } else {
             echo '<script> 
@@ -65,7 +92,7 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                 confirmButtonText: "Aceptar",
                 allowOutsideClick: false,
                 willClose: () => {
-                    window.location.href = "index.php?modulo=formulario-clave&accion=recuperar&token='. $token .'";
+                    window.location.href = "index.php?modulo=formulario-clave&accion=recuperar&token=' . $token . '";
                 }
             }); 
         </script>';
@@ -83,12 +110,12 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                         <div class="mb-4 text-2xl flex flex-col justify-center items-center">
                             <label class="mb-2" for="nombre">Ingrese su Nueva Contraseña</label>
                             <?php
-                                if(isset($_GET['token'])){
-                                    $token = $_GET['token']
-                                    ?>
-                                         <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
-                                    <?php
-                                } 
+                            if (isset($_GET['token'])) {
+                                $token = $_GET['token']
+                            ?>
+                                <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                            <?php
+                            }
                             ?>
                             <input class="rounded-3xl border-none bg-blue-500 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="password" id="clave" name="clave" required />
                         </div>

@@ -40,11 +40,16 @@ if (isset($_GET['idEdicion'])) {
             background-color: #4a90e2;
             color: white;
         }
+
+        #mi_mapa {
+            height: 400px;
+        }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
 </head>
 <?php
-if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave' ) {
+if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave') {
 ?>
 
     <body class="bg-[--color-primary]">
@@ -312,7 +317,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
             });
         </script>
         <?php
-        if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave' )) {
+        if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave')) {
         ?>
             <header class="bg-[--color-primary] shadow">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
@@ -343,9 +348,15 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                 <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center hidden md:block" style="background-image: url('Imagenes/fondo-texto-1.jpg'); background-size: cover; background-position: center;">
                     <h1 class="md:text-4xl md:font-bold md:text-white md:mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                     <p class="md:text-white md:mb-5">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
-                    <a href="index.php?modulo=registro" class="mt-2  md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
-                        Registrarse
-                    </a>
+                    <?php
+                    if (empty($_SESSION['nombre_usuario'])) {
+                    ?>
+                        <a href="index.php?modulo=registro" class="mt-2  md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
+                            Registrarse
+                        </a>
+                    <?php
+                    }
+                    ?>
                 </div>
 
                 <!-- Segundo diseño para pantallas pequeñas -->
@@ -354,9 +365,15 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                         <div>
                             <h1 class="text-4xl font-bold text-white mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                             <p class="text-white mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
-                            <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
-                                Registrarse
-                            </a>
+                            <?php
+                            if (empty($_SESSION['nombre_usuario'])) {
+                            ?>
+                                <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
+                                    Registrarse
+                                </a>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <img src="Imagenes/fondo-texto-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
@@ -383,11 +400,33 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                     <?php endif; ?>
                 </div>
 
-                <div class="flex justify-center items-center">
-                    <div class="flex justify-center items-center flex-row w-full md:w-1/2 mb-5">
-                        <img class="md:w-1/2 w-full h-auto rounded-xl" src="Imagenes/mitai-mbarete.jpg" alt="Escudo La Isla">
-                    </div>
+                <div class="flex justify-center items-center flex-col">
+                    <div id="mi_mapa" class="md:block md:w-96 md:h-96 rounded-lg"></div>
+                    <a id="googleMapsLink" href="" target="_blank" rel="noopener noreferrer">
+                        <button class="mt-2 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                            Abrir Ubicacion
+                        </button>
+                    </a>
                 </div>
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const latitud = -27.400747; // Reemplaza con la latitud del complejo deportivo Mbaréte
+                        const longitud = -55.941036; // Reemplaza con la longitud del complejo deportivo Mbaréte
+                        const nombreUbicacion = "Complejo Deportivo Mbarete";
+
+                        let map = L.map('mi_mapa').setView([latitud, longitud], 15);
+
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        L.marker([latitud, longitud]).addTo(map).bindPopup(nombreUbicacion).openPopup();
+
+                        let googleMapsLink = document.getElementById('googleMapsLink');
+                        googleMapsLink.href = `https://www.google.com/maps/dir/?api=1&destination=${latitud},${longitud}`;
+                    });
+                </script>
             <?php
             }
             ?>
