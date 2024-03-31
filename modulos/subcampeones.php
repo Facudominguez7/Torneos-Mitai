@@ -1,3 +1,7 @@
+<head>
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 <?php
 $campeonatos = [
     [
@@ -94,45 +98,47 @@ function mostrarSubCampeones($categoria, $anio, $categoria_id, $con)
         $colorTexto = '#C0C0C0';
     }
 ?>
-    <div class="flex justify-center mt-10">
-        <div class="bg-white py-6 w-full lg:w-2/4 rounded-lg">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
-                <h1 class="text-2xl lg:text-5xl font-bold tracking-tight flex justify-center " style="color: <?php echo $colorTexto; ?>">
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="px-4 py-6">
+                <h2 class="text-center text-2xl font-bold text-gray-800 mb-4" style="color: <?php echo $colorTexto; ?>">
                     Subcampeón <?php echo $tituloCategoria . " " . $anio; ?>
-                </h1>
-                <br />
-                <?php
-                $idEdicion = $_GET['idEdicion'];
-                $sqlMostrarSubCampeon = "SELECT cat.nombreCategoria AS nombreCat, e.nombre AS nombreEquipo, e.foto AS fotoEquipo
+                </h2>
+                <div class="mt-4">
+                    <?php
+                    $idEdicion = $_GET['idEdicion'];
+                    $sqlMostrarSubCampeon = "SELECT cat.nombreCategoria AS nombreCat, e.nombre AS nombreEquipo, e.foto AS fotoEquipo
                     FROM subcampeones_" . strtolower($categoria) . " AS subcampeon
                     INNER JOIN categorias cat ON subcampeon.idCategoria = cat.id
                     INNER JOIN equipos e ON subcampeon.idEquipo = e.id 
                     WHERE subcampeon.idCategoria = $categoria_id AND subcampeon.idEdicion = $idEdicion";
-                $stmtSubCampeon = mysqli_prepare($con, $sqlMostrarSubCampeon);
-                if (!$stmtSubCampeon) {
-                    die('Error en la consulta: ' . mysqli_error($con));
-                } else {
-                    mysqli_stmt_execute($stmtSubCampeon);
-                    $resultSubCampeon = mysqli_stmt_get_result($stmtSubCampeon);
+                    $stmtSubCampeon = mysqli_prepare($con, $sqlMostrarSubCampeon);
+                    if (!$stmtSubCampeon) {
+                        die('Error en la consulta: ' . mysqli_error($con));
+                    } else {
+                        mysqli_stmt_execute($stmtSubCampeon);
+                        $resultSubCampeon = mysqli_stmt_get_result($stmtSubCampeon);
 
-                    if ($resultSubCampeon->num_rows > 0) {
-                        while ($filaSubCampeon = mysqli_fetch_array($resultSubCampeon)) {
-                ?>
-                            <div class="flex flex-row flex-nowrap items-center justify-center mt-4">
-                                <img class="h-32 w-32 lg:h-40 lg:w-40 text-xs ml-2 mr-10" src="Imagenes/<?php echo $filaSubCampeon['fotoEquipo'] ?>">
-                                <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">
-                                    <?php echo $filaSubCampeon['nombreEquipo']; ?>
-                                </p>
-                            </div>
-                <?php
+                        if ($resultSubCampeon->num_rows > 0) {
+                            while ($filaSubCampeon = mysqli_fetch_array($resultSubCampeon)) {
+                    ?>
+                                <div class="flex flex-col items-center justify-center mt-4">
+                                    <img class="h-24 w-24 rounded-full object-cover" src="Imagenes/<?php echo $filaSubCampeon['fotoEquipo'] ?>">
+                                    <p class="mt-2 text-lg font-medium text-gray-900">
+                                        <?php echo $filaSubCampeon['nombreEquipo']; ?>
+                                    </p>
+                                </div>
+                            <?php
+                            }
+                        } else {
+                            ?>
+                            <p class="text-lg font-medium text-gray-900 text-center">En disputa...</p>
+                    <?php
                         }
-                    } else { 
-                        ?>
-                        <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">En disputa...</p>
-                        <?php
                     }
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
     </div>

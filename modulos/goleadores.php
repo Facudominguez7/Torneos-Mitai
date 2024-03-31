@@ -1,3 +1,7 @@
+<head>
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 <?php
 // Define un array con la información de los campeones
 $equiposcatgoleadores = [
@@ -29,7 +33,7 @@ $equiposcatgoleadores = [
 ];
 ?>
 <h1 class="text-2xl lg:text-5xl font-bold tracking-tight flex justify-center text-white mt-5 ">
-    Goleadores 
+    Goleadores
 </h1>
 <br />
 <?php
@@ -38,19 +42,19 @@ function mostrarGoleadores($categoria_id, $con)
 {
 
 ?>
-    <div class="flex justify-center mt-10">
-        <div class="bg-white py-6 w-full lg:w-2/4 rounded-lg">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="px-4 py-6">
                 <?php
                 $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarGoleadores = "SELECT e.nombre AS nombreEquipo, e.foto AS fotoEquipo, cat.nombreCategoria AS nombreCategoria, goleadores.nombre AS nombreJugador
-                 FROM goleadores AS goleadores
-                 INNER JOIN equipos e ON goleadores.idEquipo = e.id
-                 INNER JOIN categorias cat ON goleadores.idCategoria = cat.id 
-                 WHERE goleadores.idCategoria = $categoria_id AND goleadores.idEdicion = $idEdicion";
+                FROM goleadores AS goleadores
+                INNER JOIN equipos e ON goleadores.idEquipo = e.id
+                INNER JOIN categorias cat ON goleadores.idCategoria = cat.id 
+                WHERE goleadores.idCategoria = $categoria_id AND goleadores.idEdicion = $idEdicion";
                 $stmtGoleador = mysqli_prepare($con, $sqlMostrarGoleadores);
                 if (!$stmtGoleador) {
-                    die('Error en la consulta: ' . mysqli_error($con));
+                    die('Error in the query: ' . mysqli_error($con));
                 } else {
                     mysqli_stmt_execute($stmtGoleador);
                     $resultGoleador = mysqli_stmt_get_result($stmtGoleador);
@@ -58,17 +62,17 @@ function mostrarGoleadores($categoria_id, $con)
                     if ($resultGoleador->num_rows > 0) {
                         while ($filaGoleador = mysqli_fetch_array($resultGoleador)) {
                 ?>
-                            <h1 class="text-3xl lg:text-5xl font-bold tracking-tight flex justify-center text-black ">
-                                <?php echo $filaGoleador['nombreCategoria']?>
-                            </h1>
-                            <br />
-                            <h1 class="text-4xl lg:text-5xl font-bold tracking-tight flex justify-center text-[#ffbf00] mt-4 ">
-                                <?php echo $filaGoleador['nombreJugador']?>
-                            </h1>
-                            <br />
-                            <div class="flex flex-row flex-nowrap items-center justify-center mt-4">
-                                <img class="h-32 w-32 lg:h-40 lg:w-40 text-xs ml-2 mr-10" src="Imagenes/<?php echo $filaGoleador['fotoEquipo'] ?>">
-                                <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">
+                            <div class="text-center mb-4">
+                                <h1 class="text-2xl font-bold text-gray-800">
+                                    <?php echo $filaGoleador['nombreCategoria'] ?>
+                                </h1>
+                                <h2 class="text-xl font-bold text-[#ffbf00] mt-2">
+                                    <?php echo $filaGoleador['nombreJugador'] ?>
+                                </h2>
+                            </div>
+                            <div class="flex items-center justify-center mt-4">
+                                <img class="h-24 w-24 rounded-full object-cover" src="Imagenes/<?php echo $filaGoleador['fotoEquipo'] ?>" alt="<?php echo $filaGoleador['nombreEquipo']; ?>">
+                                <p class="ml-6 text-lg font-medium text-gray-900">
                                     <?php echo $filaGoleador['nombreEquipo']; ?>
                                 </p>
                             </div>
@@ -84,6 +88,8 @@ function mostrarGoleadores($categoria_id, $con)
             </div>
         </div>
     </div>
+
+
 <?php
 }
 
