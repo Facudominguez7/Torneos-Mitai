@@ -34,7 +34,20 @@ function enviarCorreoVerificacion($email, $token, $clave)
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Verificación de correo electrónico';
-        $mail->Body = "Haga clic en el siguiente enlace para verificar su correo electrónico: <a href='http://localhost/MITAI/index.php?modulo=verificar-email&token=". urlencode(base64_encode($token)) . "'>Verificar correo electrónico</a>";
+        $body = '<html>';
+        $body .= '<head><style>';
+        $body .= 'body { font-family: Arial, sans-serif; }';
+        $body .= 'a { color: #007bff; text-decoration: none; }';
+        $body .= 'a:hover { text-decoration: underline; }';
+        $body .= '</style></head>';
+        $body .= '<body>';
+        $body .= '<p>Hola,</p>';
+        $body .= '<p>Haga clic en el siguiente enlace para verificar su correo electrónico:</p>';
+        $body .= '<p><a href="http://localhost/MITAI/index.php?modulo=verificar-email&token=' . urlencode(base64_encode($token)) . '">Verificar correo electrónico</a></p>';
+        $body .= '<p>Si no solicitó esta verificación, ignore este correo electrónico.</p>';
+        $body .= '</body></html>';
+        
+        $mail->Body = $body;
 
         // Enviar el correo electrónico
         $mail->send();

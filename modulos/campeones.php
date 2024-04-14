@@ -1,3 +1,7 @@
+<head>
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 <?php
 // Define un array con la información de los campeones
 $campeonatos = [
@@ -95,20 +99,22 @@ function mostrarCampeones($categoria, $anio, $categoria_id, $con)
         $colorTexto = '#C0C0C0';
     }
 ?>
-    <div class="flex justify-center mt-10">
-        <div class="bg-white py-6 w-full lg:w-2/4 rounded-lg">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
-                <h1 class="text-2xl lg:text-5xl font-bold tracking-tight flex justify-center " style="color: <?php echo $colorTexto; ?>">
-                    Campeón <?php echo $tituloCategoria . " " . $anio; ?>
-                </h1>
-                <br />
+
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="px-4 py-6">
+            <h2 class="text-center text-2xl font-bold text-gray-800 mb-4">
+                Campeón <?php echo $tituloCategoria . " " . $anio; ?>
+            </h2>
+            <div class="mt-4">
                 <?php
                 $idEdicion = $_GET['idEdicion'];
                 $sqlMostrarCampeon = "SELECT cat.nombreCategoria AS nombreCat, e.nombre AS nombreEquipo, e.foto AS fotoEquipo
-                    FROM campeones_" . strtolower($categoria) . " AS campeon
-                    INNER JOIN categorias cat ON campeon.idCategoria = cat.id
-                    INNER JOIN equipos e ON campeon.idEquipo = e.id 
-                    WHERE campeon.idCategoria = $categoria_id AND campeon.idEdicion = $idEdicion";
+                FROM campeones_" . strtolower($categoria) . " AS campeon
+                INNER JOIN categorias cat ON campeon.idCategoria = cat.id
+                INNER JOIN equipos e ON campeon.idEquipo = e.id 
+                WHERE campeon.idCategoria = $categoria_id AND campeon.idEdicion = $idEdicion";
                 $stmtCampeon = mysqli_prepare($con, $sqlMostrarCampeon);
                 if (!$stmtCampeon) {
                     die('Error en la consulta: ' . mysqli_error($con));
@@ -119,24 +125,26 @@ function mostrarCampeones($categoria, $anio, $categoria_id, $con)
                     if ($resultCampeon->num_rows > 0) {
                         while ($filaCampeon = mysqli_fetch_array($resultCampeon)) {
                 ?>
-                            <div class="flex flex-row flex-nowrap items-center justify-center mt-4">
-                                <img class="h-32 w-32 lg:h-40 lg:w-40 text-xs ml-2 mr-10" src="Imagenes/<?php echo $filaCampeon['fotoEquipo'] ?>">
-                                <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">
+                            <div class="flex flex-col items-center justify-center mt-4">
+                                <img class="h-24 w-24 rounded-full object-cover" src="Imagenes/<?php echo $filaCampeon['fotoEquipo'] ?>" alt="<?php echo $filaCampeon['nombreEquipo']; ?>">
+                                <h3 class="mt-2 text-lg font-medium text-gray-900">
                                     <?php echo $filaCampeon['nombreEquipo']; ?>
-                                </p>
+                                </h3>
                             </div>
-                <?php
+                        <?php
                         }
                     } else {
                         ?>
-                        <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">En disputa...</p>
-                        <?php
+                        <p class="text-lg font-medium text-gray-900 text-center">En disputa...</p>
+                <?php
                     }
                 }
                 ?>
             </div>
         </div>
     </div>
+</div>
+
 <?php
 }
 

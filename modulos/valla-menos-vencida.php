@@ -1,3 +1,7 @@
+<head>
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 <?php
 // Define un array con la información de los campeones
 $equipos = [
@@ -28,6 +32,7 @@ $equipos = [
 
 ];
 ?>
+
 <h1 class="text-2xl lg:text-5xl font-bold tracking-tight flex justify-center text-white mt-5 ">
     Equipos con la valla menos vencida
 </h1>
@@ -38,45 +43,47 @@ function mostrarVallaMenosVencida($categoria_id, $con)
 {
 
 ?>
-    <div class="flex justify-center mt-10">
-        <div class="bg-white py-6 w-full lg:w-2/4 rounded-lg">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
-                <?php
-                $idEdicion = $_GET['idEdicion'];
-                $sqlMostrarValla = "SELECT e.nombre AS nombreEquipo, e.foto AS fotoEquipo, cat.nombreCategoria AS nombreCategoria
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="px-4 py-6">
+                <div class="mt-4">
+                    <?php
+                    $idEdicion = $_GET['idEdicion'];
+                    $sqlMostrarValla = "SELECT e.nombre AS nombreEquipo, e.foto AS fotoEquipo, cat.nombreCategoria AS nombreCategoria
                  FROM vallas_menos_vencidas AS valla
                  INNER JOIN equipos e ON valla.idEquipo = e.id
                  INNER JOIN categorias cat ON valla.idCategoria = cat.id 
                  WHERE valla.idCategoria = $categoria_id AND valla.idEdicion = $idEdicion";
-                $stmtValla = mysqli_prepare($con, $sqlMostrarValla);
-                if (!$stmtValla) {
-                    die('Error en la consulta: ' . mysqli_error($con));
-                } else {
-                    mysqli_stmt_execute($stmtValla);
-                    $resultValla = mysqli_stmt_get_result($stmtValla);
-
-                    if ($resultValla->num_rows > 0) {
-                        while ($filaValla = mysqli_fetch_array($resultValla)) {
-                ?>
-                            <h1 class="text-2xl lg:text-5xl font-bold tracking-tight flex justify-center text-black ">
-                                <?php echo $filaValla['nombreCategoria']?>
-                            </h1>
-                            <br />
-                            <div class="flex flex-row flex-nowrap items-center justify-center mt-4">
-                                <img class="h-32 w-32 lg:h-40 lg:w-40 text-xs ml-2 mr-10" src="Imagenes/<?php echo $filaValla['fotoEquipo'] ?>">
-                                <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">
-                                    <?php echo $filaValla['nombreEquipo']; ?>
-                                </p>
-                            </div>
-                        <?php
-                        }
+                    $stmtValla = mysqli_prepare($con, $sqlMostrarValla);
+                    if (!$stmtValla) {
+                        die('Error en la consulta: ' . mysqli_error($con));
                     } else {
-                        ?>
-                        <p class="text-3xl lg:text-4xl font-bold text-black flex items-center">Sin Registros</p>
-                <?php
+                        mysqli_stmt_execute($stmtValla);
+                        $resultValla = mysqli_stmt_get_result($stmtValla);
+
+                        if ($resultValla->num_rows > 0) {
+                            while ($filaValla = mysqli_fetch_array($resultValla)) {
+                    ?>
+                                <h1 class="text-center text-2xl font-bold text-gray-800 mb-4">
+                                    <?php echo $filaValla['nombreCategoria'] ?>
+                                </h1>
+                                <br />
+                                <div class="flex flex-col items-center justify-center">
+                                    <img class="h-24 w-24 rounded-full object-cover" src="Imagenes/<?php echo $filaValla['fotoEquipo'] ?>">
+                                    <p class="mt-2 text-lg font-medium text-gray-900">
+                                        <?php echo $filaValla['nombreEquipo']; ?>
+                                    </p>
+                                </div>
+                            <?php
+                            }
+                        } else {
+                            ?>
+                            <p class="text-lg font-medium text-gray-900 text-center">Sin Registros</p>
+                    <?php
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
     </div>

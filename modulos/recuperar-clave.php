@@ -6,10 +6,12 @@ use PHPMailer\PHPMailer\Exception;
 require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
+require_once './PHPMailer/config.php';
+$clave = $config['smtp_password'];
 
 if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
     $email = $_POST['email'];
-    $sqlVerificarExistencia = "SELECT us.email, us.token FROM usuarios as us WHERE email = ?";
+    $sqlVerificarExistencia = "SELECT us.email, us.token, us.correo_verificado, us.id FROM usuarios as us WHERE LOWER(email) = LOWER(?)";
     $stmt = mysqli_prepare($con, $sqlVerificarExistencia);
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
@@ -17,31 +19,53 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
 
     if ($resultado->num_rows > 0) {
         while ($row = mysqli_fetch_array($resultado)) {
-            $mail = new PHPMailer(true); // Crear una instancia de PHPMailer
-            try {
+            $correo_verificado = $row['correo_verificado'];
+            if ($correo_verificado === 1) {
                 $token = $row['token'];
-                // Configurar la conexión SMTP
-                $mail->isSMTP();
-                $mail->Host = 'c248.ferozo.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Cambiar por tu dirección de correo electrónico
-                $mail->Password = ''; // Cambiar por tu contraseña
-                $mail->SMTPSecure = 'ssl';
-                $mail->Port = 465;
+                $expiracion = date('Y-m-d H:i:s', strtotime('+24 hours'));
+                // Almacena el tiempo de expiración del token en la base de datos
+                $sql_guardar_expiracion = "UPDATE usuarios SET expiracion_token = ? WHERE token = ?";
+                $stmt_guardar_expiracion = mysqli_prepare($con, $sql_guardar_expiracion);
+                mysqli_stmt_bind_param($stmt_guardar_expiracion, "ss", $expiracion, $token);
+                mysqli_stmt_execute($stmt_guardar_expiracion);
 
-                // Configurar el remitente y el destinatario
-                $mail->setFrom('torneos-mitai@xn--torneosmita-ycb.com', 'Torneos Mitai'); // Cambiar por tu dirección de correo electrónico
-                $mail->addAddress($row['email']);
+                $mail = new PHPMailer(true); // Crear una instancia de PHPMailer
+                try {
+                    // Configurar la conexión SMTP
+                    $mail->isSMTP();
+                    $mail->Host = 'c248.ferozo.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Cambiar por tu dirección de correo electrónico
+                    $mail->Password = $clave; // Cambiar por tu contraseña
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->Port = 465;
 
-                // Configurar el contenido del correo electrónico
-                $mail->isHTML(true);
-                $mail->CharSet = 'UTF-8';
-                $mail->Subject = 'Verificación de correo electrónico';
-                $mail->Body = "Haga clic en el siguiente enlace para Recuperar su contraseña: <a href='http://localhost/MITAI/index.php?modulo=formulario-clave&token=". urlencode(base64_encode($token)) . "'>Recuperar Contraseña</a>";
+                    // Configurar el remitente y el destinatario
+                    $mail->setFrom('torneos-mitai@xn--torneosmita-ycb.com', 'Torneos Mitai'); // Cambiar por tu dirección de correo electrónico
+                    $mail->addAddress($row['email']);
 
-                // Enviar el correo electrónico
-                $mail->send();
-                echo '<script> 
+                    // Configurar el contenido del correo electrónico
+                    $mail->isHTML(true);
+                    $mail->CharSet = 'UTF-8';
+                    $mail->Subject = 'Recuperación';
+                    $body = '<html>';
+                    $body .= '<head><style>';
+                    $body .= 'body { font-family: Arial, sans-serif; }';
+                    $body .= 'a { color: #007bff; text-decoration: none; }';
+                    $body .= 'a:hover { text-decoration: underline; }';
+                    $body .= '</style></head>';
+                    $body .= '<body>';
+                    $body .= '<p>Hola,</p>';
+                    $body .= '<p>Haga clic en el siguiente enlace para recuperar su contraseña. Este enlace será válido por 24 horas.</p>';
+                    $body .= '<p><a href="http://localhost/MITAI/index.php?modulo=formulario-clave&token=' . urlencode(base64_encode($token)) . '">Recuperar Contraseña</a></p>';
+                    $body .= '<p>Si no solicitó este cambio, ignore este correo electrónico.</p>';
+                    $body .= '</body></html>';
+
+                    $mail->Body = $body;
+
+                    // Enviar el correo electrónico
+                    $mail->send();
+                    echo '<script> 
                 Swal.fire({
                     title: "¡Correo enviado!",
                     text: "Se ha enviado un correo electrónico de verificación. Por favor, verifique su correo electrónico para recuperar su contraseña.",
@@ -50,9 +74,9 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                     confirmButtonText: "Aceptar"
                 }); 
         </script>';
-            } catch (Exception $e) {
-                echo $e;
-                echo '<script> 
+                } catch (Exception $e) {
+                    echo $e;
+                    echo '<script> 
                 Swal.fire({
                     title: "¡Error!",
                     text: "No se pudo enviar el correo electrónico, por favor intentelo de nuevo mas tarde.",
@@ -64,6 +88,71 @@ if (!empty($_GET['accion']) && $_GET['accion'] == 'recuperar') {
                     }
                 }); 
             </script>';
+                }
+            } else {
+                $token_nuevo = bin2hex(random_bytes(16));
+                $idUsuario = $row['id'];
+                $insertarUsuario = "UPDATE usuarios SET token = ? WHERE id = ?";
+                $stmt = mysqli_prepare($con, $insertarUsuario);
+
+                mysqli_stmt_bind_param($stmt, "si", $token_nuevo, $idUsuario);
+
+                $insertarResultado = mysqli_stmt_execute($stmt);
+
+                if ($insertarResultado) {
+                    $mail = new PHPMailer(true); // Crear una instancia de PHPMailer
+                    try {
+                        // Configurar la conexión SMTP
+                        $mail->isSMTP();
+                        $mail->Host = 'c248.ferozo.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'torneos-mitai@xn--torneosmita-ycb.com'; // Cambiar por tu dirección de correo electrónico
+                        $mail->Password = $clave; // Cambiar por tu contraseña
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Port = 465;
+
+                        // Configurar el remitente y el destinatario
+                        $mail->setFrom('torneos-mitai@xn--torneosmita-ycb.com', 'Torneos Mitai'); // Cambiar por tu dirección de correo electrónico
+                        $mail->addAddress($email);
+
+                        // Configurar el contenido del correo electrónico
+                        $mail->isHTML(true);
+                        $mail->CharSet = 'UTF-8';
+                        $mail->Subject = 'Verificación de correo electrónico';
+                        $body = '<html>';
+                        $body .= '<head><style>';
+                        $body .= 'body { font-family: Arial, sans-serif; }';
+                        $body .= 'a { color: #007bff; text-decoration: none; }';
+                        $body .= 'a:hover { text-decoration: underline; }';
+                        $body .= '</style></head>';
+                        $body .= '<body>';
+                        $body .= '<p>Hola,</p>';
+                        $body .= '<p>Haga clic en el siguiente enlace para verificar su correo electrónico:</p>';
+                        $body .= '<p><a href="http://localhost/MITAI/index.php?modulo=verificar-email&token=' . urlencode(base64_encode($token_nuevo)) . '">Verificar correo electrónico</a></p>';
+                        $body .= '<p>Si no solicitó esta verificación, ignore este correo electrónico.</p>';
+                        $body .= '</body></html>';
+
+                        $mail->Body = $body;
+
+                        // Enviar el correo electrónico
+                        $mail->send();
+                        echo '<script> 
+                        Swal.fire({
+                            title: "¡Correo enviado!",
+                            text: "Se ha enviado un correo electrónico de verificación. Es necesario validar su correo para poder recuperar su contraseña",
+                            icon: "success",
+                            confirmButtonColor: "#4caf50",
+                            confirmButtonText: "Aceptar"
+                        }); 
+                </script>';
+                    } catch (Exception $e) {
+                        echo $e;
+                        // Manejar cualquier excepción
+                        echo "<script>alert('Error: No se pudo enviar el correo electrónico de verificación. Por favor, inténtelo de nuevo más tarde.');</script>";
+                    }
+                } else {
+                    echo "Correo no enviado";
+                }
             }
         }
     } else {

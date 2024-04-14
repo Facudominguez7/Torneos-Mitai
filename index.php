@@ -40,11 +40,17 @@ if (isset($_GET['idEdicion'])) {
             background-color: #4a90e2;
             color: white;
         }
-    </style>
 
+        #mi_mapa {
+            height: 400px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <?php
-if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave' ) {
+if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave') {
 ?>
 
     <body class="bg-[--color-primary]">
@@ -67,7 +73,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                         <?php
                         if (!isset($_GET['idEdicion'])) {
                         ?>
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Torneos Mitaí</span>
+                            <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Torneos Mitaí</span>
                             <?php
                         } else {
                             $idEdicion = $_GET['idEdicion'];
@@ -79,12 +85,12 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                             if ($resultEdiciones->num_rows > 0) {
                                 while ($filaEdiciones = mysqli_fetch_array($resultEdiciones)) {
                             ?>
-                                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"><?php echo $filaEdiciones['nombre'] ?></span>
+                                    <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white"><?php echo $filaEdiciones['nombre'] ?></span>
                                 <?php
                                 }
                             } else {
                                 ?>
-                                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Torneos Mitaí</span>
+                                <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Torneos Mitaí</span>
                             <?php
                             }
                             ?>
@@ -312,7 +318,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
             });
         </script>
         <?php
-        if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave' )) {
+        if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave')) {
         ?>
             <header class="bg-[--color-primary] shadow">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
@@ -343,9 +349,15 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                 <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center hidden md:block" style="background-image: url('Imagenes/fondo-texto-1.jpg'); background-size: cover; background-position: center;">
                     <h1 class="md:text-4xl md:font-bold md:text-white md:mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                     <p class="md:text-white md:mb-5">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
-                    <a href="index.php?modulo=registro" class="mt-2  md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
-                        Registrarse
-                    </a>
+                    <?php
+                    if (empty($_SESSION['nombre_usuario'])) {
+                    ?>
+                        <a href="index.php?modulo=registro" class="mt-2  md:inline-block md:bg-blue-600 md:hover:bg-blue-200 md:text-white md:font-bold md:py-3 md:px-8 md:rounded-lg md:transition-all md:duration-300 md:shadow-lg">
+                            Registrarse
+                        </a>
+                    <?php
+                    }
+                    ?>
                 </div>
 
                 <!-- Segundo diseño para pantallas pequeñas -->
@@ -354,9 +366,15 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                         <div>
                             <h1 class="text-4xl font-bold text-white mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                             <p class="text-white mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
-                            <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
-                                Registrarse
-                            </a>
+                            <?php
+                            if (empty($_SESSION['nombre_usuario'])) {
+                            ?>
+                                <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
+                                    Registrarse
+                                </a>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <img src="Imagenes/fondo-texto-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
@@ -373,21 +391,50 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                             ['url' => 'index.php?modulo=goleadores&idEdicion=' . $idEdicion,  'texto' => 'Goleadores'],
                         ];
                         ?>
-                        <div class="flex justify-center flex-wrap">
+                        <div class="flex justify-center flex-col space-y-4 md:flex-row md:space-y-0 md:flex-wrap md:space-x-4 ">
                             <?php foreach ($botones as $boton) : ?>
-                                <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mr-4 mb-4 hover:bg-blue-700 transition-all duration-300">
-                                    <a href="<?php echo $boton['url']; ?>"><?php echo $boton['texto']; ?></a>
-                                </button>
+                                <a href="<?php echo $boton['url']; ?>">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                        <?php echo $boton['texto']; ?>
+                                    </button>
+                                </a>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
-                </div>
 
-                <div class="flex justify-center items-center">
-                    <div class="flex justify-center items-center flex-row w-full md:w-1/2 mb-5">
-                        <img class="md:w-1/2 w-full h-auto rounded-xl" src="Imagenes/mitai-mbarete.jpg" alt="Escudo La Isla">
+                    <div class="mt-8">
+                        <div id="mi_mapa" class="block w-full rounded-lg"></div>
+                        <a id="googleMapsLink" href="" target="_blank" rel="noopener noreferrer" class="mt-2">
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300 mt-5">
+                                Abrir Ubicacion
+                            </button>
+                        </a>
                     </div>
                 </div>
+
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const latitud = -27.400747; // Reemplaza con la latitud del complejo deportivo Mbaréte
+                        const longitud = -55.941036; // Reemplaza con la longitud del complejo deportivo Mbaréte
+                        const nombreUbicacion = "Complejo Deportivo Mbarete";
+
+                        let map = L.map('mi_mapa', {
+                            dragging: false, // Desactivar el arrastre del mapa
+                            zoomControl: false,
+                            scrollWheelZoom: false
+                        }).setView([latitud, longitud], 15);
+
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        L.marker([latitud, longitud]).addTo(map).bindPopup(nombreUbicacion).openPopup();
+
+                        let googleMapsLink = document.getElementById('googleMapsLink');
+                        googleMapsLink.href = `https://www.google.com/maps/dir/?api=1&destination=${latitud},${longitud}`;
+                    });
+                </script>
             <?php
             }
             ?>

@@ -1163,6 +1163,21 @@ input:checked + .toggle-bg {
   margin: 0px;
 }
 
+.mx-24 {
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
+
+.mx-6 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.mx-8 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1252,8 +1267,20 @@ input:checked + .toggle-bg {
   margin-top: 1.25rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .mt-8 {
   margin-top: 2rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
+.mr-5 {
+  margin-right: 1.25rem;
 }
 
 .block {
@@ -1344,6 +1371,14 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -1402,6 +1437,14 @@ input:checked + .toggle-bg {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.w-12 {
+  width: 3rem;
 }
 
 .max-w-2xl {
@@ -1572,6 +1615,30 @@ input:checked + .toggle-bg {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.75rem * var(--tw-space-x-reverse));
   margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -1774,6 +1841,11 @@ input:checked + .toggle-bg {
   background-repeat: no-repeat;
 }
 
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .p-0 {
   padding: 0px;
 }
@@ -1872,6 +1944,11 @@ input:checked + .toggle-bg {
   padding-bottom: 0.75rem;
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -1956,6 +2033,10 @@ input:checked + .toggle-bg {
 
 .font-bold {
   font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
 }
 
 .font-medium {
@@ -2226,6 +2307,11 @@ input:checked + .toggle-bg {
   background-color: rgb(142 75 16 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-blue-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(28 100 242 / var(--tw-bg-opacity));
+}
+
 .hover\:text-blue-600:hover {
   --tw-text-opacity: 1;
   color: rgb(28 100 242 / var(--tw-text-opacity));
@@ -2459,6 +2545,10 @@ input:checked + .toggle-bg {
 }
 
 @media (min-width: 640px) {
+  .sm\:p-6 {
+    padding: 1.5rem;
+  }
+
   .sm\:px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -2473,6 +2563,11 @@ input:checked + .toggle-bg {
 @media (min-width: 768px) {
   .md\:col-span-5 {
     grid-column: span 5 / span 5;
+  }
+
+  .md\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
   .md\:mx-auto {
@@ -2512,6 +2607,10 @@ input:checked + .toggle-bg {
     width: 50%;
   }
 
+  .md\:w-2\/5 {
+    width: 40%;
+  }
+
   .md\:w-auto {
     width: auto;
   }
@@ -2524,10 +2623,26 @@ input:checked + .toggle-bg {
     flex-direction: row;
   }
 
+  .md\:flex-wrap {
+    flex-wrap: wrap;
+  }
+
   .md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(2rem * var(--tw-space-x-reverse));
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .md\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1rem * var(--tw-space-x-reverse));
+    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .md\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
   .md\:rounded-lg {
