@@ -7,15 +7,16 @@ if (!empty([$_GET['accion']])) {
         $categoria = $_POST['categoria'];
         $edicion = $_POST['edicion'];
         $equipo = $_POST['equipo'];
+        $goles = $_POST['goles'];
         //Verifico que no exista ese equipo
-        $sql = "SELECT * FROM tabla_goleadores where nombre = '$nombre' AND idCategoria = $categoria AND idEdicion = $edicion";
+        $sql = "SELECT * FROM tabla_goleadores where nombre = '$nombre' AND idCategoria = $categoria AND idEdicion = $edicion AND cantidadGoles = $goles";
         $sql = mysqli_query($con, $sql);
         if (mysqli_num_rows($sql) != 0) {
             echo "<script> alert('EL JUGADOR YA EXISTE EN LA BD');</script>";
         } else {
 
             //insertar jugador
-            $sql = "INSERT INTO tabla_goleadores (nombre,idCategoria,idEquipo,idEdicion) values ('$nombre', $categoria, '$equipo', $edicion)";
+            $sql = "INSERT INTO tabla_goleadores (nombre,idCategoria,idEquipo,idEdicion, cantidadGoles) values ('$nombre', $categoria, '$equipo', $edicion, $goles)";
             $resultado = mysqli_query($con, $sql);
             if (mysqli_error($con)) {
                 echo "<script>alert('Error no se pudo insertar el registro');</script>";
@@ -97,6 +98,12 @@ if (!empty([$_GET['accion']])) {
                         }
                         ?>
                     </select>
+                </div>
+                <div class="mb-5">
+                    <label for="goles" class="mb-3 block text-base font-medium text-white">
+                        Goles
+                    </label>
+                    <input type="number" name="goles" id="goles"  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                 </div>
                 <input type="text" name="edicion" id="edicion" value="<?php echo $_GET['idEdicion'] ?>" class="hidden w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                 <input type="text" name="categoria" id="categoria" value="<?php echo $_GET['idCategoria'] ?>" class="hidden w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
