@@ -379,6 +379,13 @@
                                                             </button>
                                                         </a>
                                                     </div>
+                                                    <div class="col-span-6 lg:col-span-3 flex items-center justify-center">
+                                                        <a href="index.php?modulo=editar-partido&accion=editar&idPartido=<?php echo $idPartido ?>&idCategoria=<?php echo $idCategoria?>">
+                                                            <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                                                Editar
+                                                            </button>
+                                                        </a>
+                                                    </div>
                                             <?php
                                                 }
                                             }
