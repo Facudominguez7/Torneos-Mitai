@@ -342,7 +342,28 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
         <main>
             <?php
             if (!empty($_GET['modulo'])) {
-                include('./modulos/' . $_GET['modulo'] . '.php');
+                $modulo = $_GET['modulo'];
+
+                switch (true) {
+                    case strpos($modulo, 'editar') !== false:
+                        $ruta_modulo = './modulos/editar/' . $modulo . '.php';
+                        break;
+                    case strpos($modulo, 'agregar') !== false:
+                        $ruta_modulo = './modulos/agregar/' . $modulo . '.php';
+                        break;
+                    case strpos($modulo, 'cargar') !== false:
+                        $ruta_modulo = './modulos/cargar/' . $modulo . '.php';
+                        break;
+                    default:
+                        $ruta_modulo = './modulos/' . $modulo . '.php';
+                        break;
+                }
+                
+                if (file_exists($ruta_modulo)) {
+                    include($ruta_modulo);
+                } else {
+                    echo "El módulo solicitado no existe.";
+                }
             } else {
             ?>
                 <!-- Primer diseño para pantallas grandes -->
