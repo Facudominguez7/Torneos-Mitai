@@ -1,5 +1,5 @@
 <?php $idEdicion = $_GET['idEdicion'] ?>
-<header class="bg-[--color-primary] shadow">
+<header class="bg-[--color-primary]">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
         <?php
         $idCategoria = $_GET['id'];
@@ -63,7 +63,7 @@
 <section>
     <div class="relative">
         <div id="desplegableFecha" class="flex justify-start mb-4 mt-10 ml-10">
-            <button id="dropdownButton" class="flex items-center middle none rounded-lg bg-blue-500 py-6 px-12 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+            <button id="dropdownButton" class="flex items-center middle none rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-10 font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-500/20 transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                 <span class="mr-1 text-2xl">Fechas</span>
                 <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
@@ -71,7 +71,7 @@
             </button>
         </div>
         <!-- Dropdown menu -->
-        <div id="dropdownMenu" class="hidden font-normal bg-blue-500 divide-y divide-gray-100  rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-2 ml-10 z-10">
+        <div id="dropdownMenu" class="hidden overflow-y-auto font-normal bg-gray-800 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-2 ml-10 z-10 max-h-80">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400">
                 <?php
                 $idCategoria = $_GET['id'];
@@ -84,9 +84,10 @@
                     while ($filaFecha = mysqli_fetch_array($resultFechas)) {
 
                 ?>
-                        <li>
+                        <li class="py-1">
                             <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria; ?>&fecha=<?php echo $filaFecha['id']; ?>&idEdicion=<?php echo $idEdicion ?>" class="block px-4 py-2 text-white text-xl"><?php echo $filaFecha['nombre']; ?></a>
                         </li>
+                        <hr class="border-t border-white">
                     <?php
                     }
                 } else {
@@ -156,7 +157,7 @@
         }
         ?>
         <a href="index.php?modulo=tabla-goleadores&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $idEdicion ?>">
-            <button class="mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+            <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                 Tabla de Goleadores
             </button>
         </a>
@@ -254,6 +255,13 @@
             ?>
                         <!-- Grupo A -->
                         <div id="grupos" class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
+                            <a class="flex justify-center" href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>">
+                                <button class="middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-semibold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                    Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre']) ?>
+                                </button>
+                            </a>
+                            <a class="block px-4 py-2 text-black text-xl">Debe seleccionar una fecha para ver los partidos</a>
+
                             <div class="w-full">
                                 <?php
                                 if (isset($_SESSION['rol'])) {
@@ -269,12 +277,7 @@
                                     }
                                 }
                                 ?>
-                                <a class="block px-4 py-2 text-black text-xl">Debe seleccionar una fecha para ver los partidos</a>
-                                <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>">
-                                    <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                        Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre']) ?>
-                                    </button>
-                                </a>
+
                             </div>
                         </div>
                     <?php
@@ -314,6 +317,11 @@
                                     $diaPartido = $filaDiaPartido['dia'];
                                 ?>
                                     <h3 class="text-xl font-semibold mb-4 text-gray-800 text-center"><?php echo htmlspecialchars($fila['nombre']) ?> <?php echo $diaPartido ?></h3>
+                                    <a class="flex justify-center mb-4" href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
+                                        <button class="middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-semibold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                            Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre']) ?>
+                                        </button>
+                                    </a>
                             <?php
                                 }
                             }
@@ -380,7 +388,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-span-6 lg:col-span-3 flex items-center justify-center">
-                                                        <a href="index.php?modulo=editar-partido&accion=editar&idPartido=<?php echo $idPartido ?>&idCategoria=<?php echo $idCategoria?>">
+                                                        <a href="index.php?modulo=editar-partido&accion=editar&idPartido=<?php echo $idPartido ?>&idCategoria=<?php echo $idCategoria ?>&idFecha=<?php echo $idFecha ?>&idEdicion=<?php echo $idEdicion ?>">
                                                             <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                                                 Editar
                                                             </button>
@@ -409,11 +417,7 @@
                                     }
                                 }
                                 ?>
-                                <a href="index.php?modulo=tabla-posiciones&accion=cargar&idCategoria=<?php echo $id ?>&idGrupo=<?php echo $fila['id'] ?>&idFecha=<?php echo $idFecha ?>">
-                                    <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                                        Tabla de Posiciones <?php echo htmlspecialchars($fila['nombre']) ?>
-                                    </button>
-                                </a>
+
                             </div>
                         </div>
                     <?php

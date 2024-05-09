@@ -108,7 +108,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                     <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                         <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li>
-                                <a href="<?php echo isset($_SESSION['edicionSeleccionada']) ? 'index.php?idEdicion=' . $_SESSION['edicionSeleccionada'] : 'index.php' ?>" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Inicio</a>
+                                <a href="<?php echo isset($_SESSION['edicionSeleccionada']) ? 'index.php?idEdicion=' . $_SESSION['edicionSeleccionada'] : 'index.php' ?>" class="block py-2 px-3 text-white bg-gray-800  rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Inicio</a>
                             </li>
                             <li>
                                 <div class="flex flex-row items-center">
@@ -320,7 +320,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
         <?php
         if (!isset($_GET['modulo']) || ($_GET['modulo'] !== 'iniciar-sesion' && $_GET['modulo'] !== 'registro' && $_GET['modulo'] !== 'recuperar-clave' && $_GET['modulo'] !== 'formulario-clave')) {
         ?>
-            <header class="bg-[--color-primary] shadow">
+            <header class="bg-[--color-primary]">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
                     <?php
                     if (!empty($_SESSION['nombre_usuario'])) {
@@ -358,7 +358,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                         $ruta_modulo = './modulos/' . $modulo . '.php';
                         break;
                 }
-                
+
                 if (file_exists($ruta_modulo)) {
                     include($ruta_modulo);
                 } else {
@@ -367,7 +367,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
             } else {
             ?>
                 <!-- Primer diseño para pantallas grandes -->
-                <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center hidden md:block" style="background-image: url('Imagenes/fondo-texto-1.jpg'); background-size: cover; background-position: center;">
+                <div class="md:container md:mx-auto md:px-4 md:py-8 md:text-center hidden md:block" style="background-image: url('Imagenes/fondo-texto-1.jpg'); background-size: cover; background-position: center; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
                     <h1 class="md:text-4xl md:font-bold md:text-white md:mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                     <p class="md:text-white md:mb-5">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
                     <?php
@@ -381,27 +381,29 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                     ?>
                 </div>
 
+
                 <!-- Segundo diseño para pantallas pequeñas -->
-                <div class="container mx-auto px-4 py-8 text-center relative md:hidden">
-                    <div class="absolute inset-0 flex justify-center items-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="container mx-auto w-11/12 text-center relative md:hidden">
+                    <div class="absolute inset-0 flex justify-center items-center" style="background-color: rgba(0, 0, 0, 0.5); box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
                         <div>
-                            <h1 class="text-4xl font-bold text-white mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
-                            <p class="text-white mb-6">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
+                            <h1 class="text-3xl font-bold text-white mb-4">¡Recibe las últimas actualizaciones del torneo!</h1>
                             <?php
                             if (empty($_SESSION['nombre_usuario'])) {
                             ?>
-                                <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
+                                <a href="index.php?modulo=registro" class="inline-block bg-blue-600 hover:bg-blue-200 text-white font-bold py-2 px-5 rounded-lg transition-all duration-300 shadow-lg">
                                     Registrarse
                                 </a>
                             <?php
                             }
                             ?>
+                            <p class="text-white text-center mt-24">Regístrate para estar al tanto de todas las noticias y novedades del torneo.</p>
+
                         </div>
                     </div>
                     <img src="Imagenes/fondo-texto-1.jpg" alt="Imagen de fondo" class="w-full h-1/5">
                 </div>
 
-                <div class="container mx-auto px-4 py-8 text-center">
+                <div class="container mx-auto px-4 py-8 text-start">
                     <?php if (isset($_GET['idEdicion'])) : ?>
                         <?php
                         $idEdicion = $_GET['idEdicion'];
@@ -412,21 +414,20 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                             ['url' => 'index.php?modulo=goleadores&idEdicion=' . $idEdicion,  'texto' => 'Goleadores'],
                         ];
                         ?>
-                        <div class="flex justify-center flex-col space-y-4 md:flex-row md:space-y-0 md:flex-wrap md:space-x-4 ">
+                        <div class="flex justify-start flex-row flex-wrap space-x-2 md:justify-center md:flex-row md:space-y-0 md:flex-wrap md:space-x-4">
                             <?php foreach ($botones as $boton) : ?>
                                 <a href="<?php echo $boton['url']; ?>">
-                                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-300">
+                                    <button class="bg-gray-800 hover:bg-gray-900 mt-2 mb-2 text-white py-2 px-4 rounded-full transition-all duration-300 md:py-3 md:px-6 md:rounded-lg">
                                         <?php echo $boton['texto']; ?>
                                     </button>
                                 </a>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
-
                     <div class="mt-8">
                         <div id="mi_mapa" class="block w-full rounded-lg"></div>
-                        <a id="googleMapsLink" href="" target="_blank" rel="noopener noreferrer" class="mt-2">
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300 mt-5">
+                        <a id="googleMapsLink" href="" target="_blank" rel="noopener noreferrer" class="mt-2 flex justify-center">
+                            <button class=" bg-gray-800 hover:bg-gray-900  text-white py-2 px-4 rounded transition-all duration-300 mt-5">
                                 Abrir Ubicacion
                             </button>
                         </a>
