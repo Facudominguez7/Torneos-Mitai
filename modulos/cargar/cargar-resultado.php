@@ -1,125 +1,133 @@
 <?php
+
 if (!empty($_GET['accion'])) {
     $idPartido = $_GET['idPartido'];
     $idGrupo = $_GET['idGrupo'];
     $idFecha = $_GET['idFecha'];
     $idCategoria = $_GET['idCategoria'];
     $idEdicion = $_GET['idEdicion'];
+
     if ($_GET['accion'] == 'cargarResultado') {
         $golesEquipoLocal = $_POST['golesEquipoLocal'];
         $golesEquipoVisitante = $_POST['golesEquipoVisitante'];
         $jugado = 1;
 
-        // Actualizar los resultados del partido en la tabla partidos
-        $sqlActualizarResultado = "UPDATE partidos SET golesEquipoLocal = ?, golesEquipoVisitante = ?, jugado = ? WHERE id = ?";
-        $stmtActualizarResultado = mysqli_prepare($con, $sqlActualizarResultado);
-        mysqli_stmt_bind_param($stmtActualizarResultado, "iiii", $golesEquipoLocal, $golesEquipoVisitante, $jugado, $idPartido);
-        mysqli_stmt_execute($stmtActualizarResultado);
+        // Obtener el nombre de la fecha
+        $sqlNombreFecha = "SELECT nombre FROM fechas WHERE id = ?";
+        $stmtNombreFecha = mysqli_prepare($con, $sqlNombreFecha);
+        mysqli_stmt_bind_param($stmtNombreFecha, "i", $idFecha);
+        mysqli_stmt_execute($stmtNombreFecha);
+        $resultNombreFecha = mysqli_stmt_get_result($stmtNombreFecha);
+        $filaNombreFecha = mysqli_fetch_assoc($resultNombreFecha);
+        $nombreFecha = $filaNombreFecha['nombre'];
 
-        function verificarEquipoEnTablaPosiciones($con, $idEquipo, $idGrupo)
-        {
-            $sqlVerificarEquipo = "SELECT COUNT(*) AS count FROM tabla_posiciones WHERE idEquipo = ? AND idGrupo = ?";
-            $stmtVerificarEquipo = mysqli_prepare($con, $sqlVerificarEquipo);
-            mysqli_stmt_bind_param($stmtVerificarEquipo, "ii", $idEquipo, $idGrupo);
-            mysqli_stmt_execute($stmtVerificarEquipo);
-            $resultVerificarEquipo = mysqli_stmt_get_result($stmtVerificarEquipo);
-            $row = mysqli_fetch_assoc($resultVerificarEquipo);
-            return $row['count'] > 0;
-        }
+        // Comprobar si el nombre de la fecha contiene "cuartos de final"
+        if (stripos($nombreFecha, "cuartos de final") === false) {
+            // Actualizar los resultados del partido en la tabla partidos
+            $sqlActualizarResultado = "UPDATE partidos SET golesEquipoLocal = ?, golesEquipoVisitante = ?, jugado = ? WHERE id = ?";
+            $stmtActualizarResultado = mysqli_prepare($con, $sqlActualizarResultado);
+            mysqli_stmt_bind_param($stmtActualizarResultado, "iiii", $golesEquipoLocal, $golesEquipoVisitante, $jugado, $idPartido);
+            mysqli_stmt_execute($stmtActualizarResultado);
 
-        function agregarEquipoATablaPosiciones($con, $idEquipo, $idGrupo)
-        {
-            $sqlAgregarEquipo = "INSERT INTO tabla_posiciones (idEquipo, idGrupo, golesFavor, golesContra, jugado, ganado, empatado, puntos) VALUES (?, ?, 0, 0, 0, 0, 0, 0)";
-            $stmtAgregarEquipo = mysqli_prepare($con, $sqlAgregarEquipo);
-            mysqli_stmt_bind_param($stmtAgregarEquipo, "ii", $idEquipo, $idGrupo);
-            mysqli_stmt_execute($stmtAgregarEquipo);
-            return mysqli_stmt_affected_rows($stmtAgregarEquipo);
-            
-        }
-
-        // Verificar y agregar equipos ausentes en la tabla de posiciones
-        function verificarYAgregarEquipo($con, $idEquipo, $idGrupo)
-        {
-            if (!verificarEquipoEnTablaPosiciones($con, $idEquipo, $idGrupo)) {
-                agregarEquipoATablaPosiciones($con, $idEquipo, $idGrupo);
+            function verificarEquipoEnTablaPosiciones($con, $idEquipo, $idGrupo) {
+                $sqlVerificarEquipo = "SELECT COUNT(*) AS count FROM tabla_posiciones WHERE idEquipo = ? AND idGrupo = ?";
+                $stmtVerificarEquipo = mysqli_prepare($con, $sqlVerificarEquipo);
+                mysqli_stmt_bind_param($stmtVerificarEquipo, "ii", $idEquipo, $idGrupo);
+                mysqli_stmt_execute($stmtVerificarEquipo);
+                $resultVerificarEquipo = mysqli_stmt_get_result($stmtVerificarEquipo);
+                $row = mysqli_fetch_assoc($resultVerificarEquipo);
+                return $row['count'] > 0;
             }
-        }
 
-
-        //Obtener los datos de los equipos involucrados
-        $sqlDatosEquiposInvolucrados = "SELECT idEquipoLocal, idEquipoVisitante FROM partidos WHERE id = ?";
-        $stmtDatosEquiposInvolucrados = mysqli_prepare($con, $sqlDatosEquiposInvolucrados);
-        mysqli_stmt_bind_param($stmtDatosEquiposInvolucrados, "i", $idPartido);
-        mysqli_stmt_execute($stmtDatosEquiposInvolucrados);
-        $resultDatosEquiposInvolucrados = mysqli_stmt_get_result($stmtDatosEquiposInvolucrados);
-        $filaDatosEquiposInvolucrados = mysqli_fetch_assoc($resultDatosEquiposInvolucrados);
-
-        $idEquipoLocal = $filaDatosEquiposInvolucrados['idEquipoLocal'];
-        $idEquipoVisitante = $filaDatosEquiposInvolucrados['idEquipoVisitante'];
-
-        // Verificar y agregar equipos ausentes en la tabla de posiciones
-        verificarYAgregarEquipo($con, $idEquipoLocal, $idGrupo);
-        verificarYAgregarEquipo($con, $idEquipoVisitante, $idGrupo);
-
-        function actualizarTablaPosiciones($con, $idEquipo, $idGrupo, $golesFavor, $golesContra, $puntos, $ganados, $empatados)
-        {
-            $diferenciaGoles = $golesFavor - $golesContra;
-            $perdidos = 0;
-            if ($ganados == 0 && $empatados == 0) {
-                $perdidos = 1; // Si no ganó ni empató, se cuenta como perdido
+            function agregarEquipoATablaPosiciones($con, $idEquipo, $idGrupo) {
+                $sqlAgregarEquipo = "INSERT INTO tabla_posiciones (idEquipo, idGrupo, golesFavor, golesContra, jugado, ganado, empatado, puntos) VALUES (?, ?, 0, 0, 0, 0, 0, 0)";
+                $stmtAgregarEquipo = mysqli_prepare($con, $sqlAgregarEquipo);
+                mysqli_stmt_bind_param($stmtAgregarEquipo, "ii", $idEquipo, $idGrupo);
+                mysqli_stmt_execute($stmtAgregarEquipo);
+                return mysqli_stmt_affected_rows($stmtAgregarEquipo);
             }
-             $sqlUpdateEquipo = "UPDATE tabla_posiciones SET 
-                golesFavor = golesFavor + ?, 
-                golesContra = golesContra + ?,
-                diferenciaGoles = diferenciaGoles + ?,
-                jugado = jugado + 1,
-                ganado = ganado + ?, 
-                empatado = empatado + ?,
-                perdido = perdido + ?,
-                puntos = puntos + ?
-                WHERE idEquipo = ? AND idGrupo = ?";
 
-            $stmtUpdateEquipo = mysqli_prepare($con, $sqlUpdateEquipo);
-            mysqli_stmt_bind_param($stmtUpdateEquipo, "iiiiiiiii", $golesFavor, $golesContra, $diferenciaGoles, $ganados, $empatados, $perdidos, $puntos, $idEquipo, $idGrupo);
-            mysqli_stmt_execute($stmtUpdateEquipo);
+            function verificarYAgregarEquipo($con, $idEquipo, $idGrupo) {
+                if (!verificarEquipoEnTablaPosiciones($con, $idEquipo, $idGrupo)) {
+                    agregarEquipoATablaPosiciones($con, $idEquipo, $idGrupo);
+                }
+            }
 
-            return mysqli_stmt_affected_rows($stmtUpdateEquipo);
-        }
+            $sqlDatosEquiposInvolucrados = "SELECT idEquipoLocal, idEquipoVisitante FROM partidos WHERE id = ?";
+            $stmtDatosEquiposInvolucrados = mysqli_prepare($con, $sqlDatosEquiposInvolucrados);
+            mysqli_stmt_bind_param($stmtDatosEquiposInvolucrados, "i", $idPartido);
+            mysqli_stmt_execute($stmtDatosEquiposInvolucrados);
+            $resultDatosEquiposInvolucrados = mysqli_stmt_get_result($stmtDatosEquiposInvolucrados);
+            $filaDatosEquiposInvolucrados = mysqli_fetch_assoc($resultDatosEquiposInvolucrados);
 
-        //Calcular resultados para el equipo local y visitante
-        $ganadosLocal = 0;
-        $ganadosVisitante = 0;
-        $empatadosLocal = 0;
-        $empatadosVisitante = 0;
+            $idEquipoLocal = $filaDatosEquiposInvolucrados['idEquipoLocal'];
+            $idEquipoVisitante = $filaDatosEquiposInvolucrados['idEquipoVisitante'];
 
-        $puntosLocal = 0;
-        $puntosVisitante = 0;
+            verificarYAgregarEquipo($con, $idEquipoLocal, $idGrupo);
+            verificarYAgregarEquipo($con, $idEquipoVisitante, $idGrupo);
 
-        //Determinar si hubo un ganador o empate
-        if ($golesEquipoLocal > $golesEquipoVisitante) {
-            $ganadosLocal = 1;
-            $puntosLocal = 3;
-        } else if ($golesEquipoLocal < $golesEquipoVisitante) {
-            $ganadosVisitante = 1;
-            $puntosVisitante = 3;
+            function actualizarTablaPosiciones($con, $idEquipo, $idGrupo, $golesFavor, $golesContra, $puntos, $ganados, $empatados) {
+                $diferenciaGoles = $golesFavor - $golesContra;
+                $perdidos = 0;
+                if ($ganados == 0 && $empatados == 0) {
+                    $perdidos = 1; // Si no ganó ni empató, se cuenta como perdido
+                }
+                $sqlUpdateEquipo = "UPDATE tabla_posiciones SET 
+                    golesFavor = golesFavor + ?, 
+                    golesContra = golesContra + ?,
+                    diferenciaGoles = diferenciaGoles + ?,
+                    jugado = jugado + 1,
+                    ganado = ganado + ?, 
+                    empatado = empatado + ?,
+                    perdido = perdido + ?,
+                    puntos = puntos + ?
+                    WHERE idEquipo = ? AND idGrupo = ?";
+
+                $stmtUpdateEquipo = mysqli_prepare($con, $sqlUpdateEquipo);
+                mysqli_stmt_bind_param($stmtUpdateEquipo, "iiiiiiiii", $golesFavor, $golesContra, $diferenciaGoles, $ganados, $empatados, $perdidos, $puntos, $idEquipo, $idGrupo);
+                mysqli_stmt_execute($stmtUpdateEquipo);
+
+                return mysqli_stmt_affected_rows($stmtUpdateEquipo);
+            }
+
+            $ganadosLocal = 0;
+            $ganadosVisitante = 0;
+            $empatadosLocal = 0;
+            $empatadosVisitante = 0;
+
+            $puntosLocal = 0;
+            $puntosVisitante = 0;
+
+            if ($golesEquipoLocal > $golesEquipoVisitante) {
+                $ganadosLocal = 1;
+                $puntosLocal = 3;
+            } else if ($golesEquipoLocal < $golesEquipoVisitante) {
+                $ganadosVisitante = 1;
+                $puntosVisitante = 3;
+            } else {
+                $empatadosLocal = 1;
+                $empatadosVisitante = 1;
+                $puntosLocal = 1;
+                $puntosVisitante = 1;
+            }
+
+            actualizarTablaPosiciones($con, $idEquipoLocal, $idGrupo, $golesEquipoLocal, $golesEquipoVisitante, $puntosLocal, $ganadosLocal, $empatadosLocal);
+            actualizarTablaPosiciones($con, $idEquipoVisitante, $idGrupo, $golesEquipoVisitante, $golesEquipoLocal, $puntosVisitante, $ganadosVisitante, $empatadosVisitante);
         } else {
-            $empatadosLocal = 1;
-            $empatadosVisitante = 1;
-            $puntosLocal = 1;
-            $puntosVisitante = 1;
+            // Solo actualizar los resultados del partido sin tocar la tabla de posiciones
+            $sqlActualizarResultado = "UPDATE partidos SET golesEquipoLocal = ?, golesEquipoVisitante = ?, jugado = ? WHERE id = ?";
+            $stmtActualizarResultado = mysqli_prepare($con, $sqlActualizarResultado);
+            mysqli_stmt_bind_param($stmtActualizarResultado, "iiii", $golesEquipoLocal, $golesEquipoVisitante, $jugado, $idPartido);
+            mysqli_stmt_execute($stmtActualizarResultado);
         }
-
-        // Para el equipo local
-        actualizarTablaPosiciones($con, $idEquipoLocal, $idGrupo, $golesEquipoLocal, $golesEquipoVisitante, $puntosLocal, $ganadosLocal, $empatadosLocal);
-
-        // Para el equipo visitante
-        actualizarTablaPosiciones($con, $idEquipoVisitante, $idGrupo, $golesEquipoVisitante, $golesEquipoLocal, $puntosVisitante, $ganadosVisitante, $empatadosVisitante);
 
         echo "<script>window.location='index.php?modulo=categoria-2010&id=" . $idCategoria . "&fecha=" . $idFecha . "&idEdicion=". $idEdicion ."';</script>";
     }
 }
-
 ?>
+
+
+
 
 <section>
     <div class="flex items-center justify-center p-12">
