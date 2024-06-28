@@ -1,4 +1,4 @@
-<header class="bg-[--color-primary] shadow">
+<section class="bg-[--color-primary] shadow">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
         <?php
         $idCategoria = $_GET['idCategoria'];
@@ -22,7 +22,7 @@
         ?>
 
     </div>
-</header>
+</section>
 <section>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
         <?php
@@ -88,7 +88,7 @@
                             <span class="text-gray-800"><?php echo $filaFinal['nombre_local'] ?></span>
                         </div>
                         <?php
-                        if ($partidosJugadosEquipoLocal === 0 && $partidosJugadosEquipoVisitante === 0)  {
+                        if ($partidosJugadosEquipoLocal === 0 && $partidosJugadosEquipoVisitante === 0) {
                         ?>
                             <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-center">vs</div>
                             <?php
@@ -143,11 +143,11 @@
                 } else {
                     ?>
                     <div class="col-span-6 lg:col-span-3 flex justify-center lg:justify-end  items-center">
-                        <h1 class="text-gray-800">Ganador Semifinal Oro</h1>
+                        <h1 class="text-gray-800">Ganador Semifinal</h1>
                     </div>
                     <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-start lg:justify-center">vs</div>
                     <div class="col-span-3 lg:col-span-3 flex justify-center items-center lg:justify-start">
-                        <span class="text-gray-800 m-0">Ganador Semifinal Oro</span>
+                        <span class="text-gray-800 m-0">Ganador Semifinal</span>
                     </div>
                     <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
                         <span class="font-semibold text-gray-800 text-xl mb-3 mr-4">Horario</span>
@@ -270,11 +270,11 @@
                 } else {
                     ?>
                     <div class="col-span-6 lg:col-span-3 flex justify-center lg:justify-end  items-center">
-                        <h1 class="text-gray-800">Ganador Semifinal Plata</h1>
+                        <h1 class="text-gray-800">Perdedor Semifinal</h1>
                     </div>
                     <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-start lg:justify-center">vs</div>
                     <div class="col-span-3 lg:col-span-3 flex justify-center items-center lg:justify-start">
-                        <span class="text-gray-800 m-0">Ganador Semifinal Plata</span>
+                        <span class="text-gray-800 m-0">Perdedor Semifinal</span>
                     </div>
                     <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
                         <span class="font-semibold text-gray-800 text-xl mb-3 mr-4">Horario</span>

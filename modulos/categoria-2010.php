@@ -121,15 +121,28 @@
     <div class="flex justify-center flex-wrap">
         <?php
         $id = $_GET['id'];
+        if ($_GET['idEdicion'] == 1) {
         ?>
-        <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-            <a href="index.php?modulo=semifinal&accion=cargar&idCategoria=<?php echo $id ?>">
-                SemiFinales 07/01
-            </a>
-        </button>
-        <button class="hidden mb-4 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-            <a href="index.php?modulo=final&accion=cargar&idCategoria=<?php echo $id ?>">
-                Finales 07/01
+            <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                <a href="index.php?modulo=semifinal&accion=cargar&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $_GET['idEdicion']?>">
+                    SemiFinales
+                </a>
+            </button>
+        <?php
+        } else {
+            ?>
+             <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                <a href="index.php?modulo=semifinal-nueva&accion=cargar&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $_GET['idEdicion']?>">
+                    SemiFinales
+                </a>
+            </button>
+            <?php
+        }
+        ?>
+
+        <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+            <a href="index.php?modulo=final&accion=cargar&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $_GET['idEdicion'] ?>">
+                Finales
             </a>
         </button>
         <?php
