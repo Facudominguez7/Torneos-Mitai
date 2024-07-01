@@ -26,22 +26,32 @@
         <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
             Semifinales
         </h1>
+
         <br />
-        <?php
-        if (isset($_SESSION['rol'])) {
-            if (!empty($_SESSION['rol'] == 2)) {
-        ?>
-                <div class="mb-5">
-                    <a href="index.php?modulo=agregar-semis-nueva&accion=agregar&idCategoria=<?php echo $idCategoria ?>&idEdicion=<?php echo $_GET['idEdicion']?>">
-                        <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
-                            Agregar Partidos
-                        </button>
-                    </a>
-                </div>
-        <?php
+        <div class="flex flex-row">
+            <div class="mb-5">
+                <a href="index.php?modulo=categoria-2010&id=<?php echo $idCategoria ?>&idEdicion=<?php echo $_GET['idEdicion'] ?>">
+                    <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"  data-ripple-light="true">
+                        Volver
+                    </button>
+                </a>
+            </div>
+            <?php
+            if (isset($_SESSION['rol'])) {
+                if (!empty($_SESSION['rol'] == 2)) {
+            ?>
+                    <div class="mb-5">
+                        <a href="index.php?modulo=agregar-semis-nueva&accion=agregar&idCategoria=<?php echo $idCategoria ?>&idEdicion=<?php echo $_GET['idEdicion'] ?>">
+                            <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+                                Agregar Partidos
+                            </button>
+                        </a>
+                    </div>
+            <?php
+                }
             }
-        }
-        ?>
+            ?>
+        </div>
         <div class="border rounded-lg p-4 flex justify-center flex-col bg-gray-100">
             <div class="grid grid-cols-12 lg:grid-cols-24 gap-4 py-2 text-center  overflow-x-auto lg:overflow-x-hidden">
                 <?php

@@ -26,6 +26,7 @@
             ?>
         </div>
     </header>
+
     <form action="index.php" method="GET" class="flex items-center justify-center mt-10">
         <?php
         $idEdicion = $_GET['idEdicion'];
