@@ -138,6 +138,16 @@
             </button>
             <?php
         }
+        //Caso especial 16 edicion mitai - Tumbada en algunas categorias $id = idCategoria
+        if($id == 17 || $id == 16 || $id == 12){
+            ?>
+            <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
+            <a href="index.php?modulo=tumbada&idCategoria=<?php echo $id ?>&idEdicion=<?php echo $_GET['idEdicion'] ?>">
+                Tumbada
+            </a>
+        </button>
+            <?php
+        }
         ?>
 
         <button class="mb-4 middle none center mr-4 rounded-lg bg-gray-800 hover:bg-gray-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md  transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
