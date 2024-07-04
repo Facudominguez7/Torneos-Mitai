@@ -135,9 +135,10 @@
                         <?php
                         if (isset($_SESSION['rol'])) {
                             if (!empty($_SESSION['rol'] == 2)) {
+                                $idEdicion = $_GET['idEdicion'];
                         ?>
                                 <div class="col-span-12 flex items-center justify-center">
-                                    <a href="index.php?modulo=cargar-resultado-final&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idCopa=<?php echo $idCopa ?>">
+                                    <a href="index.php?modulo=cargar-resultado-final&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idCopa=<?php echo $idCopa ?>&idEdicion=<?php echo $idEdicion ?>">
                                         <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                             Cargar Resultado
                                         </button>
@@ -152,21 +153,9 @@
                     }
                 } else {
                     ?>
-                    <div class="col-span-6 lg:col-span-3 flex justify-center lg:justify-end  items-center">
-                        <h1 class="text-gray-800">Ganador Semifinal</h1>
-                    </div>
-                    <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-start lg:justify-center">vs</div>
-                    <div class="col-span-3 lg:col-span-3 flex justify-center items-center lg:justify-start">
-                        <span class="text-gray-800 m-0">Ganador Semifinal</span>
-                    </div>
-                    <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
-                        <span class="font-semibold text-gray-800 text-xl mb-3 mr-4">Horario</span>
-                        <span class="text-gray-800 mr-2">A definir</span>
-                    </div>
-                    <div class="col-span-6 lg:col-span-2 flex flex-col items-center justify-center">
-                        <span class="font-semibold text-gray-800 text-xl mb-3">Cancha</span>
-                        <span class="text-gray-800 mr-2">A definir</span>
-                    </div>
+                    <h1 class="col-span-12 py-2 border-t-4 text-center text-black">
+                        Sin Partidos Cargados.
+                    </h1>
                 <?php
                 }
                 ?>
@@ -219,6 +208,8 @@
                         $idCopa = $filaFinal['idCopa'];
                         $penalesEquipoLocal = $filaFinal['penalesEquipoLocal'];
                         $penalesEquipoVisitante = $filaFinal['penalesEquipoVisitante'];
+                        $partidosJugadosEquipoLocal = $filaFinal['jugado'];
+                        $partidosJugadosEquipoVisitante = $filaFinal['jugado'];
 
                 ?>
                         <div class="col-span-6 lg:col-span-3 flex lg:justify-end items-center">
@@ -226,7 +217,7 @@
                             <span class="text-gray-800"><?php echo $filaFinal['nombre_local'] ?></span>
                         </div>
                         <?php
-                        if ($resultadoEquipoLocal === 0 && $resultadoEquipoVisitante === 0) {
+                        if ($partidosJugadosEquipoLocal === 0 && $partidosJugadosEquipoVisitante === 0) {
                         ?>
                             <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-center">vs</div>
                             <?php
@@ -265,7 +256,7 @@
                             if (!empty($_SESSION['rol'] == 2)) {
                         ?>
                                 <div class="col-span-12 flex items-center justify-center">
-                                    <a href="index.php?modulo=cargar-resultado-final&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idCopa=<?php echo $idCopa ?>">
+                                    <a href="index.php?modulo=cargar-resultado-final&accion=cargar&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idCopa=<?php echo $idCopa ?>&idEdicion=<?php echo $idEdicion ?>">
                                         <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                             Cargar Resultado
                                         </button>
@@ -280,21 +271,9 @@
                     }
                 } else {
                     ?>
-                    <div class="col-span-6 lg:col-span-3 flex justify-center lg:justify-end  items-center">
-                        <h1 class="text-gray-800">Perdedor Semifinal</h1>
-                    </div>
-                    <div class="flex col-span-2 lg:col-span-3 items-center font-bold justify-start lg:justify-center">vs</div>
-                    <div class="col-span-3 lg:col-span-3 flex justify-center items-center lg:justify-start">
-                        <span class="text-gray-800 m-0">Perdedor Semifinal</span>
-                    </div>
-                    <div class="col-span-6 lg:col-span-1 flex flex-col items-center justify-center ml-10">
-                        <span class="font-semibold text-gray-800 text-xl mb-3 mr-4">Horario</span>
-                        <span class="text-gray-800 mr-2">A definir</span>
-                    </div>
-                    <div class="col-span-6 lg:col-span-2 flex flex-col items-center justify-center">
-                        <span class="font-semibold text-gray-800 text-xl mb-3">Cancha</span>
-                        <span class="text-gray-800 mr-2">A definir</span>
-                    </div>
+                    <h1 class="col-span-12 py-2 border-t-4 text-center text-black">
+                        Sin Partidos Cargados.
+                    </h1>
                 <?php
                 }
                 ?>

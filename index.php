@@ -325,7 +325,7 @@ if (!isset($_GET['modulo']) || $_GET['modulo'] !== 'iniciar-sesion' && $_GET['mo
                     <?php
                     if (!empty($_SESSION['nombre_usuario'])) {
                     ?>
-                        <h1 class="text-3xl font-bold tracking-tight flex justify-center text-white">
+                        <h1 class="text-3xl font-bold tracking-tight text-center text-white">
                             Bienvenido/a <?php echo $_SESSION['nombre_usuario']; ?>
                         </h1>
                     <?php

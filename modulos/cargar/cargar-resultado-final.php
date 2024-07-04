@@ -3,6 +3,7 @@ if (!empty($_GET['accion'])) {
     $idPartido = $_GET['idPartido'];
     $idCategoria = $_GET['idCategoria'];
     $idCopa = $_GET['idCopa'];
+    $idEdicion = $_GET['idEdicion'];
     if ($_GET['accion'] == 'cargarResultadoFinal') {
         $golesEquipoLocal = $_POST['golesEquipoLocal'];
         $golesEquipoVisitante = $_POST['golesEquipoVisitante'];
@@ -10,11 +11,12 @@ if (!empty($_GET['accion'])) {
         $penalesEquipoVisitante = $_POST['penalesEquipoVisitante'];
         $idEquipoLocal = $_POST['idEquipoLocal'];
         $idEquipoVisitante = $_POST['idEquipoVisitante'];
+        $jugado = 1;
 
         // Actualizar los resultados del partido en la tabla finales
-        $sqlActualizarResultado = "UPDATE finales SET golesEquipoLocal = ?, golesEquipoVisitante = ?, penalesEquipoLocal = ?, penalesEquipoVisitante = ? WHERE id = ?";
+        $sqlActualizarResultado = "UPDATE finales SET golesEquipoLocal = ?, golesEquipoVisitante = ?, penalesEquipoLocal = ?, penalesEquipoVisitante = ?, jugado = ? WHERE id = ?";
         $stmtActualizarResultado = mysqli_prepare($con, $sqlActualizarResultado);
-        mysqli_stmt_bind_param($stmtActualizarResultado, "iiiii", $golesEquipoLocal, $golesEquipoVisitante, $penalesEquipoLocal, $penalesEquipoVisitante, $idPartido);
+        mysqli_stmt_bind_param($stmtActualizarResultado, "iiiiii", $golesEquipoLocal, $golesEquipoVisitante, $penalesEquipoLocal, $penalesEquipoVisitante, $jugado, $idPartido);
         mysqli_stmt_execute($stmtActualizarResultado);
 
         //Determinar el Equipo ganador y perdedor
@@ -41,9 +43,9 @@ if (!empty($_GET['accion'])) {
         if (!empty($equipoGanador) && !empty($equipoPerdedor)) {
             if ($idCopa == 1) {
                 // Insertar en la tabla de ganadores oro
-                $sqlInsertarEquipoGanadorOro = "INSERT INTO campeones_oro (idEquipo, idCategoria, idCopa) VALUES (?, ?, ?)";
+                $sqlInsertarEquipoGanadorOro = "INSERT INTO campeones_oro (idEquipo, idCategoria, idCopa, idEdicion) VALUES (?, ?, ?, ?)";
                 $stmtInsertarEquipoGanadorOro = mysqli_prepare($con, $sqlInsertarEquipoGanadorOro);
-                mysqli_stmt_bind_param($stmtInsertarEquipoGanadorOro, "iii", $equipoGanador, $idCategoria, $idCopa);
+                mysqli_stmt_bind_param($stmtInsertarEquipoGanadorOro, "iiii", $equipoGanador, $idCategoria, $idCopa, $idEdicion);
                 mysqli_stmt_execute($stmtInsertarEquipoGanadorOro);
 
                 if ($stmtInsertarEquipoGanadorOro) {
@@ -53,9 +55,9 @@ if (!empty($_GET['accion'])) {
                 }
 
                 // Insertar en la tabla de subcampeones oro
-                $sqlInsertarEquipoPerdedorOro = "INSERT INTO subcampeones_oro (idEquipo, idCategoria, idCopa) VALUES (?, ?, ?)";
+                $sqlInsertarEquipoPerdedorOro = "INSERT INTO subcampeones_oro (idEquipo, idCategoria, idCopa, idEdicion) VALUES (?, ?, ?, ?)";
                 $stmtInsertarEquipoPerdedorOro = mysqli_prepare($con, $sqlInsertarEquipoPerdedorOro);
-                mysqli_stmt_bind_param($stmtInsertarEquipoPerdedorOro, "iii", $equipoPerdedor, $idCategoria, $idCopa);
+                mysqli_stmt_bind_param($stmtInsertarEquipoPerdedorOro, "iiii", $equipoPerdedor, $idCategoria, $idCopa, $idEdicion);
                 mysqli_stmt_execute($stmtInsertarEquipoPerdedorOro);
 
                 if ($stmtInsertarEquipoPerdedorOro) {
@@ -65,9 +67,9 @@ if (!empty($_GET['accion'])) {
                 }
             } else if ($idCopa == 2) {
                 // Insertar en la tabla de ganadores plata
-                $sqlInsertarEquipoGanadorPlata = "INSERT INTO campeones_plata (idEquipo, idCategoria, idCopa) VALUES (?, ?, ?)";
+                $sqlInsertarEquipoGanadorPlata = "INSERT INTO campeones_plata (idEquipo, idCategoria, idCopa, idEdicion) VALUES (?, ?, ?, ?)";
                 $stmtInsertarEquipoGanadorPlata = mysqli_prepare($con, $sqlInsertarEquipoGanadorPlata);
-                mysqli_stmt_bind_param($stmtInsertarEquipoGanadorPlata, "iii", $equipoGanador, $idCategoria, $idCopa);
+                mysqli_stmt_bind_param($stmtInsertarEquipoGanadorPlata, "iiii", $equipoGanador, $idCategoria, $idCopa, $idEdicion);
                 mysqli_stmt_execute($stmtInsertarEquipoGanadorPlata);
 
                 if ($stmtInsertarEquipoGanadorPlata) {
@@ -76,9 +78,9 @@ if (!empty($_GET['accion'])) {
                     echo "<script>alert('Hubo un problema al insertar el equipo ganador');</script>";
                 }
                 // Insertar en la tabla de subcampeones plata
-                $sqlInsertarEquipoPerdedorPlata = "INSERT INTO subcampeones_plata (idEquipo, idCategoria, idCopa) VALUES (?, ?, ?)";
+                $sqlInsertarEquipoPerdedorPlata = "INSERT INTO subcampeones_plata (idEquipo, idCategoria, idCopa, idEdicion) VALUES (?, ?, ?, ?)";
                 $stmtInsertarEquipoPerdedorPlata = mysqli_prepare($con, $sqlInsertarEquipoPerdedorPlata);
-                mysqli_stmt_bind_param($stmtInsertarEquipoPerdedorPlata, "iii", $equipoPerdedor, $idCategoria, $idCopa);
+                mysqli_stmt_bind_param($stmtInsertarEquipoPerdedorPlata, "iiii", $equipoPerdedor, $idCategoria, $idCopa, $idEdicion);
                 mysqli_stmt_execute($stmtInsertarEquipoPerdedorPlata);
 
                 if ($stmtInsertarEquipoPerdedorPlata) {
@@ -87,7 +89,7 @@ if (!empty($_GET['accion'])) {
                     echo "<script>alert('Hubo un problema al insertar el equipo ganador');</script>";
                 }
             }
-            echo "<script>window.location='index.php?modulo=final&idCategoria=" . $idCategoria . "';</script>";
+            echo "<script>window.location='index.php?modulo=final&idCategoria=" . $idCategoria . "&idEdicion=". $idEdicion ."';</script>";
         }
     }
 }
@@ -95,7 +97,7 @@ if (!empty($_GET['accion'])) {
 <section>
     <div class="flex items-center justify-center p-12">
         <div class="mx-auto w-full max-w-[550px]">
-            <form action="index.php?modulo=cargar-resultado-final&accion=cargarResultadoFinal&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idCopa=<?php echo $idCopa ?>" method="POST">
+            <form action="index.php?modulo=cargar-resultado-final&accion=cargarResultadoFinal&idCategoria=<?php echo $idCategoria ?>&idPartido=<?php echo $idPartido ?>&idCopa=<?php echo $idCopa ?>&idEdicion=<?php echo $idEdicion ?>" method="POST">
                 <?php
                 $sqlMostrarEquipoLocal = "SELECT finales.id, equipos.nombre AS nombreEquipoLocal, equipos.id AS idEquipoLocal
                     FROM finales
