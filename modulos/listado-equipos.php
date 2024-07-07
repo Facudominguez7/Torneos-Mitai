@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <body>
     <header class="bg-[--color-primary] shadow">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-3 lg:px-8">
@@ -10,8 +11,8 @@
         </div>
     </header>
     <div class="flex justify-center mt-10 mb-0">
-        <?php $idEdicion = $_GET['idEdicion']?>
-        <a href="index.php?modulo=agregar-equipo&accion=agregar&idEdicion=<?php echo $idEdicion?>">
+        <?php $idEdicion = $_GET['idEdicion'] ?>
+        <a href="index.php?modulo=agregar-equipo&accion=agregar&idEdicion=<?php echo $idEdicion ?>">
             <button class="middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                 Agregar Equipo
             </button>
@@ -22,6 +23,7 @@
         <table class="border-collapse w-full mt-5">
             <thead>
                 <tr>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Id</th>
                     <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Logo</th>
                     <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Nombre</th>
                     <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Categoria</th>
@@ -42,22 +44,26 @@
                     while ($fila = mysqli_fetch_array($datos)) {
                 ?>
                         <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">ID</span>
+                                <?php echo $fila['id']; ?>
+                            </td>
                             <td class="w-full lg:w-auto p-3 text-gray-800 flex justify-center border border-b  lg:table-cell relative lg:static">
-                                <img class="h-24 w-24" src="Imagenes/<?php echo $fila['foto'];?>" alt="logo <?php echo $fila['nombre'];?>">
+                                <img class="h-24 w-24" src="Imagenes/<?php echo $fila['foto']; ?>" alt="logo <?php echo $fila['nombre']; ?>">
                             </td>
 
                             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">nombre</span>
-                                <?php echo $fila['nombre'];?>
+                                <?php echo $fila['nombre']; ?>
                             </td>
                             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Categoria</span>
-                                <?php echo $fila['nombreCategoria'];?>
+                                <?php echo $fila['nombreCategoria']; ?>
                             </td>
                             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Accion</span>
-                                <a href="index.php?modulo=editar-equipo&accion=editar&id=<?php echo $fila['id'];?>&idEdicion=<?php echo $idEdicion?>" class="text-blue-400 hover:text-blue-600 underline">Editar</a>
-                                <a href="index.php?modulo=eliminar-equipo&id=<?php echo $fila['id'];?>&idEdicion=<?php echo $idEdicion?>" class="text-blue-400 hover:text-blue-600 underline pl-6">Eliminar</a>
+                                <a href="index.php?modulo=editar-equipo&accion=editar&id=<?php echo $fila['id']; ?>&idEdicion=<?php echo $idEdicion ?>" class="text-blue-400 hover:text-blue-600 underline">Editar</a>
+                                <a href="index.php?modulo=eliminar-equipo&id=<?php echo $fila['id']; ?>&idEdicion=<?php echo $idEdicion ?>" class="text-blue-400 hover:text-blue-600 underline pl-6">Eliminar</a>
                             </td>
                         </tr>
                     <?php
